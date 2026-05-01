@@ -23,22 +23,23 @@ export default async function handler(req, res) {
       + 'Be friendly and encouraging. Use checkmark for good, warning for caution, X for problems. Give specific numbers.'
   }
 
-  if (type === 'chemistry') {
-    const labels = { pH: 'pH', ammonia: 'Ammonia (ppm)', nitrite: 'Nitrite (ppm)', nitrate: 'Nitrate (ppm)', kh: 'KH (dKH)', gh: 'GH (dGH)', temp: 'Temperature (°F)', do2: 'Dissolved O2 (ppm)', salt: 'Salt (%)' }
+if (type === 'chemistry') {
+    const labels = { pH: 'pH', ammonia: 'Ammonia (ppm)', nitrite: 'Nitrite (ppm)', nitrate: 'Nitrate (ppm)', kh: 'KH (dKH)', gh: 'GH (dGH)', temp: 'Temperature (°F)', do2: 'Dissolved O2 (ppm)', salt: 'Specific Gravity', salinity: 'Salinity (ppt)', calcium: 'Calcium (ppm)', magnesium: 'Magnesium (ppm)' }
     const readings = Object.entries(data)
-      .filter(function(entry) { return entry[1] !== '' && entry[0] !== 'lastChange' && entry[0] !== 'gallons' })
+      .filter(function(entry) { return entry[1] !== '' && entry[0] !== 'lastChange' && entry[0] !== 'gallons' && entry[0] !== 'tankType' })
       .map(function(entry) { return '- ' + (labels[entry[0]] || entry[0]) + ': ' + entry[1] })
       .join('\n')
 
     const gallonsLine = data.gallons ? '- Tank volume: ' + data.gallons + ' gallons\n' : ''
+    const tankTypeLabel = data.tankType === 'saltwater' ? 'saltwater/marine' : data.tankType === 'pond' ? 'outdoor koi pond' : 'freshwater'
 
-    prompt = 'You are Pond Pal, a friendly koi and aquarium care assistant.\n\n'
-      + 'Water readings:\n'
+    prompt = 'You are Pond Pal, a friendly fish care assistant. This is a ' + tankTypeLabel + ' setup.\n\n'
+      + 'Water readings provided:\n'
       + readings + '\n'
       + gallonsLine
       + '- Last water change: ' + data.lastChange + '\n\n'
-      + 'For each parameter: state the ideal range, flag if off, explain the health risk, give the exact fix with product names and dosing amounts. Prioritize most urgent first.\n\n'
-      + 'Be friendly. Use checkmark for good, warning for slightly off, X for dangerous.'
+      + 'For each parameter provided: state the ideal range for a ' + tankTypeLabel + ', flag if it is off, explain the health risk to the fish, and give the exact fix with specific product names and dosing amounts. If only a few parameters were provided, note which other tests would be helpful to run next. Prioritize the most urgent issues first.\n\n'
+      + 'Be warm and encouraging. Use checkmark for good, warning symbol for slightly off, X for dangerous. Keep it clear for all experience levels.'
   }
 
   try {
