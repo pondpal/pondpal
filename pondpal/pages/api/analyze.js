@@ -54,7 +54,7 @@ Be friendly and encouraging. Use ✅ for parameters in range, ⚠️ for slightl
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'x-api-key': process.env.anthr_key,
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
