@@ -6,6 +6,7 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <meta name="google-adsense-account" content="ca-pub-7893724198285520" />
+        <meta name="google-site-verification" content="0calb_heyG7VCzCnaSnXAQ3GVlJZoonOHaPa5qAZccQ" />
       </Head>
       <Component {...pageProps} />
     </>
