@@ -8,25 +8,24 @@ export default function Home() {
         <title>Pond Pal — Friendly Koi & Aquarium Care, Powered by AI</title>
         <meta name="description" content="Pond Pal helps koi and fish owners of all experience levels keep their fish healthy and their water perfect. Free AI-powered tank checker and water chemistry analyzer." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Nav */}
       <nav className="nav">
-        <div className="nav-logo">🐟 Pond<span>Pal</span></div>
+        <Link href="/" className="nav-logo">🐟 Pond<span style={{ color: '#f4833d' }}>Pal</span></Link>
         <ul className="nav-links">
           <li><Link href="/tank-checker">Tank Checker</Link></li>
           <li><Link href="/water-chemistry">Water Chemistry</Link></li>
           <li><Link href="/care-guides">Care Guides</Link></li>
+          <li><Link href="/about">About</Link></li>
+          <li><Link href="/contact">Contact</Link></li>
         </ul>
       </nav>
 
-      {/* Hero */}
       <section className="hero">
         <span className="hero-fish">🐟</span>
         <h1>Your friendly <span>pond & fish</span> companion</h1>
         <p className="hero-sub">
-          Whether you're setting up your very first tank or you've been keeping koi for decades —
+          Whether you are setting up your very first tank or you have been keeping koi for decades —
           Pond Pal is here to help. Free AI-powered tools, plain English advice, no jargon.
         </p>
         <div className="hero-btns">
@@ -35,20 +34,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Tools */}
       <section className="section" style={{ background: '#fff' }}>
         <div className="section-inner">
           <span className="section-tag">Free AI Tools</span>
           <h2>Everything your pond needs, in one place</h2>
-          <p className="section-lead">
-            Just answer a few questions and our AI gives you clear, friendly answers — no fish degree required!
-          </p>
+          <p className="section-lead">Just answer a few questions and our AI gives you clear, friendly answers — no fish degree required!</p>
           <div className="tools-grid">
             <Link href="/tank-checker" style={{ textDecoration: 'none' }}>
               <div className="tool-card">
                 <span className="tool-icon">🏠</span>
                 <h3>Tank Size Checker</h3>
-                <p>Tell us your tank size, how many fish you have, and what kind of filter you're running. We'll let you know if your setup is a happy home for your koi.</p>
+                <p>Tell us your tank size, how many fish you have, and what kind of filter you are running. We will let you know if your setup is a happy home for your koi.</p>
                 <span className="tool-link">Check my tank →</span>
               </div>
             </Link>
@@ -72,7 +68,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How it works */}
       <section className="section how-section">
         <div className="section-inner">
           <span className="section-tag" style={{ background: 'rgba(244,131,61,0.2)', color: '#f4833d' }}>How It Works</span>
@@ -92,7 +87,7 @@ export default function Home() {
             <div className="step">
               <div className="step-num">3</div>
               <h3>Get clear, friendly advice</h3>
-              <p>Plain English results — what's good, what needs attention, and exactly what to do.</p>
+              <p>Plain English results — what is good, what needs attention, and exactly what to do.</p>
             </div>
             <div className="step">
               <div className="step-num">4</div>
@@ -103,7 +98,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Pond Pal */}
       <section className="section" style={{ background: 'var(--cream)' }}>
         <div className="section-inner">
           <span className="section-tag teal">Why Pond Pal?</span>
@@ -124,31 +118,38 @@ export default function Home() {
             </div>
             <div className="info-card">
               <h3>🔬 Specific, actionable advice</h3>
-              <p>We don't just say "your ammonia is high." We tell you exactly what percentage water change to do and which products to use.</p>
+              <p>We do not just say your ammonia is high. We tell you exactly what percentage water change to do and which products to use.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
       <section className="section" style={{ background: 'var(--teal)', textAlign: 'center' }}>
         <div className="section-inner">
           <h2 style={{ color: '#fff', marginBottom: '1rem' }}>Ready to give your fish the best life possible?</h2>
           <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '2rem', fontSize: '1.1rem' }}>Start with our free tank checker — it only takes a minute.</p>
           <Link href="/tank-checker" className="btn-primary" style={{ fontSize: '16px', padding: '16px 36px' }}>
-            Get Started — It's Free 🐟
+            Get Started — It is Free 🐟
           </Link>
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="footer">
         <p>🐟 Pond Pal — Friendly fish care, powered by AI</p>
-        <p style={{ marginTop: '0.5rem' }}>
-          <Link href="/tank-checker">Tank Checker</Link> · <Link href="/water-chemistry">Water Chemistry</Link> · <Link href="/care-guides">Care Guides</Link>
+        <p style={{ marginTop: '0.75rem' }}>
+          <Link href="/tank-checker" style={{ color: 'rgba(255,255,255,0.6)' }}>Tank Checker</Link>{' · '}
+          <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Chemistry</Link>{' · '}
+          <Link href="/care-guides" style={{ color: 'rgba(255,255,255,0.6)' }}>Care Guides</Link>{' · '}
+          <Link href="/about" style={{ color: 'rgba(255,255,255,0.6)' }}>About</Link>{' · '}
+          <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)' }}>Contact</Link>
         </p>
-        <p style={{ marginTop: '1rem', fontSize: '11px', opacity: 0.6 }}>
-          Pond Pal provides general guidance only. Always consult a veterinarian for health concerns.
+        <p style={{ marginTop: '0.75rem' }}>
+          <Link href="/privacy-policy" style={{ color: '#f4833d' }}>Privacy Policy</Link>{' · '}
+          <Link href="/terms" style={{ color: '#f4833d' }}>Terms of Use</Link>{' · '}
+          <Link href="/disclaimer" style={{ color: '#f4833d' }}>Disclaimer</Link>
+        </p>
+        <p style={{ marginTop: '1rem', fontSize: '11px', opacity: 0.5 }}>
+          General guidance only. Always consult a vet for health concerns.
           Some links may be affiliate links — this helps keep Pond Pal free!
         </p>
       </footer>

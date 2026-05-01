@@ -1,45 +1,52 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
 
-  const apiKey = process.env.anthr_key
-
-  if (!apiKey) {
-    return res.status(500).json({ result: 'Error: API key not found. Check your Vercel environment variables.' })
-  }
-
   const { type, data } = req.body
+
   let prompt = ''
 
   if (type === 'tank') {
-    prompt = 'You are Pond Pal, a friendly koi and aquarium care assistant.\n\n'
-      + 'Setup details:\n'
-      + '- Tank type: ' + data.tankType + '\n'
-      + '- Volume: ' + data.gallons + ' gallons\n'
-      + '- Number of koi: ' + data.fishCount + '\n'
-      + '- Average fish size: ' + data.fishSize + ' inches\n'
-      + '- Filtration: ' + data.filtration + '\n'
-      + '- Plants: ' + data.planted + '\n\n'
-      + 'Please analyze: 1) Is the tank big enough? Use the 250-gallon-per-koi rule and 10x body length rule. Show the math. 2) Is filtration adequate? 3) What improvements are needed? 4) What is the ideal setup long term?\n\n'
-      + 'Be friendly and encouraging. Use checkmark for good, warning for caution, X for problems. Give specific numbers.'
+    prompt = `You are Pond Pal, a friendly and knowledgeable koi and aquarium care assistant. A fish keeper has shared their setup with you. Give them warm, encouraging, and specific advice.
+
+Setup details:
+- Tank type: ${data.tankType}
+- Volume: ${data.gallons} gallons
+- Number of koi: ${data.fishCount}
+- Average fish size: ${data.fishSize} inches
+- Filtration: ${data.filtration}
+- Plants: ${data.planted}
+
+Please analyze:
+1. Is the tank big enough? Use the 250-gallon-per-koi rule and the 10x body length swimming space guideline. Show the math clearly.
+2. Is the filtration adequate for koi?
+3. What specific improvements or changes would you recommend?
+4. What size setup would be ideal for these fish long-term?
+
+Be friendly and encouraging. Use ✅ for things that are good, ⚠️ for things to watch, and ❌ for things that need attention. Give specific numbers and product types where helpful. Keep it clear and easy to understand for any experience level.`
   }
 
-if (type === 'chemistry') {
-    const labels = { pH: 'pH', ammonia: 'Ammonia (ppm)', nitrite: 'Nitrite (ppm)', nitrate: 'Nitrate (ppm)', kh: 'KH (dKH)', gh: 'GH (dGH)', temp: 'Temperature (°F)', do2: 'Dissolved O2 (ppm)', salt: 'Specific Gravity', salinity: 'Salinity (ppt)', calcium: 'Calcium (ppm)', magnesium: 'Magnesium (ppm)' }
+  if (type === 'chemistry') {
     const readings = Object.entries(data)
-      .filter(function(entry) { return entry[1] !== '' && entry[0] !== 'lastChange' && entry[0] !== 'gallons' && entry[0] !== 'tankType' })
-      .map(function(entry) { return '- ' + (labels[entry[0]] || entry[0]) + ': ' + entry[1] })
-      .join('\n')
+      .filter(([k, v]) => v !== '' && k !== 'lastChange' && k !== 'gallons')
+      .map(([k, v]) => {
+        const labels = { pH: 'pH', ammonia: 'Ammonia (ppm)', nitrite: 'Nitrite (ppm)', nitrate: 'Nitrate (ppm)', kh: 'KH (dKH)', gh: 'GH (dGH)', temp: 'Temperature (°F)', do2: 'Dissolved O₂ (ppm)', salt: 'Salt (%)' }
+        return `- ${labels[k] || k}: ${v}`
+      }).join('\n')
 
-    const gallonsLine = data.gallons ? '- Tank volume: ' + data.gallons + ' gallons\n' : ''
-    const tankTypeLabel = data.tankType === 'saltwater' ? 'saltwater/marine' : data.tankType === 'pond' ? 'outdoor koi pond' : 'freshwater'
+    prompt = `You are Pond Pal, a friendly and knowledgeable koi and aquarium care assistant. A fish keeper has shared their water test results with you. Give them warm, specific, and actionable advice.
 
-    prompt = 'You are Pond Pal, a friendly fish care assistant. This is a ' + tankTypeLabel + ' setup.\n\n'
-      + 'Water readings provided:\n'
-      + readings + '\n'
-      + gallonsLine
-      + '- Last water change: ' + data.lastChange + '\n\n'
-      + 'For each parameter provided: state the ideal range for a ' + tankTypeLabel + ', flag if it is off, explain the health risk to the fish, and give the exact fix with specific product names and dosing amounts. If only a few parameters were provided, note which other tests would be helpful to run next. Prioritize the most urgent issues first.\n\n'
-      + 'Be warm and encouraging. Use checkmark for good, warning symbol for slightly off, X for dangerous. Keep it clear for all experience levels.'
+Water readings:
+${readings}
+${data.gallons ? `- Tank/pond volume: ${data.gallons} gallons` : ''}
+- Last water change: ${data.lastChange}
+
+For each parameter provided:
+1. Is it in the ideal range for koi? (state the ideal range)
+2. If it's off — what is the problem and what health risk does it pose to the fish?
+3. Exactly how to fix it — specific water change percentage, specific product names, and dosing amounts per gallon or per 100 gallons.
+4. What order to tackle fixes in (prioritize the most urgent first).
+
+Be friendly and encouraging. Use ✅ for parameters in range, ⚠️ for slightly off, and ❌ for dangerous levels. Give specific, actionable steps. Keep it warm and clear — suitable for beginners and experienced keepers alike.`
   }
 
   try {
@@ -47,28 +54,20 @@ if (type === 'chemistry') {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': apiKey,
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-5',
+        model: 'claude-sonnet-4-20250514',
         max_tokens: 1024,
         messages: [{ role: 'user', content: prompt }]
       })
     })
 
     const json = await response.json()
-
-    if (!response.ok) {
-      return res.status(500).json({
-        result: 'API Error ' + response.status + ': ' + (json.error ? json.error.message : JSON.stringify(json))
-      })
-    }
-
-    const result = (json.content && json.content[0] && json.content[0].text) ? json.content[0].text : 'No response received, please try again!'
-    res.status(200).json({ result: result })
-
+    const result = json.content?.[0]?.text || 'Sorry, something went wrong. Please try again!'
+    res.status(200).json({ result })
   } catch (e) {
-    res.status(500).json({ result: 'Connection error: ' + e.message })
+    res.status(500).json({ result: 'Unable to connect to Pond Pal AI — please try again in a moment!' })
   }
 }
