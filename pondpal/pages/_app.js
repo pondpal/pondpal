@@ -5,7 +5,7 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <meta name="google-adsense-account" content="ca-pub-XXXXXXXXXX" />
+        <meta name="google-adsense-account" content="ca-pub-7893724198285520">
       </Head>
       <Component {...pageProps} />
     </>
