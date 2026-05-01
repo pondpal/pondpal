@@ -39,11 +39,12 @@ Be friendly and encouraging. Use ✅ for things that are good, ⚠️ for things
         return `- ${labels[k] || k}: ${v}`
       }).join('\n')
 
-    prompt = `You are Pond Pal, a friendly and knowledgeable koi and aquarium care assistant. A fish keeper has shared their water test results with you.
+   const gallonsLine = data.gallons ? '- Tank/pond volume: ' + data.gallons + ' gallons' : ''
 
-Water readings:
-${readings}
-${data.gallons ? `- Tank/pond volume: ${data.gallons} gallons` : ''}
-- Last water change: ${data.lastChange}
-
-For each parameter: Is it in the ideal range? If off, what is the risk and exact fix including product names a
+    prompt = 'You are Pond Pal, a friendly and knowledgeable koi and aquarium care assistant. A fish keeper has shared their water test results with you.\n\n'
+      + 'Water readings:\n'
+      + readings + '\n'
+      + gallonsLine + '\n'
+      + '- Last water change: ' + data.lastChange + '\n\n'
+      + 'For each parameter: Is it in the ideal range? If off, what is the risk and exact fix including product names and dosing amounts. Prioritize the most urgent fixes first.\n\n'
+      + 'Be friendly. Use ✅ for good, ⚠️ for slightly off, ❌ for dangerous.'
