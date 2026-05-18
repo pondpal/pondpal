@@ -3,9 +3,27 @@ export default async function handler(req, res) {
 
   const apiKey = process.env.anthr_key
 
-  if (!apiKey) {
-    return res.status(200).json({ result: 'DEBUG: API key not found in environment variables.' })
-  }
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1024,
+        messages: [{ role: 'user', content: 'Say hello in one sentence.' }]
+      })
+    })
 
-  return res.status(200).json({ result: 'DEBUG: API key found. Key starts with: ' + apiKey.substring(0, 10) + '...' })
+    const json = await response.json()
+    return res.status(200).json({ 
+      result: 'DEBUG: Status ' + response.status + ' — ' + JSON.stringify(json).substring(0, 300)
+    })
+
+  } catch (e) {
+    return res.status(200).json({ result: 'DEBUG: Fetch error — ' + e.message })
+  }
 }
