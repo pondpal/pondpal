@@ -6,37 +6,54 @@ const posts = [
     slug: 'how-many-koi-1000-gallon-pond',
     title: 'How Many Koi Can I Put in a 1000 Gallon Pond?',
     desc: 'The honest answer to one of the most common koi keeping questions — with the math, the rules, and what most beginners get wrong.',
-    date: 'May 2026',
-    readTime: '8 min read',
-    emoji: '🐟',
-    category: 'Pond Setup'
+    date: 'May 2026', readTime: '8 min read', emoji: '🐠', category: 'Koi & Ponds'
   },
   {
     slug: 'koi-ammonia-spike',
     title: 'Koi Pond Ammonia Spike — Causes, Dangers and How to Fix It Fast',
     desc: 'Ammonia is the number one killer in koi ponds. Here is everything you need to know to identify it, fix it fast, and stop it coming back.',
-    date: 'May 2026',
-    readTime: '10 min read',
-    emoji: '⚠️',
-    category: 'Water Quality'
+    date: 'May 2026', readTime: '10 min read', emoji: '⚠️', category: 'Water Quality'
   },
   {
     slug: 'best-koi-food-every-season',
     title: 'Best Koi Food for Every Season — Complete Feeding Guide',
     desc: 'What to feed your koi in spring, summer, autumn and winter — including our top product picks and the one feeding mistake that can kill your fish.',
-    date: 'May 2026',
-    readTime: '10 min read',
-    emoji: '🍽️',
-    category: 'Feeding'
+    date: 'May 2026', readTime: '10 min read', emoji: '🍽️', category: 'Koi & Ponds'
+  },
+  {
+    slug: 'how-big-betta-tank',
+    title: 'How Big of a Tank Does a Betta Fish Need?',
+    desc: 'The honest answer — why the bowl myth is one of the most harmful in fishkeeping, and what a proper betta tank actually looks like.',
+    date: 'May 2026', readTime: '8 min read', emoji: '💜', category: 'Betta'
+  },
+  {
+    slug: 'why-is-my-goldfish-tank-cloudy',
+    title: 'Why Is My Goldfish Tank Cloudy? Causes and Fixes',
+    desc: 'White cloudiness, green water, and brown tint all have different causes. Here is how to diagnose yours and fix it correctly.',
+    date: 'May 2026', readTime: '9 min read', emoji: '🐡', category: 'Goldfish'
+  },
+  {
+    slug: 'best-filter-55-gallon-aquarium',
+    title: 'Best Filter for a 55 Gallon Aquarium',
+    desc: 'What actually matters when choosing a filter, which types work best for different fish, and our top recommendations.',
+    date: 'May 2026', readTime: '10 min read', emoji: '🔄', category: 'Aquarium Setup'
   },
 ]
+
+const categoryColors = {
+  'Koi & Ponds': { bg: '#d4f0ec', text: '#0e6b6b' },
+  'Water Quality': { bg: '#FCEBEB', text: '#A32D2D' },
+  'Betta': { bg: '#e8e4f8', text: '#4a3d8f' },
+  'Goldfish': { bg: '#faeeda', text: '#854F0B' },
+  'Aquarium Setup': { bg: '#E6F1FB', text: '#185FA5' },
+}
 
 export default function Blog() {
   return (
     <>
       <Head>
-        <title>Koi and Pond Care Blog — Pond Pal</title>
-        <meta name="description" content="Expert koi and pond care articles — stocking levels, water quality, feeding guides, and more. Written in plain English for all experience levels." />
+        <title>Fish & Aquarium Care Blog — Pond Pal</title>
+        <meta name="description" content="Expert fish and aquarium care articles — koi, goldfish, bettas, tank setup, water quality, and more. Plain English advice for every fish keeper." />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
@@ -54,34 +71,37 @@ export default function Blog() {
 
       <div className="tool-hero">
         <h1>Pond Pal Blog</h1>
-        <p>In-depth articles on koi keeping, pond care, and everything in between</p>
+        <p>In-depth articles on fish keeping, pond care, water quality, and everything in between</p>
       </div>
 
       <section className="section" style={{ background: 'var(--cream)' }}>
         <div className="section-inner" style={{ maxWidth: '860px' }}>
           <div style={{ display: 'grid', gap: '1.5rem' }}>
-            {posts.map((p, i) => (
-              <Link key={i} href={'/blog/' + p.slug} style={{ textDecoration: 'none' }}>
-                <div className="tool-card" style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
-                  <div style={{ fontSize: '40px', flexShrink: 0 }}>{p.emoji}</div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', gap: '8px', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
-                      <span style={{ fontSize: '11px', fontWeight: 500, padding: '2px 10px', borderRadius: '20px', background: '#d4f0ec', color: '#0e6b6b' }}>{p.category}</span>
-                      <span style={{ fontSize: '11px', color: '#5a7a82' }}>{p.date}</span>
-                      <span style={{ fontSize: '11px', color: '#5a7a82' }}>{p.readTime}</span>
+            {posts.map((p, i) => {
+              const colors = categoryColors[p.category] || { bg: '#d4f0ec', text: '#0e6b6b' }
+              return (
+                <Link key={i} href={'/blog/' + p.slug} style={{ textDecoration: 'none' }}>
+                  <div className="tool-card" style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
+                    <div style={{ fontSize: '40px', flexShrink: 0 }}>{p.emoji}</div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: 'flex', gap: '8px', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: '11px', fontWeight: 500, padding: '2px 10px', borderRadius: '20px', background: colors.bg, color: colors.text }}>{p.category}</span>
+                        <span style={{ fontSize: '11px', color: '#5a7a82' }}>{p.date}</span>
+                        <span style={{ fontSize: '11px', color: '#5a7a82' }}>{p.readTime}</span>
+                      </div>
+                      <h2 style={{ fontSize: '1.15rem', marginBottom: '0.5rem', color: '#1a2e35' }}>{p.title}</h2>
+                      <p style={{ fontSize: '14px', color: '#5a7a82', lineHeight: '1.6' }}>{p.desc}</p>
+                      <span className="tool-link" style={{ marginTop: '0.75rem', display: 'inline-block' }}>Read article →</span>
                     </div>
-                    <h2 style={{ fontSize: '1.15rem', marginBottom: '0.5rem', color: '#1a2e35' }}>{p.title}</h2>
-                    <p style={{ fontSize: '14px', color: '#5a7a82', lineHeight: '1.6' }}>{p.desc}</p>
-                    <span className="tool-link" style={{ marginTop: '0.75rem', display: 'inline-block' }}>Read article →</span>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              )
+            })}
           </div>
 
           <div style={{ marginTop: '3rem', background: 'var(--deep)', borderRadius: '14px', padding: '2rem', textAlign: 'center' }}>
             <h2 style={{ color: '#fff', marginBottom: '0.75rem' }}>Get instant answers for your specific setup</h2>
-            <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '1.5rem', fontSize: '14px' }}>Our free AI tools give personalized advice tailored to your exact tank or pond.</p>
+            <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '1.5rem', fontSize: '14px' }}>Our free AI tools give personalized advice for any fish, any tank.</p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <Link href="/tank-checker" className="btn-primary">Check My Tank</Link>
               <Link href="/water-chemistry" className="btn-outline">Test My Water</Link>
