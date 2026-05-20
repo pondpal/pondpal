@@ -12,19 +12,27 @@ const guides = [
   { emoji: '🌱', title: 'Pond Plants That Help', desc: 'The best aquatic plants for koi ponds — which ones absorb nitrates, provide shade, and actually survive being nibbled by curious koi.', level: 'Intermediate', levelColor: '#ffdcc9', levelText: '#c04a10', slug: '/guides/pond-plants', time: '10 min read' },
 ]
 
+const products = [
+  { name: 'API Master Test Kit', desc: 'Tests pH, ammonia, nitrite & nitrate', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20', emoji: '🧪' },
+  { name: 'Seachem Prime', desc: 'Best water conditioner for koi', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20', emoji: '💧' },
+  { name: 'Hikari Wheat Germ Food', desc: 'Perfect cool weather koi food', url: 'https://www.amazon.com/dp/B0002DHYDI?tag=pondpal20-20', emoji: '🌿' },
+  { name: 'Hikari Staple Koi Food', desc: 'Quality everyday koi food', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20', emoji: '🍽️' },
+]
+
 export default function CareGuides() {
   return (
     <>
       <Head>
         <title>Koi and Pond Care Guides — Pond Pal</title>
         <meta name="description" content="Free koi and pond care guides for all experience levels — from beginner basics to advanced filtration. Written in plain English by Pond Pal." />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <nav className="nav">
         <Link href="/" className="nav-logo">🐟 Pond<span style={{ color: '#f4833d' }}>Pal</span></Link>
         <ul className="nav-links">
           <li><Link href="/tank-checker">Tank Checker</Link></li>
-          <li><Link href="/water-chemistry">Water Chemistry</Link></li>
+          <li><Link href="/water-chemistry">Water Testing</Link></li>
           <li><Link href="/care-guides">Care Guides</Link></li>
           <li><Link href="/about">About</Link></li>
           <li><Link href="/contact">Contact</Link></li>
@@ -32,7 +40,7 @@ export default function CareGuides() {
       </nav>
 
       <div className="tool-hero">
-        <h1>Care Guides</h1>
+        <h1>📖 Care Guides</h1>
         <p>Helpful guides for every stage of your fish keeping journey — beginner to expert</p>
       </div>
 
@@ -59,6 +67,26 @@ export default function CareGuides() {
             ))}
           </div>
 
+          <div style={{ marginTop: '3rem' }}>
+            <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🛒 Recommended Products</h2>
+            <p style={{ fontSize: '14px', color: '#5a7a82', marginBottom: '1.5rem' }}>Everything our guides recommend — linked directly to Amazon for easy ordering.</p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
+              {products.map((p, i) => (
+                <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                  <div className="tool-card" style={{ textAlign: 'center' }}>
+                    <span style={{ fontSize: '28px' }}>{p.emoji}</span>
+                    <h3 style={{ fontSize: '14px', margin: '0.5rem 0 0.25rem' }}>{p.name}</h3>
+                    <p style={{ fontSize: '12px', color: '#5a7a82' }}>{p.desc}</p>
+                    <span className="tool-link" style={{ fontSize: '12px', marginTop: '0.75rem' }}>View on Amazon →</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+            <p style={{ fontSize: '11px', color: '#5a7a82', marginTop: '1rem', textAlign: 'center' }}>
+              As an Amazon Associate, Pond Pal earns from qualifying purchases. This helps keep our tools free!
+            </p>
+          </div>
+
           <div style={{ marginTop: '3rem', background: 'var(--deep)', borderRadius: '14px', padding: '2.5rem', textAlign: 'center' }}>
             <h2 style={{ color: '#fff', marginBottom: '0.75rem' }}>Need a personalized answer right now?</h2>
             <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '1.5rem' }}>
@@ -66,7 +94,7 @@ export default function CareGuides() {
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <Link href="/tank-checker" className="btn-primary">Check My Tank</Link>
-              <Link href="/water-chemistry" className="btn-outline">Analyze My Water</Link>
+              <Link href="/water-chemistry" className="btn-outline">Test My Water</Link>
             </div>
           </div>
         </div>
@@ -76,7 +104,7 @@ export default function CareGuides() {
         <p>🐟 Pond Pal — Friendly fish care, powered by AI</p>
         <p style={{ marginTop: '0.75rem' }}>
           <Link href="/tank-checker" style={{ color: 'rgba(255,255,255,0.6)' }}>Tank Checker</Link>{' · '}
-          <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Chemistry</Link>{' · '}
+          <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Testing</Link>{' · '}
           <Link href="/care-guides" style={{ color: 'rgba(255,255,255,0.6)' }}>Care Guides</Link>{' · '}
           <Link href="/about" style={{ color: 'rgba(255,255,255,0.6)' }}>About</Link>{' · '}
           <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)' }}>Contact</Link>
@@ -88,7 +116,7 @@ export default function CareGuides() {
         </p>
         <p style={{ marginTop: '1rem', fontSize: '11px', opacity: 0.5 }}>
           General guidance only. Always consult a vet for health concerns.
-          Some links may be affiliate links — this helps keep Pond Pal free!
+          As an Amazon Associate, Pond Pal earns from qualifying purchases.
         </p>
       </footer>
     </>

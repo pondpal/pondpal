@@ -2,6 +2,11 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 
+const affiliateProducts = [
+  { name: 'API Master Test Kit', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20', desc: 'Test your water after any tank change' },
+  { name: 'Seachem Prime', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20', desc: 'Essential water conditioner for koi' },
+]
+
 export default function TankChecker() {
   const [form, setForm] = useState({
     tankType: 'Outdoor Pond',
@@ -42,13 +47,14 @@ export default function TankChecker() {
       <Head>
         <title>Tank Size Checker — Pond Pal</title>
         <meta name="description" content="Is your tank big enough for your koi? Find out instantly with Pond Pal's free AI-powered tank size checker." />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <nav className="nav">
         <Link href="/" className="nav-logo">🐟 Pond<span style={{ color: '#f4833d' }}>Pal</span></Link>
         <ul className="nav-links">
           <li><Link href="/tank-checker">Tank Checker</Link></li>
-          <li><Link href="/water-chemistry">Water Chemistry</Link></li>
+          <li><Link href="/water-chemistry">Water Testing</Link></li>
           <li><Link href="/care-guides">Care Guides</Link></li>
           <li><Link href="/about">About</Link></li>
           <li><Link href="/contact">Contact</Link></li>
@@ -119,8 +125,24 @@ export default function TankChecker() {
             </div>
           )}
 
-          <div style={{ marginTop: '2rem', padding: '1.25rem', background: '#fff', borderRadius: '14px', border: '1px solid rgba(0,0,0,0.07)', fontSize: '13px', color: '#5a7a82' }}>
-            <strong style={{ color: '#1a2e35' }}>💡 Did you know?</strong> The standard rule of thumb for koi is 250 gallons per fish — but that's really a minimum. A well-filtered pond with good aeration can support slightly higher stocking, while a basic setup may need more space per fish. Pond Pal takes all of this into account!
+          {result && (
+            <div style={{ marginTop: '1.5rem', background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.07)' }}>
+              <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '1rem' }}>🛒 Products you might need</p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                {affiliateProducts.map((p, i) => (
+                  <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>
+                    <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '2px' }}>{p.name}</p>
+                    <p style={{ fontSize: '11px', color: '#5a7a82' }}>{p.desc}</p>
+                    <p style={{ fontSize: '11px', color: '#1a9e8e', marginTop: '4px' }}>View on Amazon →</p>
+                  </a>
+                ))}
+              </div>
+              <p style={{ fontSize: '10px', color: '#5a7a82', marginTop: '0.75rem' }}>As an Amazon Associate, Pond Pal earns from qualifying purchases.</p>
+            </div>
+          )}
+
+          <div style={{ marginTop: '1.5rem', padding: '1.25rem', background: '#fff', borderRadius: '14px', border: '1px solid rgba(0,0,0,0.07)', fontSize: '13px', color: '#5a7a82' }}>
+            <strong style={{ color: '#1a2e35' }}>💡 Did you know?</strong> The standard rule of thumb for koi is 250 gallons per fish — but that's really a minimum. A well-filtered pond with good aeration can support slightly higher stocking, while a basic setup may need more space per fish.
           </div>
         </div>
       </div>
@@ -129,7 +151,7 @@ export default function TankChecker() {
         <p>🐟 Pond Pal — Friendly fish care, powered by AI</p>
         <p style={{ marginTop: '0.75rem' }}>
           <Link href="/tank-checker" style={{ color: 'rgba(255,255,255,0.6)' }}>Tank Checker</Link>{' · '}
-          <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Chemistry</Link>{' · '}
+          <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Testing</Link>{' · '}
           <Link href="/care-guides" style={{ color: 'rgba(255,255,255,0.6)' }}>Care Guides</Link>{' · '}
           <Link href="/about" style={{ color: 'rgba(255,255,255,0.6)' }}>About</Link>{' · '}
           <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)' }}>Contact</Link>
@@ -141,7 +163,7 @@ export default function TankChecker() {
         </p>
         <p style={{ marginTop: '1rem', fontSize: '11px', opacity: 0.5 }}>
           General guidance only. Always consult a vet for health concerns.
-          Some links may be affiliate links — this helps keep Pond Pal free!
+          As an Amazon Associate, Pond Pal earns from qualifying purchases.
         </p>
       </footer>
     </>

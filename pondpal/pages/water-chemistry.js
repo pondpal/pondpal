@@ -2,7 +2,14 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 
-export default function WaterChemistry() {
+const affiliateProducts = [
+  { name: 'API Master Test Kit', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20', desc: 'Most trusted freshwater test kit' },
+  { name: 'Seachem Prime', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20', desc: 'Detoxifies ammonia instantly' },
+  { name: 'API Pond Master Test Kit', url: 'https://www.amazon.com/dp/B0002IHNUO?tag=pondpal20-20', desc: 'Designed specifically for ponds' },
+  { name: 'Red Sea Marine Test Kit', url: 'https://www.amazon.com/dp/B001E4EWOE?tag=pondpal20-20', desc: 'Best all-in-one for saltwater' },
+]
+
+export default function WaterTesting() {
   const [tankType, setTankType] = useState('freshwater')
   const [showAdvanced, setShowAdvanced] = useState(false)
   const [form, setForm] = useState({
@@ -74,18 +81,23 @@ export default function WaterChemistry() {
     letterSpacing: '0.5px', marginBottom: '5px'
   }
 
+  const relevantProducts = tankType === 'saltwater'
+    ? affiliateProducts.filter(p => p.name.includes('Red Sea') || p.name.includes('Prime'))
+    : affiliateProducts.filter(p => !p.name.includes('Red Sea'))
+
   return (
     <>
       <Head>
-        <title>Water Chemistry Analyzer - Pond Pal</title>
-        <meta name="description" content="Enter your fish tank or pond water test results and get instant AI-powered diagnosis and exact treatment recommendations for freshwater and saltwater setups." />
+        <title>Water Testing Analyzer — Pond Pal</title>
+        <meta name="description" content="Enter your koi pond or aquarium water test results and get instant AI-powered diagnosis and exact treatment recommendations for freshwater and saltwater setups." />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <nav className="nav">
         <Link href="/" className="nav-logo">🐟 Pond<span style={{ color: '#f4833d' }}>Pal</span></Link>
         <ul className="nav-links">
           <li><Link href="/tank-checker">Tank Checker</Link></li>
-          <li><Link href="/water-chemistry">Water Chemistry</Link></li>
+          <li><Link href="/water-chemistry">Water Testing</Link></li>
           <li><Link href="/care-guides">Care Guides</Link></li>
           <li><Link href="/about">About</Link></li>
           <li><Link href="/contact">Contact</Link></li>
@@ -93,8 +105,8 @@ export default function WaterChemistry() {
       </nav>
 
       <div className="tool-hero">
-        <h1>Water Chemistry Analyzer</h1>
-        <p>Enter your test kit readings and we will diagnose any issues and tell you exactly how to fix them</p>
+        <h1>🧪 Water Testing Analyzer</h1>
+        <p>Enter your test kit readings and we'll diagnose any issues and tell you exactly how to fix them</p>
       </div>
 
       <div className="tool-form-section">
@@ -129,7 +141,7 @@ export default function WaterChemistry() {
           <div className="form-card">
             <h2>Your Water Readings</h2>
             <p style={{ fontSize: '13px', color: '#5a7a82', marginBottom: '1.25rem' }}>
-              Enter whatever readings you have from your test kit. Leave anything blank that you have not tested yet. Even just one or two readings can help!
+              Enter whatever readings you have from your test kit. Leave anything blank that you haven't tested yet. Even just one or two readings can help!
             </p>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '1rem' }}>
@@ -152,13 +164,13 @@ export default function WaterChemistry() {
               }}
             >
               <span>{showAdvanced ? 'v' : '>'}</span>
-              {showAdvanced ? 'Hide advanced readings' : 'I have more readings to add (KH, GH, salinity, etc.)'}
+              {showAdvanced ? 'Hide advanced readings' : "I have more readings to add (KH, GH, salinity, etc.)"}
             </div>
 
             {showAdvanced && (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginTop: '1rem', marginBottom: '1rem', padding: '1rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)' }}>
                 <p style={{ gridColumn: '1 / -1', fontSize: '12px', color: '#5a7a82', marginBottom: '4px' }}>
-                  These readings give us a more complete picture. Do not worry if you do not have them all!
+                  These readings give us a more complete picture. Don't worry if you don't have them all!
                 </p>
                 {advancedFields.map(f => (
                   <div key={f.key}>
@@ -178,8 +190,7 @@ export default function WaterChemistry() {
               </div>
               <div>
                 <label style={labelStyle}>Last Water Change</label>
-                <select value={form.lastChange} onChange={e => set('lastChange', e.target.value)}
-                  style={{ ...inputStyle }}>
+                <select value={form.lastChange} onChange={e => set('lastChange', e.target.value)} style={inputStyle}>
                   <option>Today</option>
                   <option>3 days ago</option>
                   <option>1 week ago</option>
@@ -190,7 +201,7 @@ export default function WaterChemistry() {
             </div>
 
             <button className="submit-btn" onClick={analyze} disabled={loading}>
-              {loading ? 'Diagnosing your water...' : 'Analyze My Water'}
+              {loading ? 'Diagnosing your water...' : 'Analyze My Water 🧪'}
             </button>
             <p style={{ fontSize: '11px', color: '#5a7a82', textAlign: 'center', marginTop: '0.75rem' }}>
               Always verify with a physical test kit. This is guidance only, not veterinary advice.
@@ -198,19 +209,35 @@ export default function WaterChemistry() {
           </div>
 
           {(loading || result) && (
-            <div className={'result-area ' + (loading ? 'loading ' : '') + 'visible'}>
+            <div className={`result-area ${loading ? 'loading' : ''} visible`}>
               {loading
-                ? 'Pond Pal is analyzing your water chemistry...'
+                ? '🧪 Pond Pal is analyzing your water...'
                 : <div dangerouslySetInnerHTML={{ __html: result.replace(/\n/g, '<br/>') }} />
               }
             </div>
           )}
 
-          <div style={{ marginTop: '2rem', padding: '1.25rem', background: '#fff', borderRadius: '14px', border: '1px solid rgba(0,0,0,0.07)', fontSize: '13px', color: '#5a7a82' }}>
-            <strong style={{ color: '#1a2e35' }}>New to water testing?</strong>
+          {result && (
+            <div style={{ marginTop: '1.5rem', background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.07)' }}>
+              <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '1rem' }}>🛒 Recommended test kits and treatments</p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                {relevantProducts.map((p, i) => (
+                  <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>
+                    <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '2px' }}>{p.name}</p>
+                    <p style={{ fontSize: '11px', color: '#5a7a82' }}>{p.desc}</p>
+                    <p style={{ fontSize: '11px', color: '#1a9e8e', marginTop: '4px' }}>View on Amazon →</p>
+                  </a>
+                ))}
+              </div>
+              <p style={{ fontSize: '10px', color: '#5a7a82', marginTop: '0.75rem' }}>As an Amazon Associate, Pond Pal earns from qualifying purchases.</p>
+            </div>
+          )}
+
+          <div style={{ marginTop: '1.5rem', padding: '1.25rem', background: '#fff', borderRadius: '14px', border: '1px solid rgba(0,0,0,0.07)', fontSize: '13px', color: '#5a7a82' }}>
+            <strong style={{ color: '#1a2e35' }}>🧪 New to water testing?</strong>
             {tankType === 'saltwater'
-              ? ' For saltwater tanks we recommend the Red Sea Reef Foundation test kit — a great all-in-one solution covering the most important parameters.'
-              : ' We recommend the API Master Test Kit — it covers pH, ammonia, nitrite, and nitrate all in one box and is the most trusted kit among freshwater and koi keepers. Available at most pet stores or online.'
+              ? ' For saltwater tanks we recommend the Red Sea Reef Foundation test kit — a great all-in-one solution.'
+              : " We recommend the API Master Test Kit — it covers pH, ammonia, nitrite, and nitrate all in one box and it's the most trusted kit among koi keepers."
             }
           </div>
         </div>
@@ -220,7 +247,7 @@ export default function WaterChemistry() {
         <p>🐟 Pond Pal — Friendly fish care, powered by AI</p>
         <p style={{ marginTop: '0.75rem' }}>
           <Link href="/tank-checker" style={{ color: 'rgba(255,255,255,0.6)' }}>Tank Checker</Link>{' · '}
-          <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Chemistry</Link>{' · '}
+          <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Testing</Link>{' · '}
           <Link href="/care-guides" style={{ color: 'rgba(255,255,255,0.6)' }}>Care Guides</Link>{' · '}
           <Link href="/about" style={{ color: 'rgba(255,255,255,0.6)' }}>About</Link>{' · '}
           <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)' }}>Contact</Link>
@@ -232,7 +259,7 @@ export default function WaterChemistry() {
         </p>
         <p style={{ marginTop: '1rem', fontSize: '11px', opacity: 0.5 }}>
           General guidance only. Always consult a vet for health concerns.
-          Some links may be affiliate links — this helps keep Pond Pal free!
+          As an Amazon Associate, Pond Pal earns from qualifying purchases.
         </p>
       </footer>
     </>
