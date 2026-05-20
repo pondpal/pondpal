@@ -10,19 +10,6 @@ export default function AmmoniaSpike() {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
-      <nav className="nav">
-        <Link href="/" className="nav-logo">🐟 Pond<span style={{ color: '#f4833d' }}>Pal</span></Link>
-        <ul className="nav-links">
-          <li><Link href="/tank-checker">Tank Checker</Link></li>
-          <li><Link href="/water-chemistry">Water Testing</Link></li>
-          <li><Link href="/care-guides">Care Guides</Link></li>
-          <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/about">About</Link></li>
-          <li><Link href="/contact">Contact</Link></li>
-          <li><Link href="/search" style={{ fontSize: '18px' }}>🔍</Link></li>
-        </ul>
-      </nav>
-
       <div className="tool-hero" style={{ background: 'linear-gradient(135deg, #3d0a0a 0%, #6b1a1a 50%, #8b2a2a 100%)' }}>
         <h1>Koi Pond Ammonia Spike</h1>
         <p>Causes, dangers, and how to fix it fast before you lose fish</p>

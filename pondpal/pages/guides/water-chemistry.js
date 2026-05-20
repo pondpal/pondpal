@@ -40,19 +40,6 @@ export default function WaterChemistryGuide() {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
-      <nav className="nav">
-        <Link href="/" className="nav-logo">🐟 Pond<span style={{ color: '#f4833d' }}>Pal</span></Link>
-        <ul className="nav-links">
-          <li><Link href="/tank-checker">Tank Checker</Link></li>
-          <li><Link href="/water-chemistry">Water Testing</Link></li>
-          <li><Link href="/care-guides">Care Guides</Link></li>
-          <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/about">About</Link></li>
-          <li><Link href="/contact">Contact</Link></li>
-          <li><Link href="/search" style={{ fontSize: '18px' }}>🔍</Link></li>
-        </ul>
-      </nav>
-
       <div className="tool-hero">
         <h1>Understanding Water Chemistry</h1>
         <p>What the numbers on your test kit actually mean — and what to do about them</p>

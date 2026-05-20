@@ -19,19 +19,6 @@ export default function FiltrationGuide() {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
-      <nav className="nav">
-        <Link href="/" className="nav-logo">🐟 Pond<span style={{ color: '#f4833d' }}>Pal</span></Link>
-        <ul className="nav-links">
-          <li><Link href="/tank-checker">Tank Checker</Link></li>
-          <li><Link href="/water-chemistry">Water Testing</Link></li>
-          <li><Link href="/care-guides">Care Guides</Link></li>
-          <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/about">About</Link></li>
-          <li><Link href="/contact">Contact</Link></li>
-          <li><Link href="/search" style={{ fontSize: '18px' }}>🔍</Link></li>
-        </ul>
-      </nav>
-
       <div className="tool-hero">
         <h1>Advanced Filtration Systems</h1>
         <p>Gravity filters, bead filters, UV sterilizers — what they are and which is right for your pond</p>
