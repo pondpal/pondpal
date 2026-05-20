@@ -1,13 +1,31 @@
 import Head from 'next/head'
 import Link from 'next/link'
 
+function ProductGrid({ items, title }) {
+  return (
+    <div style={{ background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.07)', margin: '1.5rem 0' }}>
+      <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '1rem' }}>🛒 {title}</p>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+        {items.map((p, i) => (
+          <a key={i} href={p.url} target="_blank" rel="noopener noreferrer"
+            style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>
+            <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '2px' }}>{p.name}</p>
+            <p style={{ fontSize: '11px', color: '#5a7a82' }}>{p.desc}</p>
+            <p style={{ fontSize: '11px', color: '#1a9e8e', marginTop: '4px' }}>View on Amazon →</p>
+          </a>
+        ))}
+      </div>
+      <p style={{ fontSize: '10px', color: '#5a7a82', marginTop: '0.75rem' }}>As an Amazon Associate, Pond Pal earns from qualifying purchases.</p>
+    </div>
+  )
+}
+
 const sections = [
   { emoji: '🍽️', title: 'The golden rule of koi feeding', content: `When it comes to feeding koi, less is almost always better. Overfeeding is one of the most common mistakes new koi keepers make, and it causes a cascade of problems — uneaten food decomposes and spikes ammonia, excess nutrients fuel algae blooms, and overfed koi can develop liver and digestive issues over time.\n\nThe standard guideline is to feed only what your koi can consume within 5 minutes, then remove any uneaten food. In practice, you should see your fish actively competing for food. If food is sinking to the bottom untouched, you're feeding too much.` },
-  { emoji: '🌡️', title: 'Temperature dictates everything', content: `A koi's metabolism is tied directly to water temperature, which means temperature determines what you feed, how much you feed, and whether you feed at all.\n\nAbove 65°F: feed a quality staple or growth food 2–3 times daily. This is when koi grow fastest and build body condition.\n\n55–65°F: switch to a wheat germ based food, which is lower in protein and much easier to digest in cooler water. Feed once daily, small amounts.\n\n50–55°F: feed wheat germ every 2–3 days, very small portions. Watch for uneaten food carefully.\n\nBelow 50°F: stop feeding entirely. Koi cannot properly digest food at this temperature, and undigested food sitting in their gut over winter can cause serious internal damage and even death. They will not starve — they survive on stored body fat.` },
-  { emoji: '🥗', title: 'Understanding koi food types', content: `Staple food is your everyday feeding option — a balanced pellet designed to meet koi's nutritional needs during normal activity. Look for a protein content of 30–36% from quality sources like fish meal or shrimp meal.\n\nWheat germ food is lower in protein (around 20–25%) and higher in easily digestible carbohydrates. Essential for spring and autumn feeding when temperatures are cooler. Some keepers use wheat germ year-round for less intensive feeding.\n\nGrowth or color-enhancing foods are higher in protein (38–42%) and often contain color enhancers like spirulina or astaxanthin that bring out orange and red pigments. Best used in summer when koi are actively growing. Don't feed these in cooler weather.\n\nTreats and supplements include silkworm pupae, shrimp, watermelon, and orange slices. These are enjoyable enrichment for your fish but should not make up more than 10% of their diet. Avoid feeding bread, crackers, or high-carbohydrate human food.` },
-  { emoji: '📏', title: 'How much to feed', content: `As a starting guideline, feed 1–2% of your koi's total body weight per day in summer. For a pond with 10 fish averaging 12 inches and roughly 1.5 pounds each, that's about 2.25–4.5 ounces of food daily — less than you might think.\n\nThe 5-minute rule is more practical than trying to calculate body weight: offer a small handful of food, watch your fish eat, and stop when they lose interest or food starts sinking to the bottom. You'll quickly develop an intuition for your specific pond.\n\nFeed multiple small meals rather than one large feeding. Two or three small feedings daily is better than one large one — it reduces ammonia spikes and is closer to how fish eat naturally. Morning and evening feedings are a natural routine that most keepers find works well.` },
-  { emoji: '📅', title: 'Seasonal feeding calendar', content: `Spring (water above 50°F, below 65°F): wheat germ food, once daily, small amounts. Gradually increase as temperatures rise. Switch to staple food once consistently above 65°F.\n\nSummer (65°F and above): staple or growth food, 2–3 times daily. This is peak feeding season. Monitor water quality closely as feeding frequency increases.\n\nAutumn (dropping below 65°F): begin transitioning back to wheat germ. Reduce feeding frequency as temperatures drop. By the time you're consistently below 55°F, feed only every 2–3 days.\n\nWinter (below 50°F): no feeding. None. Not even a little. Resist the temptation when you see your koi looking up at you hopefully — they're not hungry, they're just reacting to movement.` },
-  { emoji: '🚫', title: 'Foods to never feed koi', content: `Bread and crackers: high in starch and gluten, which koi cannot properly digest. They expand in the gut and can cause bloating and constipation.\n\nPork, beef, and most mammal-based meats: koi are not designed to digest mammal fats and proteins. These can cause serious digestive issues.\n\nCitrus fruits: the acidity can irritate koi's digestive systems. Oranges are a borderline exception in small amounts, but most citrus should be avoided.\n\nAnything with added salt, seasoning, or preservatives: human-processed foods contain additives that are harmful to fish.\n\nWild-caught insects from pesticide-treated areas: can introduce toxins into your pond.\n\nStick to quality koi-specific foods as your base and offer only known-safe treats in moderation.` },
+  { emoji: '🌡️', title: 'Temperature dictates everything', content: `A koi's metabolism is tied directly to water temperature, which means temperature determines what you feed, how much you feed, and whether you feed at all.\n\nAbove 65°F: feed a quality staple or growth food 2–3 times daily. This is when koi grow fastest and build body condition.\n\n55–65°F: switch to a wheat germ based food, which is lower in protein and much easier to digest in cooler water. Feed once daily, small amounts.\n\n50–55°F: feed wheat germ every 2–3 days, very small portions.\n\nBelow 50°F: stop feeding entirely. Koi cannot properly digest food at this temperature, and undigested food sitting in their gut over winter can cause serious internal damage and even death.` },
+  { emoji: '🥗', title: 'Understanding koi food types', content: `Staple food is your everyday feeding option — a balanced pellet designed to meet koi's nutritional needs during normal activity. Look for a protein content of 30–36% from quality sources like fish meal or shrimp meal.\n\nWheat germ food is lower in protein (around 20–25%) and higher in easily digestible carbohydrates. Essential for spring and autumn feeding when temperatures are cooler.\n\nGrowth or color-enhancing foods are higher in protein (38–42%) and often contain color enhancers like spirulina or astaxanthin that bring out orange and red pigments. Best used in summer when koi are actively growing.\n\nTreats and supplements include silkworm pupae, shrimp, watermelon, and orange slices. These are enjoyable enrichment but should not make up more than 10% of their diet.` },
+  { emoji: '📅', title: 'Seasonal feeding calendar', content: `Spring (water above 50°F, below 65°F): wheat germ food, once daily, small amounts. Gradually increase as temperatures rise. Switch to staple food once consistently above 65°F.\n\nSummer (65°F and above): staple or growth food, 2–3 times daily. Monitor water quality closely as feeding frequency increases.\n\nAutumn (dropping below 65°F): begin transitioning back to wheat germ. Reduce feeding frequency as temperatures drop. By the time you're consistently below 55°F, feed only every 2–3 days.\n\nWinter (below 50°F): no feeding. None. Not even a little.` },
+  { emoji: '🚫', title: 'Foods to never feed koi', content: `Bread and crackers: high in starch and gluten, which koi cannot properly digest. They expand in the gut and can cause bloating and constipation.\n\nPork, beef, and most mammal-based meats: koi are not designed to digest mammal fats and proteins.\n\nCitrus fruits: the acidity can irritate koi's digestive systems.\n\nAnything with added salt, seasoning, or preservatives: human-processed foods contain additives that are harmful to fish.\n\nStick to quality koi-specific foods as your base and offer only known-safe treats in moderation.` },
 ]
 
 export default function FeedingGuide() {
@@ -16,14 +34,16 @@ export default function FeedingGuide() {
       <Head>
         <title>Feeding Your Koi Right — Pond Pal</title>
         <meta name="description" content="What to feed koi, how much, how often, and how feeding changes with the seasons. A complete koi feeding guide for all experience levels." />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
       <nav className="nav">
         <Link href="/" className="nav-logo">🐟 Pond<span style={{ color: '#f4833d' }}>Pal</span></Link>
         <ul className="nav-links">
           <li><Link href="/tank-checker">Tank Checker</Link></li>
-          <li><Link href="/water-chemistry">Water Chemistry</Link></li>
+          <li><Link href="/water-chemistry">Water Testing</Link></li>
           <li><Link href="/care-guides">Care Guides</Link></li>
+          <li><Link href="/blog">Blog</Link></li>
           <li><Link href="/about">About</Link></li>
           <li><Link href="/contact">Contact</Link></li>
         </ul>
@@ -52,7 +72,37 @@ export default function FeedingGuide() {
           </div>
         ))}
 
-        <div style={{ background: '#062d3a', borderRadius: '14px', padding: '2rem', marginTop: '2rem', textAlign: 'center' }}>
+        <ProductGrid
+          title="Our recommended koi foods"
+          items={[
+            { name: 'Hikari Staple Koi Food', desc: 'Best everyday summer staple', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
+            { name: 'Hikari Wheat Germ Koi Food', desc: 'Essential cool weather formula', url: 'https://www.amazon.com/dp/B0002DHYDI?tag=pondpal20-20' },
+            { name: 'Hikari Gold Koi Food', desc: 'Premium summer color enhancer', url: 'https://www.amazon.com/dp/B0002562OY?tag=pondpal20-20' },
+            { name: 'Blue Ridge Wheat Germ', desc: 'Great value wheat germ food', url: 'https://www.amazon.com/dp/B002C026OY?tag=pondpal20-20' },
+          ]}
+        />
+
+        
+        <div style={{ background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.07)', marginBottom: '2rem' }}>
+          <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '1rem' }}>🛒 Recommended products for this guide</p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+            {[
+              { name: 'Hikari Staple Koi Food', desc: 'Best everyday summer koi food', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
+              { name: 'Hikari Wheat Germ Koi Food', desc: 'Essential cool weather formula', url: 'https://www.amazon.com/dp/B0002DHYDI?tag=pondpal20-20' },
+              { name: 'Hikari Gold Koi Food', desc: 'Premium color-enhancing summer food', url: 'https://www.amazon.com/dp/B0002562OY?tag=pondpal20-20' },
+              { name: 'Blue Ridge Wheat Germ', desc: 'Great value cool weather food', url: 'https://www.amazon.com/dp/B002C026OY?tag=pondpal20-20' },
+            ].map((p, i) => (
+              <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>
+                <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '2px' }}>{p.name}</p>
+                <p style={{ fontSize: '11px', color: '#5a7a82' }}>{p.desc}</p>
+                <p style={{ fontSize: '11px', color: '#1a9e8e', marginTop: '4px' }}>View on Amazon →</p>
+              </a>
+            ))}
+          </div>
+          <p style={{ fontSize: '10px', color: '#5a7a82', marginTop: '0.75rem' }}>As an Amazon Associate, Pond Pal earns from qualifying purchases.</p>
+        </div>
+
+        <div style={{ background: '#062d3a', borderRadius: '14px', padding: '2rem', textAlign: 'center' }}>
           <h3 style={{ color: '#fff', marginBottom: '0.75rem', fontSize: '1.2rem' }}>Is your water handling the feeding load?</h3>
           <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', marginBottom: '1.5rem' }}>More food means more waste. Check your water chemistry to make sure your pond is keeping up.</p>
           <Link href="/water-chemistry" className="btn-primary">Analyze My Water</Link>
@@ -64,23 +114,19 @@ export default function FeedingGuide() {
       </div>
 
       <footer className="footer">
-        <p>🐟 Pond Pal — Friendly fish care, powered by AI</p>
+        <p>🐟 Pond Pal — Friendly fish & aquarium care, powered by AI</p>
         <p style={{ marginTop: '0.75rem' }}>
           <Link href="/tank-checker" style={{ color: 'rgba(255,255,255,0.6)' }}>Tank Checker</Link>{' · '}
-          <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Chemistry</Link>{' · '}
+          <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Testing</Link>{' · '}
           <Link href="/care-guides" style={{ color: 'rgba(255,255,255,0.6)' }}>Care Guides</Link>{' · '}
-          <Link href="/about" style={{ color: 'rgba(255,255,255,0.6)' }}>About</Link>{' · '}
-          <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)' }}>Contact</Link>
+          <Link href="/blog" style={{ color: 'rgba(255,255,255,0.6)' }}>Blog</Link>
         </p>
         <p style={{ marginTop: '0.75rem' }}>
           <Link href="/privacy-policy" style={{ color: '#f4833d' }}>Privacy Policy</Link>{' · '}
           <Link href="/terms" style={{ color: '#f4833d' }}>Terms of Use</Link>{' · '}
           <Link href="/disclaimer" style={{ color: '#f4833d' }}>Disclaimer</Link>
         </p>
-        <p style={{ marginTop: '1rem', fontSize: '11px', opacity: 0.5 }}>
-          General guidance only. Always consult a vet for health concerns.
-          Some links may be affiliate links — this helps keep Pond Pal free!
-        </p>
+        <p style={{ marginTop: '1rem', fontSize: '11px', opacity: 0.5 }}>General guidance only. Always consult a vet for health concerns. As an Amazon Associate, Pond Pal earns from qualifying purchases.</p>
       </footer>
     </>
   )

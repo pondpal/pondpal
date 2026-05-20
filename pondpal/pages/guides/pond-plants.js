@@ -2,22 +2,20 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 const plants = [
-  { name: 'Water Hyacinth', emoji: '💜', type: 'Floating', difficulty: 'Easy', desc: 'One of the best plants you can add to a koi pond. Water hyacinth floats freely on the surface, trailing long roots that absorb nitrates and phosphates directly from the water — making it a natural filter. It grows rapidly in summer and produces beautiful purple flowers. Koi will nibble the roots but rarely destroy the plant entirely. Remove excess growth to prevent it blanketing the surface. Note: water hyacinth is invasive in warm climates and should never be released into natural waterways.' },
-  { name: 'Water Lettuce', emoji: '🥬', type: 'Floating', difficulty: 'Easy', desc: 'Similar to water hyacinth in its water-purifying abilities. Water lettuce forms rosettes of velvety pale green leaves and trailing roots that koi love to pick at. It provides excellent shade in summer, which helps reduce algae and keeps the pond cooler. Grows best in warm sheltered conditions. Like water hyacinth, it is invasive in warm climates and should be disposed of responsibly.' },
-  { name: 'Lotus', emoji: '🪷', type: 'Marginal', difficulty: 'Moderate', desc: 'The lotus is the crown jewel of pond plants. With enormous round leaves that repel water and stunning flowers in pink, white, and yellow, a lotus in full bloom is breathtaking. Koi generally leave lotus roots alone once established, though they may nibble young shoots. Lotus need full sun and warm temperatures to bloom and go dormant in winter in cooler climates. Plant in a large basket filled with clay soil and submerged to around 6 inches below the surface.' },
-  { name: 'Water Lily', emoji: '🌸', type: 'Submerged/Marginal', difficulty: 'Easy', desc: 'Water lilies are the most practical plant for koi ponds — their floating pads shade the water, reducing algae and providing shelter for fish. They are available in hardy varieties that survive freezing winters and tropical varieties for warmer climates. Koi will eat water lily pads, which can frustrate keepers, but established plants usually produce leaves faster than the fish can consume them. Plant in baskets at a depth where leaves float on the surface.' },
-  { name: 'Hornwort', emoji: '🌿', type: 'Submerged', difficulty: 'Very Easy', desc: 'Hornwort is a fully submerged oxygenating plant that grows rapidly and absorbs nutrients from the water column. It provides excellent cover for small fish and a natural surface for beneficial bacteria. Koi may nibble hornwort but rarely eradicate it due to its fast growth rate. Simply drop bunches into the pond — no planting required. One of the most effective and low-maintenance pond plants available.' },
-  { name: 'Iris', emoji: '🌺', type: 'Marginal', difficulty: 'Easy', desc: 'Marginal irises planted around the edge or in shallow areas of the pond add height, structure, and seasonal color. Yellow flag iris and Louisiana iris are particularly well-suited to pond margins. Their roots help stabilize pond edges and absorb some nutrients from the water. Most iris varieties are unpalatable to koi, making them one of the more reliably unkibbled pond plants. They die back in winter and return reliably in spring.' },
-  { name: 'Pickerelweed', emoji: '🔵', type: 'Marginal', difficulty: 'Easy', desc: 'A native plant in many regions, pickerelweed thrives in shallow water and pond margins. It produces spikes of blue-purple flowers in summer that attract pollinators, making it an excellent choice for wildlife ponds. Koi generally leave pickerelweed alone. It spreads moderately and is easy to divide in spring to share with other pond keepers.' },
+  { name: 'Water Hyacinth', emoji: '💜', type: 'Floating', difficulty: 'Easy', desc: 'One of the best plants for a koi pond. Water hyacinth floats freely on the surface, trailing long roots that absorb nitrates and phosphates directly from the water — making it a natural filter. It grows rapidly in summer and produces beautiful purple flowers. Koi will nibble the roots but rarely destroy the plant entirely. Note: water hyacinth is invasive in warm climates and should never be released into natural waterways.' },
+  { name: 'Water Lettuce', emoji: '🥬', type: 'Floating', difficulty: 'Easy', desc: 'Similar to water hyacinth in its water-purifying abilities. Water lettuce forms rosettes of velvety pale green leaves and trailing roots that koi love to pick at. It provides excellent shade in summer, which helps reduce algae and keeps the pond cooler. Like water hyacinth, it is invasive in warm climates and should be disposed of responsibly.' },
+  { name: 'Lotus', emoji: '🪷', type: 'Marginal', difficulty: 'Moderate', desc: 'The lotus is the crown jewel of pond plants. With enormous round leaves that repel water and stunning flowers in pink, white, and yellow, a lotus in full bloom is breathtaking. Koi generally leave lotus roots alone once established, though they may nibble young shoots. Lotus need full sun and warm temperatures to bloom and go dormant in winter in cooler climates.' },
+  { name: 'Water Lily', emoji: '🌸', type: 'Submerged/Marginal', difficulty: 'Easy', desc: 'Water lilies are the most practical plant for koi ponds — their floating pads shade the water, reducing algae and providing shelter for fish. Available in hardy varieties that survive freezing winters and tropical varieties for warmer climates. Koi will eat water lily pads, which can frustrate keepers, but established plants usually produce leaves faster than the fish can consume them.' },
+  { name: 'Hornwort', emoji: '🌿', type: 'Submerged', difficulty: 'Very Easy', desc: 'Hornwort is a fully submerged oxygenating plant that grows rapidly and absorbs nutrients from the water column. It provides excellent cover for small fish and a natural surface for beneficial bacteria. Koi may nibble hornwort but rarely eradicate it due to its fast growth rate. Simply drop bunches into the pond — no planting required.' },
+  { name: 'Iris', emoji: '🌺', type: 'Marginal', difficulty: 'Easy', desc: 'Marginal irises planted around the edge or in shallow areas of the pond add height, structure, and seasonal color. Yellow flag iris and Louisiana iris are particularly well-suited to pond margins. Most iris varieties are unpalatable to koi, making them one of the more reliably unkibbled pond plants.' },
 ]
 
 const tips = [
-  'Plant in mesh baskets filled with heavy clay-based aquatic compost — never regular garden soil or peat, which will cloud your water.',
-  'Top baskets with pea gravel to stop koi rooting in the compost and disturbing the soil.',
-  'Aim for floating plants to cover 30–50% of the pond surface in summer — this shades the water, reduces algae, and provides refuge for fish.',
+  'Plant in mesh baskets filled with heavy clay-based aquatic compost — never regular garden soil which will cloud your water.',
+  "Top baskets with pea gravel to stop koi rooting in the compost and disturbing the soil.",
+  "Aim for floating plants to cover 30–50% of the pond surface in summer — this shades the water, reduces algae, and provides refuge for fish.",
   'Remove fading leaves and flowers promptly to prevent decomposition from adding nutrients back to the water.',
   'Divide plants every 2–3 years to keep them vigorous and prevent overcrowding.',
-  'In winter, bring tropical plants indoors or compost them. Hardy plants can remain in the pond.',
 ]
 
 export default function PondPlants() {
@@ -26,14 +24,16 @@ export default function PondPlants() {
       <Head>
         <title>Pond Plants That Help — Pond Pal</title>
         <meta name="description" content="The best plants for koi ponds — water hyacinth, lotus, water lily, and more. Which plants absorb nitrates, survive koi nibbling, and thrive in your pond." />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
       <nav className="nav">
         <Link href="/" className="nav-logo">🐟 Pond<span style={{ color: '#f4833d' }}>Pal</span></Link>
         <ul className="nav-links">
           <li><Link href="/tank-checker">Tank Checker</Link></li>
-          <li><Link href="/water-chemistry">Water Chemistry</Link></li>
+          <li><Link href="/water-chemistry">Water Testing</Link></li>
           <li><Link href="/care-guides">Care Guides</Link></li>
+          <li><Link href="/blog">Blog</Link></li>
           <li><Link href="/about">About</Link></li>
           <li><Link href="/contact">Contact</Link></li>
         </ul>
@@ -82,7 +82,26 @@ export default function PondPlants() {
           ))}
         </div>
 
-        <div style={{ background: '#062d3a', borderRadius: '14px', padding: '2rem', marginTop: '2rem', textAlign: 'center' }}>
+        <div style={{ background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.07)', marginBottom: '2rem' }}>
+          <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '1rem' }}>🛒 Recommended products for this guide</p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+            {[
+              { name: 'API Pond Master Test Kit', desc: 'See how plants improve your water quality', url: 'https://www.amazon.com/dp/B0002IHNUO?tag=pondpal20-20' },
+              { name: 'Seachem Prime', desc: 'Safe for fish and aquatic plants', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
+              { name: 'Hikari Staple Koi Food', desc: 'Less overfeeding means healthier plants', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
+              { name: 'Hikari Wheat Germ Koi Food', desc: 'Cool weather feeding reduces waste', url: 'https://www.amazon.com/dp/B0002DHYDI?tag=pondpal20-20' },
+            ].map((p, i) => (
+              <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>
+                <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '2px' }}>{p.name}</p>
+                <p style={{ fontSize: '11px', color: '#5a7a82' }}>{p.desc}</p>
+                <p style={{ fontSize: '11px', color: '#1a9e8e', marginTop: '4px' }}>View on Amazon →</p>
+              </a>
+            ))}
+          </div>
+          <p style={{ fontSize: '10px', color: '#5a7a82', marginTop: '0.75rem' }}>As an Amazon Associate, Pond Pal earns from qualifying purchases.</p>
+        </div>
+
+        <div style={{ background: '#062d3a', borderRadius: '14px', padding: '2rem', textAlign: 'center', marginBottom: '2rem' }}>
           <h3 style={{ color: '#fff', marginBottom: '0.75rem', fontSize: '1.2rem' }}>Adding plants to improve water quality?</h3>
           <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', marginBottom: '1.5rem' }}>Check your nitrate levels before and after — plants make a measurable difference!</p>
           <Link href="/water-chemistry" className="btn-primary">Analyze My Water</Link>
@@ -94,23 +113,19 @@ export default function PondPlants() {
       </div>
 
       <footer className="footer">
-        <p>🐟 Pond Pal — Friendly fish care, powered by AI</p>
+        <p>🐟 Pond Pal — Friendly fish & aquarium care, powered by AI</p>
         <p style={{ marginTop: '0.75rem' }}>
           <Link href="/tank-checker" style={{ color: 'rgba(255,255,255,0.6)' }}>Tank Checker</Link>{' · '}
-          <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Chemistry</Link>{' · '}
+          <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Testing</Link>{' · '}
           <Link href="/care-guides" style={{ color: 'rgba(255,255,255,0.6)' }}>Care Guides</Link>{' · '}
-          <Link href="/about" style={{ color: 'rgba(255,255,255,0.6)' }}>About</Link>{' · '}
-          <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)' }}>Contact</Link>
+          <Link href="/blog" style={{ color: 'rgba(255,255,255,0.6)' }}>Blog</Link>
         </p>
         <p style={{ marginTop: '0.75rem' }}>
           <Link href="/privacy-policy" style={{ color: '#f4833d' }}>Privacy Policy</Link>{' · '}
           <Link href="/terms" style={{ color: '#f4833d' }}>Terms of Use</Link>{' · '}
           <Link href="/disclaimer" style={{ color: '#f4833d' }}>Disclaimer</Link>
         </p>
-        <p style={{ marginTop: '1rem', fontSize: '11px', opacity: 0.5 }}>
-          General guidance only. Always consult a vet for health concerns.
-          Some links may be affiliate links — this helps keep Pond Pal free!
-        </p>
+        <p style={{ marginTop: '1rem', fontSize: '11px', opacity: 0.5 }}>General guidance only. Always consult a vet for health concerns. As an Amazon Associate, Pond Pal earns from qualifying purchases.</p>
       </footer>
     </>
   )
