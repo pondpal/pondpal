@@ -14,6 +14,7 @@ export default function Nav() {
     { href: '/blog', label: 'Blog' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
+    { href: '/faq', label: 'FAQ' },
     { href: '/search', label: '🔍 Search' },
   ]
 
@@ -24,6 +25,7 @@ export default function Nav() {
     { href: '/blog', label: 'Blog' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
+    { href: '/faq', label: 'FAQ' },
     { href: '/search', label: '🔍', title: 'Search' },
   ]
 
