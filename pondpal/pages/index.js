@@ -17,6 +17,7 @@ export default function Home() {
           <li><Link href="/tank-checker">Tank Checker</Link></li>
           <li><Link href="/water-chemistry">Water Testing</Link></li>
           <li><Link href="/care-guides">Care Guides</Link></li>
+          <li><Link href="/blog">Blog</Link></li>
           <li><Link href="/about">About</Link></li>
           <li><Link href="/contact">Contact</Link></li>
         </ul>
