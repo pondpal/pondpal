@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 const allContent = [
+  { title: 'Fish Keeping FAQ', desc: 'Quick answers to the most common fish keeping questions — koi, goldfish, bettas, water chemistry, tank setup, and more.', url: '/faq', category: 'Tool', emoji: '❓', tags: ['faq', 'questions', 'answers', 'help', 'koi', 'goldfish', 'betta', 'ammonia', 'tank', 'filter', 'cloudy', 'feeding', 'winter', 'cycle'] },
   // Tools
   { title: 'Tank Size Checker', desc: 'Find out if your tank or pond is big enough for your fish — works for koi, goldfish, bettas, cichlids, and saltwater setups.', url: '/tank-checker', category: 'Tool', emoji: '🏠', tags: ['tank', 'size', 'checker', 'aquarium', 'pond', 'koi', 'goldfish', 'betta', 'stocking'] },
   { title: 'Water Testing Analyzer', desc: 'Enter your test kit readings and get an instant AI diagnosis — pH, ammonia, nitrite, nitrate, and more.', url: '/water-chemistry', category: 'Tool', emoji: '🧪', tags: ['water', 'testing', 'chemistry', 'ph', 'ammonia', 'nitrite', 'nitrate', 'analyze', 'diagnosis'] },
