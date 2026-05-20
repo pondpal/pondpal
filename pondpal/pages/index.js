@@ -1,16 +1,16 @@
 import Head from 'next/head'
 import Link from 'next/link'
-
+ 
 export default function Home() {
   return (
     <>
       <Head>
         <title>Pond Pal — Friendly Koi & Aquarium Care, Powered by AI</title>
-        <meta name="description" content="Pond Pal helps koi and fish owners of all experience levels keep their fish healthy and their water perfect. Free AI-powered tank checker and water testing analyzer." />
+        <meta name="description" content="Pond Pal helps koi and fish owners of all experience levels keep their fish healthy and their water perfect. Free AI-powered tools, care guides, and more." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
-
+ 
       <nav className="nav">
         <Link href="/" className="nav-logo">🐟 Pond<span style={{ color: '#f4833d' }}>Pal</span></Link>
         <ul className="nav-links">
@@ -22,7 +22,7 @@ export default function Home() {
           <li><Link href="/contact">Contact</Link></li>
         </ul>
       </nav>
-
+ 
       <section className="hero">
         <span className="hero-fish">🐟</span>
         <h1>Your friendly <span>pond & fish</span> companion</h1>
@@ -35,7 +35,7 @@ export default function Home() {
           <Link href="/water-chemistry" className="btn-outline">Test My Water</Link>
         </div>
       </section>
-
+ 
       <section className="section" style={{ background: '#fff' }}>
         <div className="section-inner">
           <span className="section-tag">Free AI Tools</span>
@@ -46,7 +46,7 @@ export default function Home() {
               <div className="tool-card">
                 <span className="tool-icon">🏠</span>
                 <h3>Tank Size Checker</h3>
-                <p>Tell us your tank size, how many fish you have, and what kind of filter you're running. We'll let you know if your setup is a happy home for your koi.</p>
+                <p>Tell us your tank size, how many fish you have, and what filtration you're running. We'll let you know if your setup is a happy home for your koi.</p>
                 <span className="tool-link">Check my tank →</span>
               </div>
             </Link>
@@ -58,18 +58,42 @@ export default function Home() {
                 <span className="tool-link">Test my water →</span>
               </div>
             </Link>
+            <Link href="/tools/pond-calculator" style={{ textDecoration: 'none' }}>
+              <div className="tool-card">
+                <span className="tool-icon">🏊</span>
+                <h3>Pond Volume Calculator</h3>
+                <p>Enter your pond dimensions and instantly find out how many gallons you have — and how many koi your pond can support.</p>
+                <span className="tool-link">Calculate my pond →</span>
+              </div>
+            </Link>
+            <Link href="/tools/feeding-calculator" style={{ textDecoration: 'none' }}>
+              <div className="tool-card">
+                <span className="tool-icon">🍽️</span>
+                <h3>Feeding Calculator</h3>
+                <p>Tell us how many fish you have, their size, and the current season. We'll tell you exactly how much to feed and which food to use.</p>
+                <span className="tool-link">Calculate feeding →</span>
+              </div>
+            </Link>
+            <Link href="/tools/ask-pond-pal" style={{ textDecoration: 'none' }}>
+              <div className="tool-card">
+                <span className="tool-icon">💬</span>
+                <h3>Ask Pond Pal</h3>
+                <p>Have a question that doesn't fit the other tools? Ask our AI anything about koi, pond care, fish health, water chemistry, or anything fish related.</p>
+                <span className="tool-link">Ask a question →</span>
+              </div>
+            </Link>
             <Link href="/care-guides" style={{ textDecoration: 'none' }}>
               <div className="tool-card">
                 <span className="tool-icon">📖</span>
                 <h3>Care Guides</h3>
-                <p>From setting up your very first pond to advanced breeding tips — our friendly guides have you covered at every stage of your fish keeping journey.</p>
+                <p>From setting up your very first pond to advanced filtration systems — our friendly guides cover every stage of your fish keeping journey.</p>
                 <span className="tool-link">Read the guides →</span>
               </div>
             </Link>
           </div>
         </div>
       </section>
-
+ 
       <section className="section" style={{ background: '#fff', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
         <div className="section-inner">
           <span className="section-tag teal">Recommended Gear</span>
@@ -106,7 +130,7 @@ export default function Home() {
           </p>
         </div>
       </section>
-
+ 
       <section className="section how-section">
         <div className="section-inner">
           <span className="section-tag" style={{ background: 'rgba(244,131,61,0.2)', color: '#f4833d' }}>How It Works</span>
@@ -136,7 +160,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+ 
       <section className="section" style={{ background: 'var(--cream)' }}>
         <div className="section-inner">
           <span className="section-tag teal">Why Pond Pal?</span>
@@ -162,7 +186,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+ 
       <section className="section" style={{ background: 'var(--teal)', textAlign: 'center' }}>
         <div className="section-inner">
           <h2 style={{ color: '#fff', marginBottom: '1rem' }}>Ready to give your fish the best life possible?</h2>
@@ -172,17 +196,21 @@ export default function Home() {
           </Link>
         </div>
       </section>
-
+ 
       <footer className="footer">
         <p>🐟 Pond Pal — Friendly fish care, powered by AI</p>
         <p style={{ marginTop: '0.75rem' }}>
           <Link href="/tank-checker" style={{ color: 'rgba(255,255,255,0.6)' }}>Tank Checker</Link>{' · '}
           <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Testing</Link>{' · '}
+          <Link href="/tools/pond-calculator" style={{ color: 'rgba(255,255,255,0.6)' }}>Pond Calculator</Link>{' · '}
+          <Link href="/tools/feeding-calculator" style={{ color: 'rgba(255,255,255,0.6)' }}>Feeding Calculator</Link>{' · '}
+          <Link href="/tools/ask-pond-pal" style={{ color: 'rgba(255,255,255,0.6)' }}>Ask Pond Pal</Link>{' · '}
           <Link href="/care-guides" style={{ color: 'rgba(255,255,255,0.6)' }}>Care Guides</Link>{' · '}
-          <Link href="/about" style={{ color: 'rgba(255,255,255,0.6)' }}>About</Link>{' · '}
-          <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)' }}>Contact</Link>
+          <Link href="/blog" style={{ color: 'rgba(255,255,255,0.6)' }}>Blog</Link>
         </p>
         <p style={{ marginTop: '0.75rem' }}>
+          <Link href="/about" style={{ color: 'rgba(255,255,255,0.6)' }}>About</Link>{' · '}
+          <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)' }}>Contact</Link>{' · '}
           <Link href="/privacy-policy" style={{ color: '#f4833d' }}>Privacy Policy</Link>{' · '}
           <Link href="/terms" style={{ color: '#f4833d' }}>Terms of Use</Link>{' · '}
           <Link href="/disclaimer" style={{ color: '#f4833d' }}>Disclaimer</Link>
@@ -195,3 +223,4 @@ export default function Home() {
     </>
   )
 }
+ 
