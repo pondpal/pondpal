@@ -7,18 +7,9 @@ const affiliateProducts = [
   { name: 'Seachem Prime', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20', desc: 'Essential water conditioner' },
 ]
 
-const fishTypes = [
-  { value: 'koi', emoji: '🐠', label: 'Koi' },
-  { value: 'goldfish', emoji: '🐡', label: 'Goldfish' },
-  { value: 'tropical freshwater', emoji: '🌿', label: 'Tropical' },
-  { value: 'betta', emoji: '💜', label: 'Betta' },
-  { value: 'cichlid', emoji: '🐟', label: 'Cichlid' },
-  { value: 'saltwater marine', emoji: '🪸', label: 'Saltwater' },
-  { value: 'other freshwater', emoji: '💧', label: 'Other' },
-]
-
 export default function TankChecker() {
   const [form, setForm] = useState({
+    waterType: 'freshwater',
     fishType: 'koi',
     tankType: 'Outdoor Pond',
     gallons: '',
@@ -32,9 +23,47 @@ export default function TankChecker() {
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
 
-  const tankTypes = form.fishType === 'koi' || form.fishType === 'goldfish'
-    ? ['Outdoor Pond', 'Indoor Aquarium', 'Stock Tank / Tub', 'Raised Bed Pond']
-    : ['Indoor Aquarium', 'Outdoor Pond', 'Nano Tank', 'Planted Tank']
+  const freshwaterFish = [
+    { value: 'koi', label: 'Koi' },
+    { value: 'goldfish', label: 'Goldfish — Fancy' },
+    { value: 'common goldfish', label: 'Goldfish — Common / Comet' },
+    { value: 'betta', label: 'Betta Fish' },
+    { value: 'african cichlid', label: 'Cichlid — African (Malawi/Tanganyika)' },
+    { value: 'south american cichlid', label: 'Cichlid — South American' },
+    { value: 'oscar', label: 'Oscar' },
+    { value: 'tropical community fish', label: 'Tropical Community Fish' },
+    { value: 'guppies', label: 'Guppies / Livebearers' },
+    { value: 'tetras', label: 'Tetras' },
+    { value: 'angelfish', label: 'Angelfish' },
+    { value: 'discus', label: 'Discus' },
+    { value: 'corydoras', label: 'Corydoras / Bottom Dwellers' },
+    { value: 'pleco', label: 'Pleco / Suckermouth Fish' },
+    { value: 'other freshwater', label: 'Other Freshwater Fish' },
+  ]
+
+  const saltwaterFish = [
+    { value: 'clownfish', label: 'Clownfish' },
+    { value: 'chromis', label: 'Chromis / Damselfish' },
+    { value: 'tang', label: 'Tang / Surgeonfish' },
+    { value: 'angelfish marine', label: 'Marine Angelfish' },
+    { value: 'blenny', label: 'Blenny / Goby' },
+    { value: 'wrasse', label: 'Wrasse' },
+    { value: 'lionfish', label: 'Lionfish' },
+    { value: 'reef mixed', label: 'Mixed Reef Tank' },
+    { value: 'other saltwater', label: 'Other Saltwater Fish' },
+  ]
+
+  const fishOptions = form.waterType === 'saltwater' ? saltwaterFish : freshwaterFish
+
+  const tankTypes = form.waterType === 'saltwater'
+    ? ['Indoor Aquarium', 'Reef Tank', 'Nano Tank']
+    : form.fishType === 'koi' || form.fishType === 'goldfish' || form.fishType === 'common goldfish'
+      ? ['Outdoor Pond', 'Indoor Aquarium', 'Stock Tank / Tub', 'Raised Bed Pond']
+      : ['Indoor Aquarium', 'Nano Tank', 'Planted Tank', 'Outdoor Pond']
+
+  const filtrationOptions = form.waterType === 'saltwater'
+    ? ['Sump + Protein Skimmer', 'Hang On Back + Skimmer', 'Canister + Skimmer', 'Basic Hang On Back']
+    : ['Biological + Mechanical', 'Pressurized Canister', 'Hang On Back Filter', 'Sponge Filter', 'Pressurized Bead Filter', 'Basic Mechanical Only', 'None / Natural']
 
   const analyze = async () => {
     if (!form.gallons || !form.fishCount || !form.fishSize) {
@@ -57,11 +86,13 @@ export default function TankChecker() {
     setLoading(false)
   }
 
+  const labelStyle = { display: 'block', fontSize: '11px', fontWeight: 500, color: '#5a7a82', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '5px' }
+
   return (
     <>
       <Head>
         <title>Tank Size Checker — Is My Tank Big Enough? — Pond Pal</title>
-        <meta name="description" content="Find out instantly if your tank or pond is big enough for your fish. Works for koi, goldfish, tropical fish, bettas, cichlids, and saltwater setups." />
+        <meta name="description" content="Find out instantly if your tank or pond is big enough for your fish. Works for koi, goldfish, tropical fish, bettas, cichlids, saltwater setups and more." />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
@@ -85,29 +116,47 @@ export default function TankChecker() {
       <div className="tool-form-section">
         <div className="tool-form-inner">
           <div className="form-card">
-            <h2>What kind of fish do you keep?</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginTop: '1rem', marginBottom: '1.5rem' }}>
-              {fishTypes.map(f => (
-                <div
-                  key={f.value}
-                  onClick={() => set('fishType', f.value)}
-                  style={{
-                    padding: '0.75rem 0.5rem', borderRadius: '10px', textAlign: 'center', cursor: 'pointer',
-                    border: form.fishType === f.value ? '2px solid #1a9e8e' : '1px solid rgba(0,0,0,0.12)',
-                    background: form.fishType === f.value ? '#d4f0ec' : '#faf7f2',
-                    transition: 'all 0.2s'
+            <h2>Your Setup</h2>
+            <p style={{ fontSize: '13px', color: '#5a7a82', marginBottom: '1.25rem' }}>
+              Tell us about your water type, fish, and tank — we'll do the rest!
+            </p>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '1rem' }}>
+              <div>
+                <label style={labelStyle}>Water Type</label>
+                <select
+                  value={form.waterType}
+                  onChange={e => {
+                    const wt = e.target.value
+                    const defaultFish = wt === 'saltwater' ? 'clownfish' : 'koi'
+                    setForm(f => ({ ...f, waterType: wt, fishType: defaultFish }))
+                    setResult('')
                   }}
+                  className="fg"
+                  style={{ width: '100%', height: '40px', padding: '0 12px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: '8px', fontSize: '14px', fontFamily: 'inherit', color: '#1a2e35', background: '#faf7f2' }}
                 >
-                  <div style={{ fontSize: '20px', marginBottom: '4px' }}>{f.emoji}</div>
-                  <div style={{ fontSize: '11px', fontWeight: 500, color: '#1a2e35' }}>{f.label}</div>
-                </div>
-              ))}
+                  <option value="freshwater">🌿 Freshwater</option>
+                  <option value="saltwater">🪸 Saltwater / Marine</option>
+                </select>
+              </div>
+
+              <div>
+                <label style={labelStyle}>Fish Type</label>
+                <select
+                  value={form.fishType}
+                  onChange={e => { set('fishType', e.target.value); setResult('') }}
+                  style={{ width: '100%', height: '40px', padding: '0 12px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: '8px', fontSize: '14px', fontFamily: 'inherit', color: '#1a2e35', background: '#faf7f2' }}
+                >
+                  {fishOptions.map(f => (
+                    <option key={f.value} value={f.value}>{f.label}</option>
+                  ))}
+                </select>
+              </div>
             </div>
 
-            <h2>Your Tank or Pond</h2>
             <div className="form-grid-2">
               <div className="fg">
-                <label>Tank Type</label>
+                <label>Tank / Pond Type</label>
                 <select value={form.tankType} onChange={e => set('tankType', e.target.value)}>
                   {tankTypes.map(t => <option key={t}>{t}</option>)}
                 </select>
@@ -127,13 +176,7 @@ export default function TankChecker() {
               <div className="fg">
                 <label>Filtration Type</label>
                 <select value={form.filtration} onChange={e => set('filtration', e.target.value)}>
-                  <option>Biological + Mechanical</option>
-                  <option>Basic Mechanical Only</option>
-                  <option>Pressurized Canister</option>
-                  <option>Pressurized Bead Filter</option>
-                  <option>Hang On Back Filter</option>
-                  <option>Sponge Filter</option>
-                  <option>None / Natural</option>
+                  {filtrationOptions.map(t => <option key={t}>{t}</option>)}
                 </select>
               </div>
               <div className="fg">
@@ -145,6 +188,7 @@ export default function TankChecker() {
                 </select>
               </div>
             </div>
+
             <button className="submit-btn" onClick={analyze} disabled={loading}>
               {loading ? 'Pond Pal is thinking...' : 'Check My Tank 🐟'}
             </button>
@@ -153,9 +197,8 @@ export default function TankChecker() {
           {(loading || result) && (
             <div className={`result-area ${loading ? 'loading' : ''} visible`}>
               {loading
-                ? '🐟 Pond Pal is analyzing your setup...'
-                : <div dangerouslySetInnerHTML={{ __html: result.replace(/\n/g, '<br/>') }} />
-              }
+                ? '🐟 Analyzing your setup...'
+                : <div dangerouslySetInnerHTML={{ __html: result.replace(/\n/g, '<br/>') }} />}
             </div>
           )}
 
@@ -164,7 +207,8 @@ export default function TankChecker() {
               <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '1rem' }}>🛒 Products you might need</p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                 {affiliateProducts.map((p, i) => (
-                  <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>
+                  <a key={i} href={p.url} target="_blank" rel="noopener noreferrer"
+                    style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>
                     <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '2px' }}>{p.name}</p>
                     <p style={{ fontSize: '11px', color: '#5a7a82' }}>{p.desc}</p>
                     <p style={{ fontSize: '11px', color: '#1a9e8e', marginTop: '4px' }}>View on Amazon →</p>
@@ -176,7 +220,7 @@ export default function TankChecker() {
           )}
 
           <div style={{ marginTop: '1.5rem', padding: '1.25rem', background: '#fff', borderRadius: '14px', border: '1px solid rgba(0,0,0,0.07)', fontSize: '13px', color: '#5a7a82' }}>
-            <strong style={{ color: '#1a2e35' }}>💡 General stocking guidelines:</strong> Koi need 250 gallons each, goldfish 20–30 gallons each, tropical fish roughly 1 inch of fish per gallon, and bettas do best alone in 5+ gallons. Our AI accounts for your specific fish type automatically!
+            <strong style={{ color: '#1a2e35' }}>💡 Stocking guidelines vary by species.</strong> Koi need 250 gallons each, fancy goldfish 20–30 gallons, bettas need at least 5 gallons alone, tropical fish roughly 1 inch per gallon, and marine fish need generous space. Our AI uses species-specific rules for every fish type!
           </div>
         </div>
       </div>
