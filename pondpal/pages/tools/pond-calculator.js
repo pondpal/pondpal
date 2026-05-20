@@ -230,7 +230,7 @@ export default function PondCalculator() {
       </div>
 
       <footer className="footer">
-        <p>🐟 Pond Pal — Friendly fish care, powered by AI</p>
+        <p>🐟 Pond Pal — Friendly fish & aquarium care, powered by AI</p>
         <p style={{ marginTop: '0.75rem' }}>
           <Link href="/tank-checker" style={{ color: 'rgba(255,255,255,0.6)' }}>Tank Checker</Link>{' · '}
           <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Testing</Link>{' · '}

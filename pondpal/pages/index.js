@@ -5,10 +5,10 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Pond Pal — Friendly Koi & Aquarium Care, Powered by AI</title>
-        <meta name="description" content="Pond Pal helps koi and fish owners of all experience levels keep their fish healthy and their water perfect. Free AI-powered tank checker and water testing analyzer." />
+        <title>Pond Pal — Friendly Fish & Aquarium Care, Powered by AI</title>
+        <meta name="description" content="Pond Pal helps koi, goldfish, tropical fish, and aquarium owners of all experience levels keep their fish healthy and their water perfect. Free AI-powered tools and care guides." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
       <nav className="nav">
@@ -17,6 +17,7 @@ export default function Home() {
           <li><Link href="/tank-checker">Tank Checker</Link></li>
           <li><Link href="/water-chemistry">Water Testing</Link></li>
           <li><Link href="/care-guides">Care Guides</Link></li>
+          <li><Link href="/blog">Blog</Link></li>
           <li><Link href="/about">About</Link></li>
           <li><Link href="/contact">Contact</Link></li>
         </ul>
@@ -24,9 +25,9 @@ export default function Home() {
 
       <section className="hero">
         <span className="hero-fish">🐟</span>
-        <h1>Your friendly <span>pond & fish</span> companion</h1>
+        <h1>Your friendly <span>fish & aquarium</span> companion</h1>
         <p className="hero-sub">
-          Whether you're setting up your very first tank or you've been keeping koi for decades —
+          Whether you keep koi, goldfish, tropical fish, or a saltwater reef —
           Pond Pal is here to help. Free AI-powered tools, plain English advice, no jargon.
         </p>
         <div className="hero-btns">
@@ -38,14 +39,14 @@ export default function Home() {
       <section className="section" style={{ background: '#fff' }}>
         <div className="section-inner">
           <span className="section-tag">Free AI Tools</span>
-          <h2>Everything your pond needs, in one place</h2>
+          <h2>Everything your tank or pond needs, in one place</h2>
           <p className="section-lead">Just answer a few questions and our AI gives you clear, friendly answers — no fish degree required!</p>
           <div className="tools-grid">
             <Link href="/tank-checker" style={{ textDecoration: 'none' }}>
               <div className="tool-card">
                 <span className="tool-icon">🏠</span>
                 <h3>Tank Size Checker</h3>
-                <p>Tell us your tank size, how many fish you have, and what kind of filter you're running. We'll let you know if your setup is a happy home for your koi.</p>
+                <p>Tell us your tank size, fish type, how many fish you have, and your filtration. We'll let you know if your setup is a happy home for your fish.</p>
                 <span className="tool-link">Check my tank →</span>
               </div>
             </Link>
@@ -53,15 +54,39 @@ export default function Home() {
               <div className="tool-card">
                 <span className="tool-icon">🧪</span>
                 <h3>Water Testing Analyzer</h3>
-                <p>Enter your test kit readings — pH, ammonia, nitrite, nitrate and more. Our AI diagnoses any issues and tells you exactly what to do to fix them.</p>
+                <p>Enter your test kit readings for freshwater, pond, or saltwater tanks. Our AI diagnoses any issues and tells you exactly what to do to fix them.</p>
                 <span className="tool-link">Test my water →</span>
+              </div>
+            </Link>
+            <Link href="/tools/pond-calculator" style={{ textDecoration: 'none' }}>
+              <div className="tool-card">
+                <span className="tool-icon">🏊</span>
+                <h3>Tank & Pond Volume Calculator</h3>
+                <p>Enter your tank or pond dimensions and instantly find out how many gallons you have — and how many fish your setup can support.</p>
+                <span className="tool-link">Calculate my volume →</span>
+              </div>
+            </Link>
+            <Link href="/tools/feeding-calculator" style={{ textDecoration: 'none' }}>
+              <div className="tool-card">
+                <span className="tool-icon">🍽️</span>
+                <h3>Feeding Calculator</h3>
+                <p>Tell us how many fish you have, their size, and the current season. We'll tell you exactly how much to feed and which food to use.</p>
+                <span className="tool-link">Calculate feeding →</span>
+              </div>
+            </Link>
+            <Link href="/tools/ask-pond-pal" style={{ textDecoration: 'none' }}>
+              <div className="tool-card">
+                <span className="tool-icon">💬</span>
+                <h3>Ask Pond Pal</h3>
+                <p>Have a question about any fish or aquarium topic? Ask our AI anything — koi, goldfish, tropical fish, bettas, saltwater reefs, and more.</p>
+                <span className="tool-link">Ask a question →</span>
               </div>
             </Link>
             <Link href="/care-guides" style={{ textDecoration: 'none' }}>
               <div className="tool-card">
                 <span className="tool-icon">📖</span>
                 <h3>Care Guides</h3>
-                <p>From setting up your very first pond to advanced breeding tips — our friendly guides have you covered at every stage of your fish keeping journey.</p>
+                <p>From setting up your first tank to advanced pond filtration — our friendly guides cover koi, goldfish, tropical fish, and everything in between.</p>
                 <span className="tool-link">Read the guides →</span>
               </div>
             </Link>
@@ -69,17 +94,43 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section" style={{ background: '#f8f8f8', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
+        <div className="section-inner">
+          <span className="section-tag teal">What Fish Do You Keep?</span>
+          <h2>Pond Pal works for every fish keeper</h2>
+          <p className="section-lead">Whether you have a backyard koi pond or a living room aquarium, we've got you covered.</p>
+          <div className="info-grid">
+            <div className="info-card">
+              <h3>🐠 Koi & Pond Fish</h3>
+              <p>Full koi care support — tank sizing, water chemistry, seasonal feeding, disease identification, filtration systems, and pond plant guides.</p>
+            </div>
+            <div className="info-card">
+              <h3>🐡 Goldfish</h3>
+              <p>Fancy goldfish, common goldfish, and everything in between. Tank sizing, water quality, and feeding guidance tailored to goldfish needs.</p>
+            </div>
+            <div className="info-card">
+              <h3>🌊 Tropical Fish</h3>
+              <p>Bettas, cichlids, tetras, gouramis, and community tanks. Water chemistry guidance for all freshwater tropical species.</p>
+            </div>
+            <div className="info-card">
+              <h3>🪸 Saltwater & Reef</h3>
+              <p>Marine fish, reef tanks, and coral setups. Our water testing tool supports saltwater parameters including salinity, calcium, and magnesium.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="section" style={{ background: '#fff', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
         <div className="section-inner">
           <span className="section-tag teal">Recommended Gear</span>
-          <h2>Tools every fish keeper needs</h2>
+          <h2>Products every fish keeper needs</h2>
           <p className="section-lead">Our most recommended products — tried, trusted, and linked directly to Amazon for easy ordering.</p>
           <div className="tools-grid">
             <a href="https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
               <div className="tool-card">
                 <span className="tool-icon">🧪</span>
                 <h3>API Master Test Kit</h3>
-                <p>The most trusted freshwater test kit among koi keepers. Tests pH, ammonia, nitrite, and nitrate accurately every time.</p>
+                <p>The most trusted freshwater test kit. Tests pH, ammonia, nitrite, and nitrate accurately — works for koi ponds, goldfish tanks, and tropical setups.</p>
                 <span className="tool-link">View on Amazon →</span>
               </div>
             </a>
@@ -87,7 +138,7 @@ export default function Home() {
               <div className="tool-card">
                 <span className="tool-icon">💧</span>
                 <h3>Seachem Prime</h3>
-                <p>The gold standard water conditioner. Neutralizes chlorine, chloramines, and detoxifies ammonia in one easy dose.</p>
+                <p>The gold standard water conditioner for all freshwater tanks and ponds. Neutralizes chlorine and detoxifies ammonia in one easy dose.</p>
                 <span className="tool-link">View on Amazon →</span>
               </div>
             </a>
@@ -95,7 +146,7 @@ export default function Home() {
               <div className="tool-card">
                 <span className="tool-icon">🌿</span>
                 <h3>Hikari Wheat Germ Koi Food</h3>
-                <p>Perfect for spring and autumn feeding when water temperatures drop below 65°F. Easy to digest, highly nutritious.</p>
+                <p>Perfect for koi and goldfish in spring and autumn when water temperatures drop below 65°F. Easy to digest, highly nutritious.</p>
                 <span className="tool-link">View on Amazon →</span>
               </div>
             </a>
@@ -110,17 +161,17 @@ export default function Home() {
         <div className="section-inner">
           <span className="section-tag" style={{ background: 'rgba(244,131,61,0.2)', color: '#f4833d' }}>How It Works</span>
           <h2>Get answers in under a minute</h2>
-          <p className="section-lead">No complicated forms, no confusing charts. Just simple, friendly guidance.</p>
+          <p className="section-lead">No complicated forms, no confusing charts. Just simple, friendly guidance for every fish keeper.</p>
           <div className="steps">
             <div className="step">
               <div className="step-num">1</div>
               <h3>Tell us about your setup</h3>
-              <p>Enter your tank or pond details — we keep it simple and only ask what we need.</p>
+              <p>Enter your tank or pond details — fish type, size, filtration. We keep it simple.</p>
             </div>
             <div className="step">
               <div className="step-num">2</div>
               <h3>Our AI gets to work</h3>
-              <p>Pond Pal analyzes your info using proven fishkeeping guidelines and best practices.</p>
+              <p>Pond Pal analyzes your info using proven fishkeeping guidelines for your specific fish type.</p>
             </div>
             <div className="step">
               <div className="step-num">3</div>
@@ -148,7 +199,7 @@ export default function Home() {
             </div>
             <div className="info-card">
               <h3>🏆 Trusted by enthusiasts</h3>
-              <p>Our AI uses real fishkeeping standards like the 250-gallon-per-koi rule and proper water chemistry ranges that experienced keepers rely on.</p>
+              <p>Our AI uses real fishkeeping standards and species-specific guidelines that experienced keepers rely on — for every type of fish.</p>
             </div>
             <div className="info-card">
               <h3>💚 Always free to use</h3>
@@ -165,7 +216,7 @@ export default function Home() {
       <section className="section" style={{ background: 'var(--teal)', textAlign: 'center' }}>
         <div className="section-inner">
           <h2 style={{ color: '#fff', marginBottom: '1rem' }}>Ready to give your fish the best life possible?</h2>
-          <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '2rem', fontSize: '1.1rem' }}>Start with our free tank checker — it only takes a minute.</p>
+          <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '2rem', fontSize: '1.1rem' }}>Start with our free tank checker — works for any fish, any setup, takes one minute.</p>
           <Link href="/tank-checker" className="btn-primary" style={{ fontSize: '16px', padding: '16px 36px' }}>
             Get Started — It's Free 🐟
           </Link>
@@ -173,15 +224,19 @@ export default function Home() {
       </section>
 
       <footer className="footer">
-        <p>🐟 Pond Pal — Friendly fish care, powered by AI</p>
+        <p>🐟 Pond Pal — Friendly fish & aquarium care, powered by AI</p>
         <p style={{ marginTop: '0.75rem' }}>
           <Link href="/tank-checker" style={{ color: 'rgba(255,255,255,0.6)' }}>Tank Checker</Link>{' · '}
           <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Testing</Link>{' · '}
+          <Link href="/tools/pond-calculator" style={{ color: 'rgba(255,255,255,0.6)' }}>Volume Calculator</Link>{' · '}
+          <Link href="/tools/feeding-calculator" style={{ color: 'rgba(255,255,255,0.6)' }}>Feeding Calculator</Link>{' · '}
+          <Link href="/tools/ask-pond-pal" style={{ color: 'rgba(255,255,255,0.6)' }}>Ask Pond Pal</Link>{' · '}
           <Link href="/care-guides" style={{ color: 'rgba(255,255,255,0.6)' }}>Care Guides</Link>{' · '}
-          <Link href="/about" style={{ color: 'rgba(255,255,255,0.6)' }}>About</Link>{' · '}
-          <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)' }}>Contact</Link>
+          <Link href="/blog" style={{ color: 'rgba(255,255,255,0.6)' }}>Blog</Link>
         </p>
         <p style={{ marginTop: '0.75rem' }}>
+          <Link href="/about" style={{ color: 'rgba(255,255,255,0.6)' }}>About</Link>{' · '}
+          <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)' }}>Contact</Link>{' · '}
           <Link href="/privacy-policy" style={{ color: '#f4833d' }}>Privacy Policy</Link>{' · '}
           <Link href="/terms" style={{ color: '#f4833d' }}>Terms of Use</Link>{' · '}
           <Link href="/disclaimer" style={{ color: '#f4833d' }}>Disclaimer</Link>

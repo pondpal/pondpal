@@ -4,11 +4,22 @@ import { useState } from 'react'
 
 const affiliateProducts = [
   { name: 'API Master Test Kit', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20', desc: 'Test your water after any tank change' },
-  { name: 'Seachem Prime', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20', desc: 'Essential water conditioner for koi' },
+  { name: 'Seachem Prime', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20', desc: 'Essential water conditioner' },
+]
+
+const fishTypes = [
+  { value: 'koi', emoji: '🐠', label: 'Koi' },
+  { value: 'goldfish', emoji: '🐡', label: 'Goldfish' },
+  { value: 'tropical freshwater', emoji: '🌿', label: 'Tropical' },
+  { value: 'betta', emoji: '💜', label: 'Betta' },
+  { value: 'cichlid', emoji: '🐟', label: 'Cichlid' },
+  { value: 'saltwater marine', emoji: '🪸', label: 'Saltwater' },
+  { value: 'other freshwater', emoji: '💧', label: 'Other' },
 ]
 
 export default function TankChecker() {
   const [form, setForm] = useState({
+    fishType: 'koi',
     tankType: 'Outdoor Pond',
     gallons: '',
     fishCount: '',
@@ -20,6 +31,10 @@ export default function TankChecker() {
   const [result, setResult] = useState('')
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
+
+  const tankTypes = form.fishType === 'koi' || form.fishType === 'goldfish'
+    ? ['Outdoor Pond', 'Indoor Aquarium', 'Stock Tank / Tub', 'Raised Bed Pond']
+    : ['Indoor Aquarium', 'Outdoor Pond', 'Nano Tank', 'Planted Tank']
 
   const analyze = async () => {
     if (!form.gallons || !form.fishCount || !form.fishSize) {
@@ -45,9 +60,9 @@ export default function TankChecker() {
   return (
     <>
       <Head>
-        <title>Tank Size Checker — Pond Pal</title>
-        <meta name="description" content="Is your tank big enough for your koi? Find out instantly with Pond Pal's free AI-powered tank size checker." />
-        <link rel="icon" href="/favicon.ico" />
+        <title>Tank Size Checker — Is My Tank Big Enough? — Pond Pal</title>
+        <meta name="description" content="Find out instantly if your tank or pond is big enough for your fish. Works for koi, goldfish, tropical fish, bettas, cichlids, and saltwater setups." />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
       <nav className="nav">
@@ -56,6 +71,7 @@ export default function TankChecker() {
           <li><Link href="/tank-checker">Tank Checker</Link></li>
           <li><Link href="/water-chemistry">Water Testing</Link></li>
           <li><Link href="/care-guides">Care Guides</Link></li>
+          <li><Link href="/blog">Blog</Link></li>
           <li><Link href="/about">About</Link></li>
           <li><Link href="/contact">Contact</Link></li>
         </ul>
@@ -69,28 +85,44 @@ export default function TankChecker() {
       <div className="tool-form-section">
         <div className="tool-form-inner">
           <div className="form-card">
+            <h2>What kind of fish do you keep?</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginTop: '1rem', marginBottom: '1.5rem' }}>
+              {fishTypes.map(f => (
+                <div
+                  key={f.value}
+                  onClick={() => set('fishType', f.value)}
+                  style={{
+                    padding: '0.75rem 0.5rem', borderRadius: '10px', textAlign: 'center', cursor: 'pointer',
+                    border: form.fishType === f.value ? '2px solid #1a9e8e' : '1px solid rgba(0,0,0,0.12)',
+                    background: form.fishType === f.value ? '#d4f0ec' : '#faf7f2',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  <div style={{ fontSize: '20px', marginBottom: '4px' }}>{f.emoji}</div>
+                  <div style={{ fontSize: '11px', fontWeight: 500, color: '#1a2e35' }}>{f.label}</div>
+                </div>
+              ))}
+            </div>
+
             <h2>Your Tank or Pond</h2>
             <div className="form-grid-2">
               <div className="fg">
                 <label>Tank Type</label>
                 <select value={form.tankType} onChange={e => set('tankType', e.target.value)}>
-                  <option>Outdoor Pond</option>
-                  <option>Indoor Aquarium</option>
-                  <option>Stock Tank / Tub</option>
-                  <option>Raised Bed Pond</option>
+                  {tankTypes.map(t => <option key={t}>{t}</option>)}
                 </select>
               </div>
               <div className="fg">
                 <label>Volume (gallons)</label>
-                <input type="number" placeholder="e.g. 500" value={form.gallons} onChange={e => set('gallons', e.target.value)} />
+                <input type="number" placeholder="e.g. 55" value={form.gallons} onChange={e => set('gallons', e.target.value)} />
               </div>
               <div className="fg">
-                <label>Number of Koi</label>
+                <label>Number of Fish</label>
                 <input type="number" placeholder="e.g. 5" value={form.fishCount} onChange={e => set('fishCount', e.target.value)} />
               </div>
               <div className="fg">
                 <label>Average Fish Size (inches)</label>
-                <input type="number" placeholder="e.g. 12" value={form.fishSize} onChange={e => set('fishSize', e.target.value)} />
+                <input type="number" placeholder="e.g. 4" value={form.fishSize} onChange={e => set('fishSize', e.target.value)} />
               </div>
               <div className="fg">
                 <label>Filtration Type</label>
@@ -99,6 +131,8 @@ export default function TankChecker() {
                   <option>Basic Mechanical Only</option>
                   <option>Pressurized Canister</option>
                   <option>Pressurized Bead Filter</option>
+                  <option>Hang On Back Filter</option>
+                  <option>Sponge Filter</option>
                   <option>None / Natural</option>
                 </select>
               </div>
@@ -142,17 +176,18 @@ export default function TankChecker() {
           )}
 
           <div style={{ marginTop: '1.5rem', padding: '1.25rem', background: '#fff', borderRadius: '14px', border: '1px solid rgba(0,0,0,0.07)', fontSize: '13px', color: '#5a7a82' }}>
-            <strong style={{ color: '#1a2e35' }}>💡 Did you know?</strong> The standard rule of thumb for koi is 250 gallons per fish — but that's really a minimum. A well-filtered pond with good aeration can support slightly higher stocking, while a basic setup may need more space per fish.
+            <strong style={{ color: '#1a2e35' }}>💡 General stocking guidelines:</strong> Koi need 250 gallons each, goldfish 20–30 gallons each, tropical fish roughly 1 inch of fish per gallon, and bettas do best alone in 5+ gallons. Our AI accounts for your specific fish type automatically!
           </div>
         </div>
       </div>
 
       <footer className="footer">
-        <p>🐟 Pond Pal — Friendly fish care, powered by AI</p>
+        <p>🐟 Pond Pal — Friendly fish & aquarium care, powered by AI</p>
         <p style={{ marginTop: '0.75rem' }}>
           <Link href="/tank-checker" style={{ color: 'rgba(255,255,255,0.6)' }}>Tank Checker</Link>{' · '}
           <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Testing</Link>{' · '}
           <Link href="/care-guides" style={{ color: 'rgba(255,255,255,0.6)' }}>Care Guides</Link>{' · '}
+          <Link href="/blog" style={{ color: 'rgba(255,255,255,0.6)' }}>Blog</Link>{' · '}
           <Link href="/about" style={{ color: 'rgba(255,255,255,0.6)' }}>About</Link>{' · '}
           <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)' }}>Contact</Link>
         </p>
