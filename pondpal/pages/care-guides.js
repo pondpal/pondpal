@@ -17,12 +17,11 @@ const otherGuides = [
   { emoji: '💜', title: 'Betta Fish Care Guide', desc: 'Everything you need to keep your betta happy and healthy — tank size, temperature, gentle filtration, feeding, and common health problems.', level: 'Beginner', levelColor: '#d4f0ec', levelText: '#0e6b6b', slug: '/guides/betta', time: '12 min', category: 'Betta' },
   { emoji: '🪸', title: 'Saltwater Aquarium Guide', desc: 'Getting started with a marine tank — equipment, salinity, cycling, water parameters, and choosing your first marine fish.', level: 'Intermediate', levelColor: '#ffdcc9', levelText: '#c04a10', slug: '/guides/saltwater', time: '15 min', category: 'Saltwater' },
   { emoji: '🐟', title: 'Cichlid Care Guide', desc: 'African, South American, and Central American cichlids — what makes each group unique and how to keep them successfully.', level: 'Intermediate', levelColor: '#ffdcc9', levelText: '#c04a10', slug: '/guides/cichlids', time: '14 min', category: 'Cichlid' },
+  { emoji: '🌿', title: 'Community Tropical Tank Guide', desc: 'How to set up a peaceful, thriving tropical aquarium — compatible fish, water parameters, feeding, and health care for beginners.', level: 'Beginner', levelColor: '#d4f0ec', levelText: '#0e6b6b', slug: '/guides/tropical', time: '13 min', category: 'Tropical' },
+  { emoji: '🌊', title: 'Planted Tank Guide', desc: 'How to set up a thriving planted freshwater aquarium — lighting, substrate, CO2, best beginner plants, and compatible fish.', level: 'Intermediate', levelColor: '#ffdcc9', levelText: '#c04a10', slug: '/guides/planted-tank', time: '13 min', category: 'Planted Tank' },
 ]
 
-const comingGuides = [
-  { emoji: '🌿', title: 'Community Tropical Tank Guide', desc: 'How to set up and maintain a peaceful community aquarium with tropical fish.', category: 'Tropical' },
-  { emoji: '🌊', title: 'Planted Tank Guide', desc: 'How to set up a thriving planted freshwater aquarium with live plants and happy fish.', category: 'Planted Tank' },
-]
+
 
 const products = [
   { name: 'API Master Test Kit', desc: 'Tests pH, ammonia, nitrite & nitrate', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20', emoji: '🧪' },
@@ -95,26 +94,7 @@ export default function CareGuides() {
             ))}
           </div>
 
-          {comingGuides.length > 0 && (
-            <>
-              <span className="section-tag" style={{ background: '#faeeda', color: '#854F0B' }}>Coming Soon</span>
-              <h2 style={{ marginBottom: '0.5rem' }}>More guides on the way</h2>
-              <p className="section-lead">We're actively working on more guides for every type of fish keeper.</p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginBottom: '3rem' }}>
-                {comingGuides.map((g, i) => (
-                  <div key={i} className="tool-card" style={{ opacity: 0.8 }}>
-                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                      <span style={{ fontSize: '28px' }}>{g.emoji}</span>
-                      <span style={{ fontSize: '11px', fontWeight: 500, padding: '3px 10px', borderRadius: '20px', background: '#faeeda', color: '#854F0B' }}>{g.category}</span>
-                    </div>
-                    <h3 style={{ marginBottom: '0.5rem', fontSize: '1rem' }}>{g.title}</h3>
-                    <p style={{ fontSize: '13px', color: '#5a7a82', lineHeight: '1.6' }}>{g.desc}</p>
-                    <span style={{ fontSize: '12px', color: '#5a7a82', marginTop: '1rem', display: 'inline-block' }}>Coming soon →</span>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
+
 
           <div style={{ marginBottom: '3rem' }}>
             <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🛒 Recommended Products</h2>
