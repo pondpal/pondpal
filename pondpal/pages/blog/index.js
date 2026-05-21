@@ -2,42 +2,15 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 const posts = [
-  {
-    slug: 'how-many-koi-1000-gallon-pond',
-    title: 'How Many Koi Can I Put in a 1000 Gallon Pond?',
-    desc: 'The honest answer to one of the most common koi keeping questions — with the math, the rules, and what most beginners get wrong.',
-    date: 'May 2026', readTime: '8 min read', emoji: '🐠', category: 'Koi & Ponds'
-  },
-  {
-    slug: 'koi-ammonia-spike',
-    title: 'Koi Pond Ammonia Spike — Causes, Dangers and How to Fix It Fast',
-    desc: 'Ammonia is the number one killer in koi ponds. Here is everything you need to know to identify it, fix it fast, and stop it coming back.',
-    date: 'May 2026', readTime: '10 min read', emoji: '⚠️', category: 'Water Quality'
-  },
-  {
-    slug: 'best-koi-food-every-season',
-    title: 'Best Koi Food for Every Season — Complete Feeding Guide',
-    desc: 'What to feed your koi in spring, summer, autumn and winter — including our top product picks and the one feeding mistake that can kill your fish.',
-    date: 'May 2026', readTime: '10 min read', emoji: '🍽️', category: 'Koi & Ponds'
-  },
-  {
-    slug: 'how-big-betta-tank',
-    title: 'How Big of a Tank Does a Betta Fish Need?',
-    desc: 'The honest answer — why the bowl myth is one of the most harmful in fishkeeping, and what a proper betta tank actually looks like.',
-    date: 'May 2026', readTime: '8 min read', emoji: '💜', category: 'Betta'
-  },
-  {
-    slug: 'why-is-my-goldfish-tank-cloudy',
-    title: 'Why Is My Goldfish Tank Cloudy? Causes and Fixes',
-    desc: 'White cloudiness, green water, and brown tint all have different causes. Here is how to diagnose yours and fix it correctly.',
-    date: 'May 2026', readTime: '9 min read', emoji: '🐡', category: 'Goldfish'
-  },
-  {
-    slug: 'best-filter-55-gallon-aquarium',
-    title: 'Best Filter for a 55 Gallon Aquarium',
-    desc: 'What actually matters when choosing a filter, which types work best for different fish, and our top recommendations.',
-    date: 'May 2026', readTime: '10 min read', emoji: '🔄', category: 'Aquarium Setup'
-  },
+  { slug: 'how-many-koi-1000-gallon-pond', title: 'How Many Koi Can I Put in a 1000 Gallon Pond?', desc: 'The honest answer with the math, the rules, and what most beginners get wrong.', date: 'May 2026', readTime: '8 min', emoji: '🐠', category: 'Koi & Ponds' },
+  { slug: 'koi-ammonia-spike', title: 'Koi Pond Ammonia Spike — Causes and How to Fix It Fast', desc: 'Ammonia is the number one killer in koi ponds. Here is everything you need to know.', date: 'May 2026', readTime: '10 min', emoji: '⚠️', category: 'Water Quality' },
+  { slug: 'best-koi-food-every-season', title: 'Best Koi Food for Every Season', desc: 'What to feed your koi in spring, summer, autumn and winter with our top product picks.', date: 'May 2026', readTime: '10 min', emoji: '🍽️', category: 'Koi & Ponds' },
+  { slug: 'how-big-betta-tank', title: 'How Big of a Tank Does a Betta Fish Need?', desc: 'Why the bowl myth is harmful and what a proper betta tank actually looks like.', date: 'May 2026', readTime: '8 min', emoji: '💜', category: 'Betta' },
+  { slug: 'why-is-my-goldfish-tank-cloudy', title: 'Why Is My Goldfish Tank Cloudy?', desc: 'White cloudiness, green water, and brown tint all have different causes — find yours here.', date: 'May 2026', readTime: '9 min', emoji: '🐡', category: 'Goldfish' },
+  { slug: 'best-filter-55-gallon-aquarium', title: 'Best Filter for a 55 Gallon Aquarium', desc: 'What to look for and which filter types work best for different fish.', date: 'May 2026', readTime: '10 min', emoji: '🔄', category: 'Aquarium Setup' },
+  { slug: 'how-to-cycle-fish-tank', title: 'How to Cycle a Fish Tank for Beginners', desc: 'The most important step before adding fish — what it is, how long it takes, and how to do it right.', date: 'May 2026', readTime: '10 min', emoji: '🔬', category: 'Aquarium Setup' },
+  { slug: 'what-fish-can-live-with-bettas', title: 'What Fish Can Live With Bettas?', desc: 'Safe tank mates, fish to always avoid, and how to tell if your betta will tolerate company.', date: 'May 2026', readTime: '9 min', emoji: '💜', category: 'Betta' },
+  { slug: 'african-cichlid-tank-setup', title: 'African Cichlid Tank Setup Guide', desc: 'Tank size, water chemistry, rockwork, stocking, and aggression management for Malawi and Tanganyika cichlids.', date: 'May 2026', readTime: '11 min', emoji: '🐟', category: 'Cichlid' },
 ]
 
 const categoryColors = {
@@ -46,6 +19,7 @@ const categoryColors = {
   'Betta': { bg: '#e8e4f8', text: '#4a3d8f' },
   'Goldfish': { bg: '#faeeda', text: '#854F0B' },
   'Aquarium Setup': { bg: '#E6F1FB', text: '#185FA5' },
+  'Cichlid': { bg: '#ffdcc9', text: '#c04a10' },
 }
 
 export default function Blog() {
@@ -53,7 +27,7 @@ export default function Blog() {
     <>
       <Head>
         <title>Fish & Aquarium Care Blog — Pond Pal</title>
-        <meta name="description" content="Expert fish and aquarium care articles — koi, goldfish, bettas, tank setup, water quality, and more. Plain English advice for every fish keeper." />
+        <meta name="description" content: "Expert fish and aquarium care articles — koi, goldfish, bettas, cichlids, tank setup, water quality, and more. Plain English advice for every fish keeper." />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
@@ -75,7 +49,7 @@ export default function Blog() {
                       <div style={{ display: 'flex', gap: '8px', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
                         <span style={{ fontSize: '11px', fontWeight: 500, padding: '2px 10px', borderRadius: '20px', background: colors.bg, color: colors.text }}>{p.category}</span>
                         <span style={{ fontSize: '11px', color: '#5a7a82' }}>{p.date}</span>
-                        <span style={{ fontSize: '11px', color: '#5a7a82' }}>{p.readTime}</span>
+                        <span style={{ fontSize: '11px', color: '#5a7a82' }}>{p.readTime} read</span>
                       </div>
                       <h2 style={{ fontSize: '1.15rem', marginBottom: '0.5rem', color: '#1a2e35' }}>{p.title}</h2>
                       <p style={{ fontSize: '14px', color: '#5a7a82', lineHeight: '1.6' }}>{p.desc}</p>
@@ -105,18 +79,15 @@ export default function Blog() {
           <Link href="/water-chemistry" style={{ color: 'rgba(255,255,255,0.6)' }}>Water Testing</Link>{' · '}
           <Link href="/care-guides" style={{ color: 'rgba(255,255,255,0.6)' }}>Care Guides</Link>{' · '}
           <Link href="/blog" style={{ color: 'rgba(255,255,255,0.6)' }}>Blog</Link>{' · '}
-          <Link href="/about" style={{ color: 'rgba(255,255,255,0.6)' }}>About</Link>{' · '}
-          <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)' }}>Contact</Link>
+          <Link href="/faq" style={{ color: 'rgba(255,255,255,0.6)' }}>FAQ</Link>{' · '}
+          <Link href="/about" style={{ color: 'rgba(255,255,255,0.6)' }}>About</Link>
         </p>
         <p style={{ marginTop: '0.75rem' }}>
           <Link href="/privacy-policy" style={{ color: '#f4833d' }}>Privacy Policy</Link>{' · '}
           <Link href="/terms" style={{ color: '#f4833d' }}>Terms of Use</Link>{' · '}
           <Link href="/disclaimer" style={{ color: '#f4833d' }}>Disclaimer</Link>
         </p>
-        <p style={{ marginTop: '1rem', fontSize: '11px', opacity: 0.5 }}>
-          General guidance only. Always consult a vet for health concerns.
-          As an Amazon Associate, Pond Pal earns from qualifying purchases.
-        </p>
+        <p style={{ marginTop: '1rem', fontSize: '11px', opacity: 0.5 }}>General guidance only. Always consult a vet for health concerns. As an Amazon Associate, Pond Pal earns from qualifying purchases.</p>
       </footer>
     </>
   )
