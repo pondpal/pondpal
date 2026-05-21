@@ -27,7 +27,7 @@ export default function Blog() {
     <>
       <Head>
         <title>Fish & Aquarium Care Blog — Pond Pal</title>
-        <meta name="description" content: "Expert fish and aquarium care articles — koi, goldfish, bettas, cichlids, tank setup, water quality, and more. Plain English advice for every fish keeper." />
+        <meta name="description" content="Expert fish and aquarium care articles — koi, goldfish, bettas, cichlids, tank setup, water quality, and more. Plain English advice for every fish keeper." />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
