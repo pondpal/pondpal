@@ -24,7 +24,7 @@ A Next.js website with two AI-powered tools:
 ### Step 3 — Add your Anthropic API Key
 1. In Vercel, go to your project → **Settings** → **Environment Variables**
 2. Add a new variable:
-   - Name: `ANTHROPIC_API_KEY`
+   - Name: `pp_api`
    - Value: your API key from console.anthropic.com
 3. Click **Save** then **Redeploy**
 
@@ -37,7 +37,7 @@ A Next.js website with two AI-powered tools:
 6. Wait 10–30 minutes for it to go live!
 
 ## Environment Variables needed
-- `ANTHROPIC_API_KEY` — get from console.anthropic.com
+- `pp_api` — get from console.anthropic.com
 
 ## Tech Stack
 - Next.js 14

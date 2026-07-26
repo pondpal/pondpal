@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
 
-  const apiKey = process.env.anthr_key
+  const apiKey = process.env.pp_api
   if (!apiKey) {
     return res.status(500).json({ result: 'Error: API key not found.' })
   }
