@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import Head from 'next/head'
+import { Analytics } from '@vercel/analytics/react'
 import Nav from '../components/Nav'
 
 export default function App({ Component, pageProps }) {
@@ -14,6 +15,7 @@ export default function App({ Component, pageProps }) {
       </Head>
       <Nav />
       <Component {...pageProps} />
+      <Analytics />
     </>
   )
 }

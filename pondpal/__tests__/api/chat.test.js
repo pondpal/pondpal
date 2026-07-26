@@ -1,4 +1,4 @@
-import handler from './chat'
+import handler from '../../pages/api/chat'
 
 function mockRes() {
   const res = {}
