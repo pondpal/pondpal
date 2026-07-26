@@ -1,5 +1,11 @@
+import { getClientIp, isRateLimited } from '../../lib/rateLimit'
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
+
+  if (isRateLimited(getClientIp(req))) {
+    return res.status(429).json({ result: "You're asking a lot of questions! Please wait a minute and try again." })
+  }
 
   const apiKey = process.env.pp_api
   if (!apiKey) {
