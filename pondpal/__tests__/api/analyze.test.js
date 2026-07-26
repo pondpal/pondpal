@@ -1,4 +1,4 @@
-import handler from './analyze'
+import handler from '../../pages/api/analyze'
 
 function mockRes() {
   const res = {}
