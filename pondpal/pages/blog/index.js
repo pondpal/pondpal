@@ -11,6 +11,8 @@ const posts = [
   { slug: 'how-to-cycle-fish-tank', title: 'How to Cycle a Fish Tank for Beginners', desc: 'The most important step before adding fish — what it is, how long it takes, and how to do it right.', date: 'May 2026', readTime: '10 min', emoji: '🔬', category: 'Aquarium Setup' },
   { slug: 'what-fish-can-live-with-bettas', title: 'What Fish Can Live With Bettas?', desc: 'Safe tank mates, fish to always avoid, and how to tell if your betta will tolerate company.', date: 'May 2026', readTime: '9 min', emoji: '💜', category: 'Betta' },
   { slug: 'african-cichlid-tank-setup', title: 'African Cichlid Tank Setup Guide', desc: 'Tank size, water chemistry, rockwork, stocking, and aggression management for Malawi and Tanganyika cichlids.', date: 'May 2026', readTime: '11 min', emoji: '🐟', category: 'Cichlid' },
+  { slug: 'how-often-water-changes', title: 'How Often Should You Do Water Changes?', desc: "The real answer depends on your setup — stocking, filtration, and feeding all play a part. Here's how to figure out yours.", date: 'July 2026', readTime: '9 min', emoji: '💧', category: 'Water Quality' },
+  { slug: 'nitrite-poisoning-fish', title: 'Nitrite Poisoning in Fish — Signs and Treatment', desc: "Nitrite is the second stage of the nitrogen cycle and just as dangerous as ammonia. Here's how to recognize it and treat it fast.", date: 'July 2026', readTime: '9 min', emoji: '🩸', category: 'Water Quality' },
 ]
 
 const categoryColors = {
