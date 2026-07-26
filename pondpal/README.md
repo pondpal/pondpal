@@ -40,7 +40,7 @@ A Next.js website with two AI-powered tools:
 - `pp_api` — get from console.anthropic.com
 
 ## Tech Stack
-- Next.js 14
+- Next.js 16
 - Anthropic Claude API
 - Deployed on Vercel (free tier)
 - No database needed for Phase 1
