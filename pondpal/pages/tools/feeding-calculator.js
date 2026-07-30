@@ -50,39 +50,39 @@ const formatVolumeRange = (ozMin, ozMax) => {
 // heated and don't have the seasonal temperature swings pond fish experience, so
 // there's no winter shutdown here — just steady year-round feeding).
 const nonPondProfiles = {
-  'goldfish-tank': { pct: 2, food: 'Goldfish pellets or flake', freq: '1–2 times daily', guide: { href: '/guides/goldfish', label: 'Goldfish Care Guide' } },
-  'betta': { pct: 2.5, food: 'High-quality betta pellets', freq: 'Once daily, a few pellets', guide: { href: '/guides/betta', label: 'Betta Fish Care Guide' } },
-  'african-cichlid': { pct: 2, food: 'Cichlid pellets', freq: '1–2 times daily', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
-  'south-american-cichlid': { pct: 2, food: 'Cichlid pellets', freq: '1–2 times daily', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
-  'oscar': { pct: 2, food: 'Cichlid pellets or sticks', freq: '1–2 times daily', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
-  'tropical': { pct: 2.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'guppies': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'tetras': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'angelfish': { pct: 2, food: 'Tropical flake or pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'discus': { pct: 2, food: 'High-protein discus pellets or flake', freq: '2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'corydoras': { pct: 2.5, food: 'Sinking wafers or pellets', freq: 'Once daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'pleco': { pct: 1.5, food: 'Algae wafers or sinking pellets', freq: 'Once daily (evening)', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'other-freshwater': { pct: 2.5, food: 'Tropical flake or pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'molly': { pct: 2.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'platy': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'swordtail': { pct: 2.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'zebra-danio': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'harlequin-rasbora': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'dwarf-gourami': { pct: 2, food: 'Tropical flake or pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'rainbowfish': { pct: 2.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'clownfish': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'chromis': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'tang': { pct: 1.5, food: 'Marine algae sheets and herbivore pellets', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'marine-angelfish': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'blenny': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'wrasse': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'lionfish': { pct: 1.5, food: 'Frozen or live meaty foods (shrimp, silversides)', freq: '2–3 times weekly', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'reef-mixed': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'firefish': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'anthias': { pct: 2.5, food: 'Frequent small feedings of frozen mysis/brine shrimp', freq: '2–3 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'butterflyfish': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'cardinalfish': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'saltwater': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'goldfish-tank': { pct: 2, food: 'Goldfish pellets or flake', freq: '1–2 times daily', amount: 'A light pinch — only what they can eat in 2–3 minutes', guide: { href: '/guides/goldfish', label: 'Goldfish Care Guide' } },
+  'betta': { pct: 2.5, food: 'High-quality betta pellets', freq: 'Once daily, a few pellets', amount: '2–4 pellets per feeding — resist the urge to add more', guide: { href: '/guides/betta', label: 'Betta Fish Care Guide' } },
+  'african-cichlid': { pct: 2, food: 'Cichlid pellets', freq: '1–2 times daily', amount: 'A small pinch of pellets — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
+  'south-american-cichlid': { pct: 2, food: 'Cichlid pellets', freq: '1–2 times daily', amount: 'A small pinch of pellets — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
+  'oscar': { pct: 2, food: 'Cichlid pellets or sticks', freq: '1–2 times daily', amount: 'A small pinch of pellets or sticks — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
+  'tropical': { pct: 2.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A light pinch — only what they can eat in 2–3 minutes', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'guppies': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A very light pinch — these are small fish, it\'s easy to overfeed', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'tetras': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A very light pinch — these are small fish, it\'s easy to overfeed', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'angelfish': { pct: 2, food: 'Tropical flake or pellet food', freq: '1–2 times daily', amount: 'A light pinch — only what they can eat in 2–3 minutes', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'discus': { pct: 2, food: 'High-protein discus pellets or flake', freq: '2 times daily', amount: 'A light pinch — only what they can eat in 2–3 minutes', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'corydoras': { pct: 2.5, food: 'Sinking wafers or pellets', freq: 'Once daily', amount: 'A few sinking pellets or wafer pieces per fish', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'pleco': { pct: 1.5, food: 'Algae wafers or sinking pellets', freq: 'Once daily (evening)', amount: '1 algae wafer per fish', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'other-freshwater': { pct: 2.5, food: 'Tropical flake or pellet food', freq: '1–2 times daily', amount: 'A light pinch — only what they can eat in 2–3 minutes', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'molly': { pct: 2.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A very light pinch — these are small fish, it\'s easy to overfeed', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'platy': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A very light pinch — these are small fish, it\'s easy to overfeed', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'swordtail': { pct: 2.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A very light pinch — these are small fish, it\'s easy to overfeed', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'zebra-danio': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A very light pinch — these are small fish, it\'s easy to overfeed', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'harlequin-rasbora': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A very light pinch — these are small fish, it\'s easy to overfeed', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'dwarf-gourami': { pct: 2, food: 'Tropical flake or pellet food', freq: '1–2 times daily', amount: 'A light pinch — only what they can eat in 2–3 minutes', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'rainbowfish': { pct: 2.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A light pinch — only what they can eat in 2–3 minutes', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'clownfish': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'chromis': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'tang': { pct: 1.5, food: 'Marine algae sheets and herbivore pellets', freq: '1–2 times daily', amount: 'A clipped sheet of nori/algae plus a pinch of herbivore pellets', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'marine-angelfish': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'blenny': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'wrasse': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'lionfish': { pct: 1.5, food: 'Frozen or live meaty foods (shrimp, silversides)', freq: '2–3 times weekly', amount: '1-2 appropriately-sized whole prey items per feeding', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'reef-mixed': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'firefish': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'anthias': { pct: 2.5, food: 'Frequent small feedings of frozen mysis/brine shrimp', freq: '2–3 times daily', amount: 'Several small pinches spread through the day — they feed almost constantly in the wild', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'butterflyfish': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of food per feeding — some species need specific coral-based diets, check your exact species', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'cardinalfish': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'saltwater': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
 }
 
 export default function FeedingCalculator() {
@@ -194,6 +194,7 @@ export default function FeedingCalculator() {
       pond: false,
       food: profile.food,
       freq: profile.freq,
+      amount: profile.amount,
       guide: profile.guide,
       fishCount: count,
     })
@@ -444,6 +445,11 @@ export default function FeedingCalculator() {
           {result && !result.pond && (
             <div style={{ background: '#fff', borderRadius: '14px', padding: '2rem', border: '1px solid rgba(0,0,0,0.07)', marginBottom: '1rem' }}>
               <h2 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', color: '#062d3a' }}>Feeding Guidance for {result.fishCount} Fish</h2>
+
+              <div style={{ background: '#d4f0ec', borderRadius: '10px', padding: '1rem', marginBottom: '1rem' }}>
+                <p style={{ fontSize: '11px', fontWeight: 500, color: '#0e6b6b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>How Much To Feed</p>
+                <p style={{ fontSize: '15px', fontWeight: 600, color: '#0e6b6b' }}>{result.amount}</p>
+              </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
                 <div style={{ background: '#E6F1FB', borderRadius: '10px', padding: '1rem', textAlign: 'center' }}>
