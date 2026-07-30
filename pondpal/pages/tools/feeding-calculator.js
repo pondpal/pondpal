@@ -17,6 +17,33 @@ const bottomFeederPond = ['weather-loach', 'golden-tench', 'sturgeon']
 // decimals below 1oz so the range stays meaningful.
 const formatOz = (n) => n < 1 ? n.toFixed(2) : n.toFixed(1)
 
+// Rough approximation only — actual weight per teaspoon varies a lot by food type
+// (fluffy flake vs. dense sinking pellets can differ 2-3x), so this is meant as an
+// intuitive "how much to scoop" reference alongside the ounce figure, not a precise unit.
+// Scales up to tablespoons/cups for larger ponds so it never shows something like "54 tsp".
+const OZ_PER_TSP = 0.07
+const formatFraction = (n) => {
+  const rounded = Math.round(n * 4) / 4
+  const whole = Math.floor(rounded)
+  const frac = rounded - whole
+  const fracGlyph = frac === 0.25 ? '¼' : frac === 0.5 ? '½' : frac === 0.75 ? '¾' : ''
+  return (whole > 0 ? whole : '') + fracGlyph
+}
+const formatVolume = (oz) => {
+  const tsp = oz / OZ_PER_TSP
+  if (tsp < 0.15) return 'a light pinch'
+  if (tsp < 3) return `${formatFraction(tsp)} tsp`
+  const tbsp = tsp / 3
+  if (tbsp < 16) return `${formatFraction(tbsp)} tbsp`
+  const cups = tbsp / 16
+  return `${formatFraction(cups)} cup${cups > 1 ? 's' : ''}`
+}
+const formatVolumeRange = (ozMin, ozMax) => {
+  const minStr = formatVolume(ozMin)
+  const maxStr = formatVolume(ozMax)
+  return minStr === maxStr ? `≈ ${minStr}` : `≈ ${minStr}–${maxStr}`
+}
+
 // Feeding guidance for anything that isn't an outdoor pond fish (indoor tanks are
 // heated and don't have the seasonal temperature swings pond fish experience, so
 // there's no winter shutdown here — just steady year-round feeding).
@@ -106,8 +133,10 @@ export default function FeedingCalculator() {
       totalWeightLbs: totalWeightLbs.toFixed(1),
       dailyMin: formatOz(dailyOzMin),
       dailyMax: formatOz(dailyOzMax),
+      dailyTsp: formatVolumeRange(dailyOzMin, dailyOzMax),
       perMealMin: formatOz(perMealOzMin),
       perMealMax: formatOz(perMealOzMax),
+      perMealTsp: formatVolumeRange(perMealOzMin, perMealOzMax),
       tinyAmount: dailyOzMax < 0.05,
       food: isBottomFeeder ? `Sinking wafers or pellets — this is a bottom feeder, so standard floating ${rec.food.toLowerCase()} isn't a great fit` : rec.food,
       freq: rec.freq,
@@ -296,8 +325,8 @@ export default function FeedingCalculator() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
                   {[
-                    { label: 'Daily Total', value: result.dailyMin + '–' + result.dailyMax, unit: 'ounces per day', color: '#d4f0ec', textColor: '#0e6b6b' },
-                    { label: 'Per Meal', value: result.perMealMin + '–' + result.perMealMax, unit: 'ounces per feeding', color: '#faeeda', textColor: '#854F0B' },
+                    { label: 'Daily Total', value: result.dailyMin + '–' + result.dailyMax, unit: 'ounces per day', tsp: result.dailyTsp, color: '#d4f0ec', textColor: '#0e6b6b' },
+                    { label: 'Per Meal', value: result.perMealMin + '–' + result.perMealMax, unit: 'ounces per feeding', tsp: result.perMealTsp, color: '#faeeda', textColor: '#854F0B' },
                     { label: 'Feeding Frequency', value: result.freq, unit: '', color: '#E6F1FB', textColor: '#185FA5' },
                     { label: 'Food Type', value: result.food, unit: '', color: '#e8e4f8', textColor: '#4a3d8f' },
                   ].map((m, i) => (
@@ -305,6 +334,7 @@ export default function FeedingCalculator() {
                       <p style={{ fontSize: '11px', fontWeight: 500, color: m.textColor, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>{m.label}</p>
                       <p style={{ fontSize: i < 2 ? '24px' : '14px', fontWeight: 600, color: m.textColor, fontFamily: i < 2 ? 'Lora, serif' : 'inherit', lineHeight: 1.3 }}>{m.value}</p>
                       {m.unit && <p style={{ fontSize: '11px', color: m.textColor, opacity: 0.8, marginTop: '2px' }}>{m.unit}</p>}
+                      {m.tsp && <p style={{ fontSize: '12px', color: m.textColor, marginTop: '4px', fontWeight: 500 }}>{m.tsp}</p>}
                     </div>
                   ))}
                 </div>
@@ -372,7 +402,7 @@ export default function FeedingCalculator() {
           )}
 
           <div style={{ padding: '1.25rem', background: '#fff', borderRadius: '14px', border: '1px solid rgba(0,0,0,0.07)', fontSize: '13px', color: '#5a7a82' }}>
-            <strong style={{ color: '#1a2e35' }}>💡 About these calculations:</strong> Pond fish amounts are estimated at 1–2% of total body weight, the standard guideline for outdoor pond fish. Indoor/saltwater guidance is qualitative rather than weight-based, since body shape varies too much between species (a betta and a tang of the same length weigh very differently) for a single formula to stay accurate. Individual fish appetites vary — always observe your fish and adjust accordingly.
+            <strong style={{ color: '#1a2e35' }}>💡 About these calculations:</strong> Pond fish amounts are estimated at 1–2% of total body weight, the standard guideline for outdoor pond fish. The teaspoon figure is a rough "how much to scoop" reference, not a precise unit — dense sinking pellets can weigh 2-3x as much per teaspoon as light, fluffy flake food. Indoor/saltwater guidance is qualitative rather than weight-based, since body shape varies too much between species (a betta and a tang of the same length weigh very differently) for a single formula to stay accurate. Individual fish appetites vary — always observe your fish and adjust accordingly.
           </div>
         </div>
       </div>
