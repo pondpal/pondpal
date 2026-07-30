@@ -97,21 +97,26 @@ export function estimateCost(categoryKey, fishCount, electricityRate) {
   return computeGroup([{ category: categoryKey, count: fishCount }], electricityRate)
 }
 
-// fishList: [{ category, count }] — entries may span multiple environments (pond/indoor/saltwater).
-// Each environment present gets its own combined estimate (shared tank/pond, structure, filter, heater),
-// since fish in different environments can't share one physical setup.
-export function estimateMultiCost(fishList, electricityRate) {
-  const valid = (fishList || []).filter(f => costCategories[f.category] && f.count > 0)
-  if (valid.length === 0) return null
+// setups: [{ env, fish: [{ category, count }] }] — each setup is a distinct physical
+// tank or pond (its own structure/filter/heater), so two setups can share the same
+// environment (e.g. two separate indoor tanks) without being merged into one.
+export function estimateSetupsCost(setups, electricityRate) {
+  const validSetups = (setups || [])
+    .map(s => ({ env: s.env, fish: (s.fish || []).filter(f => costCategories[f.category] && f.count > 0) }))
+    .filter(s => environments[s.env] && s.fish.length > 0)
 
-  const grouped = { pond: [], indoor: [], saltwater: [] }
-  for (const f of valid) {
-    grouped[costCategories[f.category].env].push(f)
-  }
+  if (validSetups.length === 0) return null
 
-  const sections = Object.keys(environments)
-    .filter(env => grouped[env].length > 0)
-    .map(env => ({ env, ...environments[env], ...computeGroup(grouped[env], electricityRate) }))
+  const envTotalCounts = {}
+  validSetups.forEach(s => { envTotalCounts[s.env] = (envTotalCounts[s.env] || 0) + 1 })
+
+  const envRunningCounts = {}
+  const sections = validSetups.map(s => {
+    envRunningCounts[s.env] = (envRunningCounts[s.env] || 0) + 1
+    const meta = environments[s.env]
+    const label = envTotalCounts[s.env] > 1 ? `${meta.label} #${envRunningCounts[s.env]}` : meta.label
+    return { env: s.env, emoji: meta.emoji, label, ...computeGroup(s.fish, electricityRate) }
+  })
 
   const grandTotal = {
     upfront: round(sections.reduce((s, sec) => s + sec.upfront.total, 0)),

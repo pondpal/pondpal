@@ -1,4 +1,4 @@
-import { estimateCost, estimateMultiCost } from './costEstimate'
+import { estimateCost, estimateSetupsCost } from './costEstimate'
 
 describe('estimateCost', () => {
   test('returns null for an unknown category or missing fish count', () => {
@@ -74,18 +74,18 @@ describe('estimateCost', () => {
   })
 })
 
-describe('estimateMultiCost', () => {
-  test('returns null for an empty or entirely invalid fish list', () => {
-    expect(estimateMultiCost([], 0.16)).toBeNull()
-    expect(estimateMultiCost(null, 0.16)).toBeNull()
-    expect(estimateMultiCost([{ category: 'not-real', count: 3 }], 0.16)).toBeNull()
-    expect(estimateMultiCost([{ category: 'koi', count: 0 }], 0.16)).toBeNull()
+describe('estimateSetupsCost', () => {
+  test('returns null for an empty or entirely invalid setup list', () => {
+    expect(estimateSetupsCost([], 0.16)).toBeNull()
+    expect(estimateSetupsCost(null, 0.16)).toBeNull()
+    expect(estimateSetupsCost([{ env: 'pond', fish: [{ category: 'not-real', count: 3 }] }], 0.16)).toBeNull()
+    expect(estimateSetupsCost([{ env: 'pond', fish: [{ category: 'koi', count: 0 }] }], 0.16)).toBeNull()
+    expect(estimateSetupsCost([{ env: 'not-an-env', fish: [{ category: 'koi', count: 2 }] }], 0.16)).toBeNull()
   })
 
-  test('combines multiple pond fish types into a single pond section', () => {
-    const result = estimateMultiCost([
-      { category: 'koi', count: 2 },
-      { category: 'goldfish-pond', count: 2 },
+  test('combines multiple fish types within a single setup', () => {
+    const result = estimateSetupsCost([
+      { env: 'pond', fish: [{ category: 'koi', count: 2 }, { category: 'goldfish-pond', count: 2 }] },
     ], 0.16)
     expect(result.sections).toHaveLength(1)
     expect(result.sections[0].env).toBe('pond')
@@ -93,20 +93,32 @@ describe('estimateMultiCost', () => {
     expect(result.sections[0].recommendedGallons).toBe(560)
   })
 
-  test('splits fish across environments into separate sections', () => {
-    const result = estimateMultiCost([
-      { category: 'koi', count: 2 },
-      { category: 'betta', count: 1 },
-      { category: 'saltwater', count: 3 },
+  test('keeps two setups of the same environment as separate sections', () => {
+    const result = estimateSetupsCost([
+      { env: 'indoor', fish: [{ category: 'betta', count: 1 }] },
+      { env: 'indoor', fish: [{ category: 'tropical', count: 6 }] },
     ], 0.16)
-    const envs = result.sections.map(s => s.env).sort()
-    expect(envs).toEqual(['indoor', 'pond', 'saltwater'])
+    expect(result.sections).toHaveLength(2)
+    expect(result.sections.every(s => s.env === 'indoor')).toBe(true)
+    expect(result.sections[0].label).toBe('Indoor Tank #1')
+    expect(result.sections[1].label).toBe('Indoor Tank #2')
+    // each setup's own gallons, not combined
+    expect(result.sections[0].recommendedGallons).toBe(5)
+    expect(result.sections[1].recommendedGallons).toBe(20)
+  })
+
+  test('does not number a section when only one setup of that environment exists', () => {
+    const result = estimateSetupsCost([
+      { env: 'pond', fish: [{ category: 'koi', count: 2 }] },
+      { env: 'saltwater', fish: [{ category: 'saltwater', count: 3 }] },
+    ], 0.16)
+    expect(result.sections.map(s => s.label)).toEqual(['Outdoor Pond', 'Saltwater Tank'])
   })
 
   test('grand total equals the sum of each section total', () => {
-    const result = estimateMultiCost([
-      { category: 'koi', count: 2 },
-      { category: 'tropical', count: 6 },
+    const result = estimateSetupsCost([
+      { env: 'pond', fish: [{ category: 'koi', count: 2 }] },
+      { env: 'indoor', fish: [{ category: 'tropical', count: 6 }] },
     ], 0.16)
     const expectedUpfront = result.sections.reduce((s, sec) => s + sec.upfront.total, 0)
     const expectedMonthly = result.sections.reduce((s, sec) => s + sec.monthly.total, 0)
@@ -114,11 +126,18 @@ describe('estimateMultiCost', () => {
     expect(result.grandTotal.monthly).toBeCloseTo(expectedMonthly, 2)
   })
 
-  test('ignores invalid entries mixed in with valid ones', () => {
-    const result = estimateMultiCost([
-      { category: 'koi', count: 2 },
-      { category: 'not-real', count: 5 },
-      { category: 'betta', count: 0 },
+  test('ignores invalid fish entries mixed in with valid ones', () => {
+    const result = estimateSetupsCost([
+      { env: 'pond', fish: [{ category: 'koi', count: 2 }, { category: 'not-real', count: 5 }, { category: 'betta', count: 0 }] },
+    ], 0.16)
+    expect(result.sections).toHaveLength(1)
+    expect(result.sections[0].env).toBe('pond')
+  })
+
+  test('drops a setup entirely if it ends up with no valid fish', () => {
+    const result = estimateSetupsCost([
+      { env: 'pond', fish: [{ category: 'koi', count: 2 }] },
+      { env: 'indoor', fish: [{ category: 'not-real', count: 5 }] },
     ], 0.16)
     expect(result.sections).toHaveLength(1)
     expect(result.sections[0].env).toBe('pond')
