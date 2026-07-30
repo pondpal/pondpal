@@ -105,7 +105,11 @@ export default function CostCalculator() {
                   {setup.fish.map((f, fi) => (
                     <div key={fi} style={{ display: 'grid', gridTemplateColumns: setup.fish.length > 1 ? '2fr 1fr auto' : '2fr 1fr', gap: '10px' }}>
                       <select value={f.category} onChange={e => { updateFish(si, fi, 'category', e.target.value); setResult(null) }} style={inputStyle}>
-                        {categoriesByEnv[setup.env].map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                        {Object.entries(environments).map(([env, meta]) => (
+                          <optgroup key={env} label={`${meta.emoji} ${meta.label}`}>
+                            {categoriesByEnv[env].map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                          </optgroup>
+                        ))}
                       </select>
                       <input type="number" placeholder="e.g. 2" value={f.count}
                         onChange={e => { updateFish(si, fi, 'count', e.target.value); setResult(null) }}
