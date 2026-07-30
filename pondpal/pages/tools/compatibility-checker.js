@@ -5,7 +5,8 @@ import { useState } from 'react'
 const freshwaterFish = [
   { value: 'koi', label: 'Koi' },
   { value: 'goldfish', label: 'Goldfish — Fancy' },
-  { value: 'common goldfish', label: 'Goldfish — Common / Comet' },
+  { value: 'common goldfish', label: 'Goldfish — Common' },
+  { value: 'comet goldfish', label: 'Goldfish — Comet' },
   { value: 'betta', label: 'Betta Fish' },
   { value: 'african cichlid', label: 'Cichlid — African (Malawi/Tanganyika)' },
   { value: 'south american cichlid', label: 'Cichlid — South American' },

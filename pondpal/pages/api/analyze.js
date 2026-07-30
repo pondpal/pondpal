@@ -18,7 +18,8 @@ export default async function handler(req, res) {
   const guidelines = {
     'koi': 'Use the 250 gallon per koi rule and the 10x body length swimming space guideline. Koi can reach 18-24 inches as adults.',
     'goldfish': 'Use 20-30 gallons per fancy goldfish. They produce high waste and need strong filtration.',
-    'common goldfish': 'Use 30-40 gallons per fish. Common and comet goldfish grow large and do best in ponds.',
+    'common goldfish': 'Use 30-40 gallons per fish. Common goldfish grow large and do best in ponds.',
+    'comet goldfish': 'Use 40-45 gallons per fish. Comets have a long, deeply forked tail and are very active swimmers, so they need even more open swimming space than common goldfish. They grow large and do best in ponds.',
     'betta': 'Minimum 5 gallons for one betta alone. Bettas need gentle filtration and should not be kept with other bettas.',
     'african cichlid': 'African Rift Lake cichlids need 55+ gallons minimum. Overcrowding is often used deliberately to spread aggression. Hard alkaline water pH 7.8-8.5 is essential.',
     'south american cichlid': 'South American cichlids vary widely by species. Most prefer soft acidic water pH 6.0-7.5. Check species-specific requirements.',
