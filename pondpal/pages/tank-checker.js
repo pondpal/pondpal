@@ -37,7 +37,8 @@ export default function TankChecker() {
   const freshwaterFish = [
     { value: 'koi', label: 'Koi' },
     { value: 'goldfish', label: 'Goldfish — Fancy' },
-    { value: 'common goldfish', label: 'Goldfish — Common / Comet' },
+    { value: 'common goldfish', label: 'Goldfish — Common' },
+    { value: 'comet goldfish', label: 'Goldfish — Comet' },
     { value: 'betta', label: 'Betta Fish' },
     { value: 'african cichlid', label: 'Cichlid — African (Malawi/Tanganyika)' },
     { value: 'south american cichlid', label: 'Cichlid — South American' },
@@ -77,7 +78,7 @@ export default function TankChecker() {
 
   const fishOptions = form.waterType === 'saltwater' ? saltwaterFish : freshwaterFish
 
-  const hasPondFish = form.fish.some(f => ['koi', 'goldfish', 'common goldfish'].includes(f.fishType))
+  const hasPondFish = form.fish.some(f => ['koi', 'goldfish', 'common goldfish', 'comet goldfish'].includes(f.fishType))
 
   const tankTypes = form.waterType === 'saltwater'
     ? ['Indoor Aquarium', 'Reef Tank', 'Nano Tank']

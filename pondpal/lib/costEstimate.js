@@ -1,7 +1,8 @@
 export const costCategories = {
   'koi': { label: 'Koi', env: 'pond', isPond: true, needsHeater: false, isSaltwater: false, fishPrice: 35, monthlyFoodPerFish: 4, gallonsPerFish: 250, minGallons: 500, pumpWattPerGallon: 0.08 },
   'goldfish-pond': { label: 'Goldfish — Fancy', env: 'pond', isPond: true, needsHeater: false, isSaltwater: false, fishPrice: 8, monthlyFoodPerFish: 2, gallonsPerFish: 30, minGallons: 150, pumpWattPerGallon: 0.1 },
-  'common-goldfish': { label: 'Goldfish — Common / Comet', env: 'pond', isPond: true, needsHeater: false, isSaltwater: false, fishPrice: 5, monthlyFoodPerFish: 2, gallonsPerFish: 40, minGallons: 150, pumpWattPerGallon: 0.1 },
+  'common-goldfish': { label: 'Goldfish — Common', env: 'pond', isPond: true, needsHeater: false, isSaltwater: false, fishPrice: 5, monthlyFoodPerFish: 2, gallonsPerFish: 40, minGallons: 150, pumpWattPerGallon: 0.1 },
+  'comet-goldfish': { label: 'Goldfish — Comet', env: 'pond', isPond: true, needsHeater: false, isSaltwater: false, fishPrice: 4, monthlyFoodPerFish: 2, gallonsPerFish: 45, minGallons: 150, pumpWattPerGallon: 0.1 },
   'shubunkin': { label: 'Shubunkin', env: 'pond', isPond: true, needsHeater: false, isSaltwater: false, fishPrice: 10, monthlyFoodPerFish: 2, gallonsPerFish: 20, minGallons: 150, pumpWattPerGallon: 0.1 },
   'golden-orfe': { label: 'Golden Orfe (Ide)', env: 'pond', isPond: true, needsHeater: false, isSaltwater: false, fishPrice: 15, monthlyFoodPerFish: 3, gallonsPerFish: 150, minGallons: 1000, pumpWattPerGallon: 0.08 },
   'weather-loach': { label: 'Weather Loach (Dojo Loach)', env: 'pond', isPond: true, needsHeater: false, isSaltwater: false, fishPrice: 6, monthlyFoodPerFish: 1, gallonsPerFish: 10, minGallons: 100, pumpWattPerGallon: 0.1 },
