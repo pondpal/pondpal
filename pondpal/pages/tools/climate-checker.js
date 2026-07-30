@@ -33,11 +33,41 @@ export default function ClimateChecker() {
   const [fishType, setFishType] = useState('koi')
   const [depth, setDepth] = useState('')
   const [result, setResult] = useState(null)
+  const [zip, setZip] = useState('')
+  const [zipLoading, setZipLoading] = useState(false)
+  const [zipMessage, setZipMessage] = useState('')
 
   const needsDepth = fishType !== 'tropical'
 
   const check = () => {
     setResult(getVerdict(zone, fishType, depth))
+  }
+
+  const lookupZone = async () => {
+    if (!/^\d{5}$/.test(zip)) {
+      setZipMessage('Please enter a valid 5-digit ZIP code.')
+      return
+    }
+    setZipLoading(true)
+    setZipMessage('')
+    try {
+      const res = await fetch('/api/zone-lookup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ zip })
+      })
+      const json = await res.json()
+      if (json.zone) {
+        setZone(json.zone)
+        setResult(null)
+        setZipMessage('✅ Set to Zone ' + json.zone + ' based on ZIP ' + zip + ' — adjust below if that doesn\'t look right.')
+      } else {
+        setZipMessage(json.result || 'Something went wrong — please select your zone manually below.')
+      }
+    } catch (e) {
+      setZipMessage('Something went wrong — please select your zone manually below.')
+    }
+    setZipLoading(false)
   }
 
   const labelStyle = { display: 'block', fontSize: '11px', fontWeight: 500, color: '#5a7a82', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '5px' }
@@ -60,9 +90,36 @@ export default function ClimateChecker() {
         <div className="tool-form-inner">
           <div className="form-card">
             <h2>Your Climate & Fish</h2>
-            <p style={{ fontSize: '13px', color: '#5a7a82', marginBottom: '1.25rem' }}>
-              Not sure your zone? Your USDA Hardiness Zone is based on your area's average annual minimum winter temperature — a quick search for "USDA hardiness zone" plus your zip code will tell you.
-            </p>
+
+            <div style={{ background: '#f0faf8', borderRadius: '10px', padding: '1rem 1.25rem', marginBottom: '1.25rem', border: '1px solid rgba(26,158,142,0.2)' }}>
+              <label style={labelStyle}>Not sure your zone? Look it up with your ZIP code</label>
+              <div style={{ display: 'flex', gap: '10px', marginTop: '6px' }}>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="e.g. 90210"
+                  value={zip}
+                  maxLength={5}
+                  onChange={e => { setZip(e.target.value.replace(/\D/g, '')); setZipMessage('') }}
+                  style={{ ...inputStyle, maxWidth: '160px' }}
+                />
+                <button
+                  type="button"
+                  onClick={lookupZone}
+                  disabled={zipLoading}
+                  className="submit-btn"
+                  style={{ padding: '0 1.25rem', height: '40px', width: 'auto' }}
+                >
+                  {zipLoading ? 'Looking up...' : 'Find My Zone'}
+                </button>
+              </div>
+              {zipMessage && (
+                <p style={{ fontSize: '13px', color: '#0e6b6b', marginTop: '0.75rem' }}>{zipMessage}</p>
+              )}
+              <p style={{ fontSize: '11px', color: '#5a7a82', marginTop: '0.75rem' }}>
+                This is an AI estimate — double check the zone selected below matches what you expect before relying on it.
+              </p>
+            </div>
 
             <div className="form-grid-2">
               <div className="fg">
