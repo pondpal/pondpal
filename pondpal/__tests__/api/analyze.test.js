@@ -38,6 +38,11 @@ describe('/api/analyze', () => {
     }
   }
 
+  const compatibilityBody = {
+    type: 'compatibility',
+    data: { waterType: 'freshwater', fish: [{ fishType: 'betta' }, { fishType: 'african cichlid' }] }
+  }
+
   test('rejects non-POST requests', async () => {
     const res = mockRes()
     await handler(mockReq({ method: 'GET' }), res)
@@ -79,6 +84,24 @@ describe('/api/analyze', () => {
     expect(prompt).toContain('2x koi')
     expect(prompt).toContain('2x goldfish')
     expect(prompt).toContain('Are these species actually compatible')
+  })
+
+  test('builds a compatibility prompt naming both species and asking for a verdict', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ content: [{ text: 'NOT COMPATIBLE' }] })
+    })
+    const res = mockRes()
+    await handler(mockReq({ ip: 'analyze-compat', body: compatibilityBody }), res)
+    expect(res.status).toHaveBeenCalledWith(200)
+    expect(res.json).toHaveBeenCalledWith({ result: 'NOT COMPATIBLE' })
+
+    const sentBody = JSON.parse(global.fetch.mock.calls[0][1].body)
+    const prompt = sentBody.messages[0].content
+    expect(prompt).toContain('betta')
+    expect(prompt).toContain('african cichlid')
+    expect(prompt).toContain('COMPATIBLE, USE CAUTION, or NOT COMPATIBLE')
+    expect(prompt).toContain('Temperament and aggression')
   })
 
   test('embeds the Anthropic API error in a 200 response', async () => {

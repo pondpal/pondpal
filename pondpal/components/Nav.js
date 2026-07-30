@@ -11,6 +11,7 @@ export default function Nav() {
     { href: '/tools/feeding-calculator', label: 'Feeding Calculator' },
     { href: '/tools/ask-pond-pal', label: 'Ask Pond Pal' },
     { href: '/tools/climate-checker', label: 'Climate Checker' },
+    { href: '/tools/compatibility-checker', label: 'Compatibility Checker' },
     { href: '/care-guides', label: 'Care Guides' },
     { href: '/blog', label: 'Blog' },
     { href: '/about', label: 'About' },
