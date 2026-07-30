@@ -33,7 +33,7 @@ export default function ClimateChecker() {
   const [fishType, setFishType] = useState('koi')
   const [depth, setDepth] = useState('')
   const [result, setResult] = useState(null)
-  const [zip, setZip] = useState('')
+  const [location, setLocation] = useState('')
   const [zipLoading, setZipLoading] = useState(false)
   const [zipMessage, setZipMessage] = useState('')
 
@@ -44,8 +44,8 @@ export default function ClimateChecker() {
   }
 
   const lookupZone = async () => {
-    if (!/^\d{5}$/.test(zip)) {
-      setZipMessage('Please enter a valid 5-digit ZIP code.')
+    if (!/^[A-Za-z0-9 ,.-]{2,40}$/.test(location.trim())) {
+      setZipMessage('Please enter a ZIP or postal code.')
       return
     }
     setZipLoading(true)
@@ -54,13 +54,13 @@ export default function ClimateChecker() {
       const res = await fetch('/api/zone-lookup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ zip })
+        body: JSON.stringify({ location: location.trim() })
       })
       const json = await res.json()
       if (json.zone) {
         setZone(json.zone)
         setResult(null)
-        setZipMessage('✅ Set to Zone ' + json.zone + ' based on ZIP ' + zip + ' — adjust below if that doesn\'t look right.')
+        setZipMessage('✅ Set to Zone ' + json.zone + ' based on "' + location.trim() + '" — adjust below if that doesn\'t look right.')
       } else {
         setZipMessage(json.result || 'Something went wrong — please select your zone manually below.')
       }
@@ -92,16 +92,18 @@ export default function ClimateChecker() {
             <h2>Your Climate & Fish</h2>
 
             <div style={{ background: '#f0faf8', borderRadius: '10px', padding: '1rem 1.25rem', marginBottom: '1.25rem', border: '1px solid rgba(26,158,142,0.2)' }}>
-              <label style={labelStyle}>Not sure your zone? Look it up with your ZIP code</label>
+              <label style={labelStyle}>Not sure your zone? Look it up with your ZIP or postal code</label>
+              <p style={{ fontSize: '11px', color: '#5a7a82', marginBottom: '6px' }}>
+                Outside the US? Include your country for a more accurate result — e.g. "SW1A 1AA, UK" or "K1A 0B1, Canada".
+              </p>
               <div style={{ display: 'flex', gap: '10px', marginTop: '6px' }}>
                 <input
                   type="text"
-                  inputMode="numeric"
-                  placeholder="e.g. 90210"
-                  value={zip}
-                  maxLength={5}
-                  onChange={e => { setZip(e.target.value.replace(/\D/g, '')); setZipMessage('') }}
-                  style={{ ...inputStyle, maxWidth: '160px' }}
+                  placeholder="e.g. 90210 or SW1A 1AA, UK"
+                  value={location}
+                  maxLength={40}
+                  onChange={e => { setLocation(e.target.value); setZipMessage('') }}
+                  style={{ ...inputStyle, maxWidth: '260px' }}
                 />
                 <button
                   type="button"
