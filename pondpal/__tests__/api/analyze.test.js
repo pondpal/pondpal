@@ -27,7 +27,15 @@ describe('/api/analyze', () => {
 
   const tankBody = {
     type: 'tank',
-    data: { fishType: 'koi', waterType: 'freshwater', tankType: 'pond', gallons: '1000', fishCount: '4', fishSize: '12', filtration: 'yes', planted: 'no' }
+    data: { waterType: 'freshwater', tankType: 'pond', gallons: '1000', filtration: 'yes', planted: 'no', fish: [{ fishType: 'koi', fishCount: '4', fishSize: '12' }] }
+  }
+
+  const mixedTankBody = {
+    type: 'tank',
+    data: {
+      waterType: 'freshwater', tankType: 'pond', gallons: '1000', filtration: 'yes', planted: 'no',
+      fish: [{ fishType: 'koi', fishCount: '2', fishSize: '12' }, { fishType: 'goldfish', fishCount: '2', fishSize: '6' }]
+    }
   }
 
   test('rejects non-POST requests', async () => {
@@ -54,6 +62,23 @@ describe('/api/analyze', () => {
     await handler(mockReq({ ip: 'analyze-success', body: tankBody }), res)
     expect(res.status).toHaveBeenCalledWith(200)
     expect(res.json).toHaveBeenCalledWith({ result: 'Your pond looks great!' })
+  })
+
+  test('builds a mixed-species compatibility prompt when multiple fish types are given', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ content: [{ text: 'Looks compatible!' }] })
+    })
+    const res = mockRes()
+    await handler(mockReq({ ip: 'analyze-mixed', body: mixedTankBody }), res)
+    expect(res.status).toHaveBeenCalledWith(200)
+
+    const sentBody = JSON.parse(global.fetch.mock.calls[0][1].body)
+    const prompt = sentBody.messages[0].content
+    expect(prompt).toContain('mixed-species tank')
+    expect(prompt).toContain('2x koi')
+    expect(prompt).toContain('2x goldfish')
+    expect(prompt).toContain('Are these species actually compatible')
   })
 
   test('embeds the Anthropic API error in a 200 response', async () => {
