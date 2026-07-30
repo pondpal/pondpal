@@ -1,40 +1,65 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
-import { costCategories, environments, estimateMultiCost } from '../../lib/costEstimate'
+import { costCategories, environments, estimateSetupsCost } from '../../lib/costEstimate'
 
 const categoriesByEnv = Object.keys(environments).reduce((acc, env) => {
   acc[env] = Object.entries(costCategories).filter(([, c]) => c.env === env).map(([value, c]) => ({ value, label: c.label }))
   return acc
 }, {})
 
+const defaultFishForEnv = (env) => categoriesByEnv[env][0].value
+const newSetup = (env) => ({ env, fish: [{ category: defaultFishForEnv(env), count: '' }] })
+
 const money = (n) => '$' + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
 export default function CostCalculator() {
-  const [fishList, setFishList] = useState([{ category: 'koi', count: '' }])
+  const [setups, setSetups] = useState([newSetup('pond')])
   const [electricityRate, setElectricityRate] = useState('0.16')
   const [result, setResult] = useState(null)
 
-  const updateFish = (index, k, v) => setFishList(list => {
+  const updateSetupEnv = (setupIndex, env) => setSetups(list => {
     const next = [...list]
-    next[index] = { ...next[index], [k]: v }
+    next[setupIndex] = newSetup(env)
     return next
   })
 
-  const addFish = () => setFishList(list => [...list, { category: 'koi', count: '' }])
-  const removeFish = (index) => setFishList(list => list.filter((_, i) => i !== index))
+  const addSetup = () => setSetups(list => [...list, newSetup('indoor')])
+  const removeSetup = (setupIndex) => setSetups(list => list.filter((_, i) => i !== setupIndex))
+
+  const updateFish = (setupIndex, fishIndex, k, v) => setSetups(list => {
+    const next = [...list]
+    const fish = [...next[setupIndex].fish]
+    fish[fishIndex] = { ...fish[fishIndex], [k]: v }
+    next[setupIndex] = { ...next[setupIndex], fish }
+    return next
+  })
+
+  const addFish = (setupIndex) => setSetups(list => {
+    const next = [...list]
+    const env = next[setupIndex].env
+    next[setupIndex] = { ...next[setupIndex], fish: [...next[setupIndex].fish, { category: defaultFishForEnv(env), count: '' }] }
+    return next
+  })
+
+  const removeFish = (setupIndex, fishIndex) => setSetups(list => {
+    const next = [...list]
+    next[setupIndex] = { ...next[setupIndex], fish: next[setupIndex].fish.filter((_, i) => i !== fishIndex) }
+    return next
+  })
 
   const calculate = () => {
-    if (fishList.some(f => !f.count || parseInt(f.count, 10) < 1)) {
-      alert('Please enter how many fish for each fish type you plan to keep.')
+    if (setups.some(s => s.fish.some(f => !f.count || parseInt(f.count, 10) < 1))) {
+      alert('Please enter how many fish for each fish type in every tank/pond.')
       return
     }
-    const entries = fishList.map(f => ({ category: f.category, count: parseInt(f.count, 10) }))
-    setResult(estimateMultiCost(entries, parseFloat(electricityRate)))
+    const payload = setups.map(s => ({ env: s.env, fish: s.fish.map(f => ({ category: f.category, count: parseInt(f.count, 10) })) }))
+    setResult(estimateSetupsCost(payload, parseFloat(electricityRate)))
   }
 
   const labelStyle = { display: 'block', fontSize: '11px', fontWeight: 500, color: '#5a7a82', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '5px' }
   const inputStyle = { width: '100%', height: '40px', padding: '0 12px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: '8px', fontSize: '14px', fontFamily: 'inherit', color: '#1a2e35', background: '#faf7f2' }
+  const removeBtnStyle = { height: '40px', padding: '0 12px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: '8px', background: '#fff', color: '#A32D2D', cursor: 'pointer', fontSize: '13px' }
 
   return (
     <>
@@ -54,44 +79,56 @@ export default function CostCalculator() {
           <div className="form-card">
             <h2>Your Planned Setup</h2>
             <p style={{ fontSize: '13px', color: '#5a7a82', marginBottom: '1.25rem' }}>
-              Add every fish you're planning to keep. If they span an indoor tank, an outdoor pond, and/or a saltwater tank, we'll estimate each setup separately, then give you a combined total.
+              Add a tank or pond for each separate setup you have — say, an outdoor pond and two different indoor tanks. Each gets its own estimate, then we'll give you a combined total.
             </p>
 
-            <div style={{ marginBottom: '1.25rem' }}>
-              <label style={labelStyle}>Fish You Plan to Keep</label>
-              <div style={{ display: 'grid', gap: '0.75rem' }}>
-                {fishList.map((f, i) => (
-                  <div key={i} style={{ display: 'grid', gridTemplateColumns: fishList.length > 1 ? '2fr 1fr auto' : '2fr 1fr', gap: '10px', alignItems: 'end' }}>
-                    <div>
-                      {i === 0 && <label style={labelStyle}>Fish Type</label>}
-                      <select value={f.category} onChange={e => { updateFish(i, 'category', e.target.value); setResult(null) }} style={inputStyle}>
-                        {Object.entries(environments).map(([env, meta]) => (
-                          <optgroup key={env} label={`${meta.emoji} ${meta.label}`}>
-                            {categoriesByEnv[env].map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-                          </optgroup>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      {i === 0 && <label style={labelStyle}>How Many?</label>}
-                      <input type="number" placeholder="e.g. 4" value={f.count}
-                        onChange={e => { updateFish(i, 'count', e.target.value); setResult(null) }}
-                        style={inputStyle} />
-                    </div>
-                    {fishList.length > 1 && (
-                      <button type="button" onClick={() => { removeFish(i); setResult(null) }}
-                        style={{ height: '40px', padding: '0 12px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: '8px', background: '#fff', color: '#A32D2D', cursor: 'pointer', fontSize: '13px' }}>
-                        Remove
-                      </button>
-                    )}
+            {setups.map((setup, si) => (
+              <div key={si} style={{ border: '1px solid rgba(0,0,0,0.1)', borderRadius: '10px', padding: '1rem', marginBottom: '1rem', background: '#fdfcfa' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: setups.length > 1 ? '1fr auto' : '1fr', gap: '10px', alignItems: 'end', marginBottom: '1rem' }}>
+                  <div>
+                    <label style={labelStyle}>Tank / Pond #{si + 1} Type</label>
+                    <select value={setup.env} onChange={e => { updateSetupEnv(si, e.target.value); setResult(null) }} style={inputStyle}>
+                      {Object.entries(environments).map(([env, meta]) => (
+                        <option key={env} value={env}>{meta.emoji} {meta.label}</option>
+                      ))}
+                    </select>
                   </div>
-                ))}
+                  {setups.length > 1 && (
+                    <button type="button" onClick={() => { removeSetup(si); setResult(null) }} style={removeBtnStyle}>
+                      Remove This Setup
+                    </button>
+                  )}
+                </div>
+
+                <label style={labelStyle}>Fish in This {environments[setup.env].label}</label>
+                <div style={{ display: 'grid', gap: '0.75rem', marginTop: '0.5rem' }}>
+                  {setup.fish.map((f, fi) => (
+                    <div key={fi} style={{ display: 'grid', gridTemplateColumns: setup.fish.length > 1 ? '2fr 1fr auto' : '2fr 1fr', gap: '10px' }}>
+                      <select value={f.category} onChange={e => { updateFish(si, fi, 'category', e.target.value); setResult(null) }} style={inputStyle}>
+                        {categoriesByEnv[setup.env].map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                      </select>
+                      <input type="number" placeholder="e.g. 2" value={f.count}
+                        onChange={e => { updateFish(si, fi, 'count', e.target.value); setResult(null) }}
+                        style={inputStyle} />
+                      {setup.fish.length > 1 && (
+                        <button type="button" onClick={() => { removeFish(si, fi); setResult(null) }} style={removeBtnStyle}>
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <button type="button" onClick={() => addFish(si)}
+                  style={{ marginTop: '0.75rem', padding: '8px 16px', border: '1px dashed #1a9e8e', borderRadius: '8px', background: '#f0faf8', color: '#0e6b6b', cursor: 'pointer', fontSize: '13px', fontWeight: 500 }}>
+                  + Add Another Fish Type
+                </button>
               </div>
-              <button type="button" onClick={addFish}
-                style={{ marginTop: '0.75rem', padding: '8px 16px', border: '1px dashed #1a9e8e', borderRadius: '8px', background: '#f0faf8', color: '#0e6b6b', cursor: 'pointer', fontSize: '13px', fontWeight: 500 }}>
-                + Add Another Fish Type
-              </button>
-            </div>
+            ))}
+
+            <button type="button" onClick={addSetup}
+              style={{ marginBottom: '1.25rem', padding: '8px 16px', border: '1px dashed #062d3a', borderRadius: '8px', background: '#f0f4f5', color: '#062d3a', cursor: 'pointer', fontSize: '13px', fontWeight: 500 }}>
+              + Add Another Tank / Pond
+            </button>
 
             <div className="form-grid-2">
               <div className="fg">
