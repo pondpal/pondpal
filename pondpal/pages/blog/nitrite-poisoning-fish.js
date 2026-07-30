@@ -74,7 +74,7 @@ export default function NitritePoisoning() {
             {[
               { name: 'Seachem Prime', desc: 'Detoxifies nitrite, ammonia & chlorine', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
               { name: 'API Master Test Kit', desc: 'Accurate nitrite testing', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20' },
-              { name: 'API Pond Master Test Kit', desc: 'Pond-specific water testing', url: 'https://www.amazon.com/dp/B0002IHNUO?tag=pondpal20-20' },
+              { name: 'API Pond Master Test Kit', desc: 'Pond-specific water testing', url: 'https://www.amazon.com/dp/B0002DJNN0?tag=pondpal20-20' },
               { name: 'API Ammo Lock', desc: 'Also helps in combined ammonia/nitrite events', url: 'https://www.amazon.com/dp/B0002APNI8?tag=pondpal20-20' },
             ].map((p, i) => (
               <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>

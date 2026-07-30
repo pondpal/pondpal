@@ -5,7 +5,7 @@ import { useState } from 'react'
 const affiliateProducts = [
   { name: 'API Master Test Kit', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20', desc: 'Most trusted freshwater test kit' },
   { name: 'Seachem Prime', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20', desc: 'Detoxifies ammonia instantly' },
-  { name: 'API Pond Master Test Kit', url: 'https://www.amazon.com/dp/B0002IHNUO?tag=pondpal20-20', desc: 'Designed specifically for ponds' },
+  { name: 'API Pond Master Test Kit', url: 'https://www.amazon.com/dp/B0002DJNN0?tag=pondpal20-20', desc: 'Designed specifically for ponds' },
   { name: 'Red Sea Marine Test Kit', url: 'https://www.amazon.com/dp/B001E4EWOE?tag=pondpal20-20', desc: 'Best all-in-one for saltwater' },
 ]
 

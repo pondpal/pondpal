@@ -123,7 +123,7 @@ export default function KoiDiseases() {
         <ProductGrid
           title="Disease treatment kit — be prepared"
           items={[
-            { name: 'API Pond Master Test Kit', desc: 'Test water first — disease often starts here', url: 'https://www.amazon.com/dp/B0002IHNUO?tag=pondpal20-20' },
+            { name: 'API Pond Master Test Kit', desc: 'Test water first — disease often starts here', url: 'https://www.amazon.com/dp/B0002DJNN0?tag=pondpal20-20' },
             { name: 'Ich-X Treatment', desc: 'Highly effective ich treatment', url: 'https://www.amazon.com/dp/B00A4Y17YW?tag=pondpal20-20' },
             { name: 'API General Cure', desc: 'Treats flukes and internal parasites', url: 'https://www.amazon.com/dp/B001F0QT1C?tag=pondpal20-20' },
           ]}
