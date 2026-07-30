@@ -194,7 +194,7 @@ export default function PondCalculator() {
                 <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '1rem' }}>🛒 Essential gear for your {result.gallons.toLocaleString()} gallon pond</p>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                   {[
-                    { name: 'API Pond Master Test Kit', desc: 'Test your water regularly', url: 'https://www.amazon.com/dp/B0002IHNUO?tag=pondpal20-20' },
+                    { name: 'API Pond Master Test Kit', desc: 'Test your water regularly', url: 'https://www.amazon.com/dp/B0002DJNN0?tag=pondpal20-20' },
                     { name: 'Seachem Prime', desc: 'Essential water conditioner', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
                     { name: 'Hikari Staple Koi Food', desc: 'Quality everyday koi food', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
                     { name: 'Hikari Wheat Germ Food', desc: 'Cool weather feeding formula', url: 'https://www.amazon.com/dp/B0002DHYDI?tag=pondpal20-20' },

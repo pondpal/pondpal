@@ -77,7 +77,7 @@ export default function HowManyKoi() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
             {[
               { name: 'API Master Test Kit', desc: 'Monitor ammonia, nitrite & nitrate', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20' },
-              { name: 'API Pond Master Test Kit', desc: 'Designed specifically for ponds', url: 'https://www.amazon.com/dp/B0002IHNUO?tag=pondpal20-20' },
+              { name: 'API Pond Master Test Kit', desc: 'Designed specifically for ponds', url: 'https://www.amazon.com/dp/B0002DJNN0?tag=pondpal20-20' },
               { name: 'Seachem Prime', desc: 'Detoxifies ammonia in emergencies', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
               { name: 'Hikari Staple Koi Food', desc: 'Quality everyday koi nutrition', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
             ].map((p, i) => (

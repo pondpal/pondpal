@@ -70,7 +70,7 @@ export default function WaterChemistryGuide() {
         <ProductGrid
           title="Essential water testing kit — start here"
           items={[
-            { name: 'API Pond Master Test Kit', desc: 'Tests pH, ammonia, nitrite and nitrate for ponds', url: 'https://www.amazon.com/dp/B0002IHNUO?tag=pondpal20-20' },
+            { name: 'API Pond Master Test Kit', desc: 'Tests pH, ammonia, nitrite and nitrate for ponds', url: 'https://www.amazon.com/dp/B0002DJNN0?tag=pondpal20-20' },
             { name: 'API Freshwater Master Test Kit', desc: 'Most trusted freshwater test kit', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20' },
             { name: 'Seachem Prime', desc: 'Detoxifies ammonia while you fix the problem', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
             { name: 'API Ammo Lock', desc: 'Emergency ammonia detoxifier', url: 'https://www.amazon.com/dp/B0002APNI8?tag=pondpal20-20' },

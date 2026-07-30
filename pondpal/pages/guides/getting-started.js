@@ -31,7 +31,7 @@ const sections = [
     title: 'How much space do koi actually need?',
     content: `This is where many first-time keepers run into trouble. Koi grow — fast. A 3-inch fish you bring home from the pet store can reach 18–24 inches within 3–5 years under good conditions.\n\nThe standard rule of thumb is 250 gallons per koi. So if you want 4 koi, you're looking at a minimum of 1,000 gallons. This isn't arbitrary — koi need space to swim, and a larger body of water is far more stable chemically, which means healthier fish and less work for you.\n\nDepth matters too. Aim for at least 3 feet deep, ideally 4–5 feet in colder climates so the pond doesn't freeze solid in winter. A good starter pond for 4–6 koi is roughly 10 feet x 6 feet x 4 feet deep — around 1,800 gallons.`,
     afterContent: [
-      { name: 'API Pond Master Test Kit', desc: 'Essential for monitoring your new pond', url: 'https://www.amazon.com/dp/B0002IHNUO?tag=pondpal20-20' },
+      { name: 'API Pond Master Test Kit', desc: 'Essential for monitoring your new pond', url: 'https://www.amazon.com/dp/B0002DJNN0?tag=pondpal20-20' },
       { name: 'Seachem Prime', desc: 'Must-have water conditioner for all water changes', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
     ],
     afterTitle: 'Essential gear before you fill your pond'
@@ -61,7 +61,7 @@ const sections = [
     title: 'What to buy before bringing fish home',
     content: `Getting the right equipment before your first fish arrive makes everything easier. Here is a practical checklist:\n\nA water test kit — the API Pond Master Test Kit is excellent for ponds. It tests pH, ammonia, nitrite, and nitrate and gives you accurate readings you can trust. Test strips are convenient but less reliable.\n\nA good thermometer — koi are sensitive to temperature swings. A simple pond thermometer tells you when to adjust feeding and warns you of problems.\n\nA dechlorinator — tap water contains chlorine and chloramines that are harmful to fish and kill your beneficial bacteria. Always treat tap water before adding it to your pond. Seachem Prime is a popular and reliable choice that also temporarily detoxifies ammonia.\n\nA net — for catching fish when needed and keeping predators like herons out.\n\nA quality pond pump — sized to turn over your full pond volume at least once per hour.`,
     afterContent: [
-      { name: 'API Pond Master Test Kit', desc: 'Test pH, ammonia, nitrite and nitrate', url: 'https://www.amazon.com/dp/B0002IHNUO?tag=pondpal20-20' },
+      { name: 'API Pond Master Test Kit', desc: 'Test pH, ammonia, nitrite and nitrate', url: 'https://www.amazon.com/dp/B0002DJNN0?tag=pondpal20-20' },
       { name: 'Seachem Prime', desc: 'Dechlorinator that also detoxifies ammonia', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
       { name: 'Hikari Staple Koi Food', desc: 'Quality everyday koi food to start with', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
       { name: 'Hikari Wheat Germ Koi Food', desc: 'For spring/autumn below 65°F feeding', url: 'https://www.amazon.com/dp/B0002DHYDI?tag=pondpal20-20' },
