@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pondpal.space/sitemap.xml
+Sitemap: https://www.pondpal.space/sitemap.xml
