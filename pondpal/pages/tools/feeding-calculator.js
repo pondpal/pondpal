@@ -12,6 +12,11 @@ const allFishSorted = Object.entries(costCategories)
 // and skip the floating-food Amazon recommendations below.
 const bottomFeederPond = ['weather-loach', 'golden-tench', 'sturgeon']
 
+// Ounces at 1 decimal place round small/young pond fish (goldfish, comets, etc.) down to
+// "0.0", which reads as broken rather than "this is genuinely a small amount." Use more
+// decimals below 1oz so the range stays meaningful.
+const formatOz = (n) => n < 1 ? n.toFixed(2) : n.toFixed(1)
+
 // Feeding guidance for anything that isn't an outdoor pond fish (indoor tanks are
 // heated and don't have the seasonal temperature swings pond fish experience, so
 // there's no winter shutdown here — just steady year-round feeding).
@@ -99,10 +104,11 @@ export default function FeedingCalculator() {
       pond: true,
       winter: false,
       totalWeightLbs: totalWeightLbs.toFixed(1),
-      dailyMin: dailyOzMin.toFixed(1),
-      dailyMax: dailyOzMax.toFixed(1),
-      perMealMin: perMealOzMin.toFixed(1),
-      perMealMax: perMealOzMax.toFixed(1),
+      dailyMin: formatOz(dailyOzMin),
+      dailyMax: formatOz(dailyOzMax),
+      perMealMin: formatOz(perMealOzMin),
+      perMealMax: formatOz(perMealOzMax),
+      tinyAmount: dailyOzMax < 0.05,
       food: isBottomFeeder ? `Sinking wafers or pellets — this is a bottom feeder, so standard floating ${rec.food.toLowerCase()} isn't a great fit` : rec.food,
       freq: rec.freq,
       warning: rec.warning,
@@ -306,6 +312,12 @@ export default function FeedingCalculator() {
                 {result.warning && (
                   <div style={{ background: '#faeeda', borderRadius: '8px', padding: '0.875rem 1rem', marginBottom: '1rem', fontSize: '13px', color: '#854F0B' }}>
                     ⚠️ {result.warning}
+                  </div>
+                )}
+
+                {result.tinyAmount && (
+                  <div style={{ background: '#E6F1FB', borderRadius: '8px', padding: '0.875rem 1rem', marginBottom: '1rem', fontSize: '13px', color: '#185FA5' }}>
+                    💡 These fish are small enough that the amount is genuinely tiny — a light pinch or dusting of food is plenty. Don't be tempted to add more just because the number looks small.
                   </div>
                 )}
 
