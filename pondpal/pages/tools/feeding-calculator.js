@@ -14,15 +14,15 @@ const saltwaterSpecies = sortByLabel(Object.entries(costCategories).filter(([, c
 // and skip the floating-food Amazon recommendations below.
 const bottomFeederPond = ['weather-loach', 'golden-tench', 'sturgeon']
 
-// Ounces at 1 decimal place round small/young pond fish (goldfish, comets, etc.) down to
-// "0.0", which reads as broken rather than "this is genuinely a small amount." Use more
-// decimals below 1oz so the range stays meaningful.
+// Ounces at 1 decimal place round small/young fish down to "0.0", which reads as
+// broken rather than "this is genuinely a small amount." Use more decimals below 1oz
+// so the range stays meaningful.
 const formatOz = (n) => n < 1 ? n.toFixed(2) : n.toFixed(1)
 
 // Rough approximation only — actual weight per teaspoon varies a lot by food type
 // (fluffy flake vs. dense sinking pellets can differ 2-3x), so this is meant as an
 // intuitive "how much to scoop" reference alongside the ounce figure, not a precise unit.
-// Scales up to tablespoons/cups for larger ponds so it never shows something like "54 tsp".
+// Scales up to tablespoons/cups for larger amounts so it never shows something like "54 tsp".
 const OZ_PER_TSP = 0.07
 const formatFraction = (n) => {
   const rounded = Math.round(n * 4) / 4
@@ -48,41 +48,47 @@ const formatVolumeRange = (ozMin, ozMax) => {
 
 // Feeding guidance for anything that isn't an outdoor pond fish (indoor tanks are
 // heated and don't have the seasonal temperature swings pond fish experience, so
-// there's no winter shutdown here — just steady year-round feeding).
+// there's no winter shutdown here — just steady year-round feeding at a fixed pct).
+//
+// bodyFactor replaces the pond formula's fixed koi condition-factor (2.5) — koi are
+// unusually chunky, so using 2.5 for a slender tetra or a flat butterflyfish would
+// wildly overstate their real weight. Lower bodyFactor = more slender/laterally
+// flat body relative to length. These are reasonable approximations, not lab data.
+// mealsPerDay is used to split the daily total into a per-meal figure.
 const nonPondProfiles = {
-  'goldfish-tank': { pct: 2, food: 'Goldfish pellets or flake', freq: '1–2 times daily', amount: 'A light pinch — only what they can eat in 2–3 minutes', guide: { href: '/guides/goldfish', label: 'Goldfish Care Guide' } },
-  'betta': { pct: 2.5, food: 'High-quality betta pellets', freq: 'Once daily, a few pellets', amount: '2–4 pellets per feeding — resist the urge to add more', guide: { href: '/guides/betta', label: 'Betta Fish Care Guide' } },
-  'african-cichlid': { pct: 2, food: 'Cichlid pellets', freq: '1–2 times daily', amount: 'A small pinch of pellets — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
-  'south-american-cichlid': { pct: 2, food: 'Cichlid pellets', freq: '1–2 times daily', amount: 'A small pinch of pellets — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
-  'oscar': { pct: 2, food: 'Cichlid pellets or sticks', freq: '1–2 times daily', amount: 'A small pinch of pellets or sticks — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
-  'tropical': { pct: 2.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A light pinch — only what they can eat in 2–3 minutes', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'guppies': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A very light pinch — these are small fish, it\'s easy to overfeed', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'tetras': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A very light pinch — these are small fish, it\'s easy to overfeed', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'angelfish': { pct: 2, food: 'Tropical flake or pellet food', freq: '1–2 times daily', amount: 'A light pinch — only what they can eat in 2–3 minutes', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'discus': { pct: 2, food: 'High-protein discus pellets or flake', freq: '2 times daily', amount: 'A light pinch — only what they can eat in 2–3 minutes', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'corydoras': { pct: 2.5, food: 'Sinking wafers or pellets', freq: 'Once daily', amount: 'A few sinking pellets or wafer pieces per fish', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'pleco': { pct: 1.5, food: 'Algae wafers or sinking pellets', freq: 'Once daily (evening)', amount: '1 algae wafer per fish', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'other-freshwater': { pct: 2.5, food: 'Tropical flake or pellet food', freq: '1–2 times daily', amount: 'A light pinch — only what they can eat in 2–3 minutes', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'molly': { pct: 2.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A very light pinch — these are small fish, it\'s easy to overfeed', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'platy': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A very light pinch — these are small fish, it\'s easy to overfeed', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'swordtail': { pct: 2.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A very light pinch — these are small fish, it\'s easy to overfeed', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'zebra-danio': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A very light pinch — these are small fish, it\'s easy to overfeed', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'harlequin-rasbora': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A very light pinch — these are small fish, it\'s easy to overfeed', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'dwarf-gourami': { pct: 2, food: 'Tropical flake or pellet food', freq: '1–2 times daily', amount: 'A light pinch — only what they can eat in 2–3 minutes', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'rainbowfish': { pct: 2.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', amount: 'A light pinch — only what they can eat in 2–3 minutes', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
-  'clownfish': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'chromis': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'tang': { pct: 1.5, food: 'Marine algae sheets and herbivore pellets', freq: '1–2 times daily', amount: 'A clipped sheet of nori/algae plus a pinch of herbivore pellets', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'marine-angelfish': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'blenny': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'wrasse': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'lionfish': { pct: 1.5, food: 'Frozen or live meaty foods (shrimp, silversides)', freq: '2–3 times weekly', amount: '1-2 appropriately-sized whole prey items per feeding', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'reef-mixed': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'firefish': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'anthias': { pct: 2.5, food: 'Frequent small feedings of frozen mysis/brine shrimp', freq: '2–3 times daily', amount: 'Several small pinches spread through the day — they feed almost constantly in the wild', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'butterflyfish': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of food per feeding — some species need specific coral-based diets, check your exact species', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'cardinalfish': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
-  'saltwater': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', amount: 'A pinch of flake/pellets or a small cube of frozen food — only what\'s eaten in 2–3 minutes', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'goldfish-tank': { pct: 2, bodyFactor: 2.2, mealsPerDay: 1.5, food: 'Goldfish pellets or flake', freq: '1–2 times daily', guide: { href: '/guides/goldfish', label: 'Goldfish Care Guide' } },
+  'betta': { pct: 2.5, bodyFactor: 1.8, mealsPerDay: 1, food: 'High-quality betta pellets', freq: 'Once daily', guide: { href: '/guides/betta', label: 'Betta Fish Care Guide' } },
+  'african-cichlid': { pct: 2, bodyFactor: 2.3, mealsPerDay: 1.5, food: 'Cichlid pellets', freq: '1–2 times daily', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
+  'south-american-cichlid': { pct: 2, bodyFactor: 2.2, mealsPerDay: 1.5, food: 'Cichlid pellets', freq: '1–2 times daily', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
+  'oscar': { pct: 2, bodyFactor: 2.4, mealsPerDay: 1.5, food: 'Cichlid pellets or sticks', freq: '1–2 times daily', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
+  'tropical': { pct: 2.5, bodyFactor: 1.6, mealsPerDay: 1.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'guppies': { pct: 3, bodyFactor: 1.3, mealsPerDay: 1.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'tetras': { pct: 3, bodyFactor: 1.2, mealsPerDay: 1.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'angelfish': { pct: 2, bodyFactor: 1.2, mealsPerDay: 1.5, food: 'Tropical flake or pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'discus': { pct: 2, bodyFactor: 1.1, mealsPerDay: 2, food: 'High-protein discus pellets or flake', freq: '2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'corydoras': { pct: 2.5, bodyFactor: 1.6, mealsPerDay: 1, food: 'Sinking wafers or pellets', freq: 'Once daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'pleco': { pct: 1.5, bodyFactor: 1.8, mealsPerDay: 1, food: 'Algae wafers or sinking pellets', freq: 'Once daily (evening)', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'other-freshwater': { pct: 2.5, bodyFactor: 1.6, mealsPerDay: 1.5, food: 'Tropical flake or pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'molly': { pct: 2.5, bodyFactor: 1.7, mealsPerDay: 1.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'platy': { pct: 3, bodyFactor: 1.7, mealsPerDay: 1.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'swordtail': { pct: 2.5, bodyFactor: 1.5, mealsPerDay: 1.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'zebra-danio': { pct: 3, bodyFactor: 1.3, mealsPerDay: 1.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'harlequin-rasbora': { pct: 3, bodyFactor: 1.4, mealsPerDay: 1.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'dwarf-gourami': { pct: 2, bodyFactor: 1.8, mealsPerDay: 1.5, food: 'Tropical flake or pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'rainbowfish': { pct: 2.5, bodyFactor: 1.5, mealsPerDay: 1.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'clownfish': { pct: 2, bodyFactor: 2.0, mealsPerDay: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'chromis': { pct: 2, bodyFactor: 1.4, mealsPerDay: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'tang': { pct: 1.5, bodyFactor: 1.3, mealsPerDay: 1.5, food: 'Marine algae sheets and herbivore pellets', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'marine-angelfish': { pct: 1.5, bodyFactor: 1.2, mealsPerDay: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'blenny': { pct: 2, bodyFactor: 1.4, mealsPerDay: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'wrasse': { pct: 1.5, bodyFactor: 1.2, mealsPerDay: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'lionfish': { pct: 1.5, bodyFactor: 1.8, mealsPerDay: 0.36, food: 'Frozen or live meaty foods (shrimp, silversides)', freq: '2–3 times weekly', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'reef-mixed': { pct: 1.5, bodyFactor: 1.5, mealsPerDay: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'firefish': { pct: 2, bodyFactor: 1.3, mealsPerDay: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'anthias': { pct: 2.5, bodyFactor: 1.3, mealsPerDay: 2.5, food: 'Frequent small feedings of frozen mysis/brine shrimp', freq: '2–3 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'butterflyfish': { pct: 2, bodyFactor: 1.1, mealsPerDay: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'cardinalfish': { pct: 2, bodyFactor: 1.4, mealsPerDay: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'saltwater': { pct: 1.5, bodyFactor: 1.5, mealsPerDay: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
 }
 
 export default function FeedingCalculator() {
@@ -90,7 +96,6 @@ export default function FeedingCalculator() {
   const [waterType, setWaterType] = useState(null)
   const [fishType, setFishType] = useState(null)
   const [fish, setFish] = useState([{ count: '', size: '' }])
-  const [nonPondCount, setNonPondCount] = useState('')
   const [season, setSeason] = useState('summer')
   const [result, setResult] = useState(null)
 
@@ -130,14 +135,14 @@ export default function FeedingCalculator() {
   ]
 
   const foodRecommendations = {
-    summer: { food: 'High-protein staple or growth food', freq: '2–3 times daily', pct: 2, warning: null },
-    spring: { food: 'Wheat germ food', freq: 'Once daily, small amounts', pct: 1, warning: 'Transition slowly from wheat germ to staple as temperatures rise above 65°F.' },
-    autumn: { food: 'Wheat germ food', freq: 'Once daily, decreasing as temps drop', pct: 1, warning: 'Stop feeding entirely once water temperature drops below 50°F.' },
-    winter: { food: null, freq: null, pct: 0, warning: 'Do not feed below 50°F. Fish digestive systems cannot process food in cold water and feeding can cause serious harm.' },
+    summer: { food: 'High-protein staple or growth food', freq: '2–3 times daily', pct: 2, mealsPerDay: 2.5, warning: null },
+    spring: { food: 'Wheat germ food', freq: 'Once daily, small amounts', pct: 1, mealsPerDay: 1, warning: 'Transition slowly from wheat germ to staple as temperatures rise above 65°F.' },
+    autumn: { food: 'Wheat germ food', freq: 'Once daily, decreasing as temps drop', pct: 1, mealsPerDay: 1, warning: 'Stop feeding entirely once water temperature drops below 50°F.' },
+    winter: { food: null, freq: null, pct: 0, mealsPerDay: 1, warning: 'Do not feed below 50°F. Fish digestive systems cannot process food in cold water and feeding can cause serious harm.' },
   }
 
-  const calculatePond = () => {
-    if (season === 'winter') {
+  const calculate = () => {
+    if (isPondFish && season === 'winter') {
       setResult({ pond: true, winter: true })
       return
     }
@@ -148,26 +153,35 @@ export default function FeedingCalculator() {
       return
     }
 
-    const rec = foodRecommendations[season]
-    const isBottomFeeder = bottomFeederPond.includes(fishType)
+    const isBottomFeeder = isPondFish && bottomFeederPond.includes(fishType)
+    const rec = isPondFish ? foodRecommendations[season] : null
+    const profile = isPondFish ? null : nonPondProfiles[fishType]
+
+    const bodyFactor = isPondFish ? 2.5 : profile.bodyFactor
+    const pct = isPondFish ? rec.pct : profile.pct
+    const mealsPerDay = isPondFish ? rec.mealsPerDay : profile.mealsPerDay
 
     let totalWeightLbs = 0
     validFish.forEach(f => {
       const count = parseInt(f.count)
       const sizeInches = parseFloat(f.size)
-      const weightPerFishLbs = Math.pow(sizeInches / 12, 3) * 2.5
+      const weightPerFishLbs = Math.pow(sizeInches / 12, 3) * bodyFactor
       totalWeightLbs += count * weightPerFishLbs
     })
 
-    const dailyOzMin = (totalWeightLbs * (rec.pct / 100)) * 16
-    const dailyOzMax = (totalWeightLbs * ((rec.pct + 1) / 100)) * 16
-    const perMealOzMin = dailyOzMin / (season === 'summer' ? 2.5 : 1)
-    const perMealOzMax = dailyOzMax / (season === 'summer' ? 2.5 : 1)
+    const dailyOzMin = (totalWeightLbs * (pct / 100)) * 16
+    const dailyOzMax = (totalWeightLbs * ((pct + 1) / 100)) * 16
+    const perMealOzMin = dailyOzMin / mealsPerDay
+    const perMealOzMax = dailyOzMax / mealsPerDay
+
+    const baseFood = isPondFish ? rec.food : profile.food
+    const food = isBottomFeeder
+      ? `Sinking wafers or pellets — this is a bottom feeder, so standard floating ${baseFood.toLowerCase()} isn't a great fit`
+      : baseFood
 
     setResult({
-      pond: true,
+      pond: isPondFish,
       winter: false,
-      totalWeightLbs: totalWeightLbs.toFixed(1),
       dailyMin: formatOz(dailyOzMin),
       dailyMax: formatOz(dailyOzMax),
       dailyTsp: formatVolumeRange(dailyOzMin, dailyOzMax),
@@ -175,34 +189,13 @@ export default function FeedingCalculator() {
       perMealMax: formatOz(perMealOzMax),
       perMealTsp: formatVolumeRange(perMealOzMin, perMealOzMax),
       tinyAmount: dailyOzMax < 0.05,
-      food: isBottomFeeder ? `Sinking wafers or pellets — this is a bottom feeder, so standard floating ${rec.food.toLowerCase()} isn't a great fit` : rec.food,
-      freq: rec.freq,
-      warning: rec.warning,
+      food,
+      freq: isPondFish ? rec.freq : profile.freq,
+      warning: isPondFish ? rec.warning : null,
+      guide: isPondFish ? null : profile.guide,
       isBottomFeeder,
       fishCount: validFish.reduce((sum, f) => sum + parseInt(f.count), 0),
     })
-  }
-
-  const calculateNonPond = () => {
-    const count = parseInt(nonPondCount, 10)
-    if (!count || count < 1) {
-      alert('Please enter how many fish you have.')
-      return
-    }
-    const profile = nonPondProfiles[fishType]
-    setResult({
-      pond: false,
-      food: profile.food,
-      freq: profile.freq,
-      amount: profile.amount,
-      guide: profile.guide,
-      fishCount: count,
-    })
-  }
-
-  const calculate = () => {
-    if (isPondFish) calculatePond()
-    else calculateNonPond()
   }
 
   const inputStyle = {
@@ -241,6 +234,7 @@ export default function FeedingCalculator() {
   }
 
   const readyForFish = (envChoice === 'pond') || (envChoice === 'indoor' && waterType)
+  const showFishForm = readyForFish && !(isPondFish && season === 'winter')
 
   return (
     <>
@@ -309,7 +303,7 @@ export default function FeedingCalculator() {
             </div>
           )}
 
-          {readyForFish && isPondFish && season !== 'winter' && (
+          {showFishForm && (
             <div className="form-card">
               <h2>Your Fish</h2>
               <div style={{ marginTop: '1rem', marginBottom: '1.25rem' }}>
@@ -353,26 +347,6 @@ export default function FeedingCalculator() {
             </div>
           )}
 
-          {readyForFish && !isPondFish && (
-            <div className="form-card">
-              <h2>Your Fish</h2>
-              <div style={{ marginTop: '1rem', marginBottom: '1.25rem' }}>
-                <label style={labelStyle}>Fish Type</label>
-                <select value={fishType} onChange={e => { setFishType(e.target.value); setResult(null) }} style={inputStyle}>
-                  {filteredSpecies.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-                </select>
-              </div>
-              <div style={{ marginBottom: '1.25rem' }}>
-                <label style={labelStyle}>How many fish?</label>
-                <input type="number" placeholder="e.g. 6" value={nonPondCount}
-                  onChange={e => setNonPondCount(e.target.value)} style={inputStyle} />
-              </div>
-              <button className="submit-btn" onClick={calculate}>
-                Get Feeding Guidance 🍽️
-              </button>
-            </div>
-          )}
-
           {envChoice === 'pond' && season === 'winter' && !result && (
             <div style={{ background: '#E6F1FB', borderRadius: '14px', padding: '2rem', border: '1px solid rgba(24,95,165,0.2)', textAlign: 'center' }}>
               <div style={{ fontSize: '48px', marginBottom: '1rem' }}>❄️</div>
@@ -386,7 +360,7 @@ export default function FeedingCalculator() {
             </div>
           )}
 
-          {result && result.pond && !result.winter && (
+          {result && !result.winter && (
             <>
               <div style={{ background: '#fff', borderRadius: '14px', padding: '2rem', border: '1px solid rgba(0,0,0,0.07)', marginBottom: '1rem' }}>
                 <h2 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', color: '#062d3a' }}>Feeding Results for {result.fishCount} Fish</h2>
@@ -419,12 +393,22 @@ export default function FeedingCalculator() {
                   </div>
                 )}
 
-                <div style={{ background: '#f0faf8', borderRadius: '8px', padding: '0.875rem 1rem', fontSize: '13px', color: '#0e6b6b' }}>
-                  <strong>5 minute rule:</strong> These are calculated estimates. In practice, offer a moderate amount and remove anything uneaten after 5 minutes. Your fish's appetite is the best guide — feed less if food is being ignored.
+                <div style={{ background: '#f0faf8', borderRadius: '8px', padding: '0.875rem 1rem', fontSize: '13px', color: '#0e6b6b', marginBottom: (!result.pond && result.guide) ? '1rem' : 0 }}>
+                  {result.pond ? (
+                    <><strong>5 minute rule:</strong> These are calculated estimates. In practice, offer a moderate amount and remove anything uneaten after 5 minutes. Your fish's appetite is the best guide — feed less if food is being ignored.</>
+                  ) : (
+                    <><strong>2–3 minute rule:</strong> Feed only what your fish can finish in 2–3 minutes. It's much easier to overfeed a small tank than an outdoor pond, and leftover food quickly fouls the water.</>
+                  )}
                 </div>
+
+                {!result.pond && result.guide && (
+                  <p style={{ fontSize: '13px' }}>
+                    <Link href={result.guide.href} style={{ color: '#1a9e8e', fontWeight: 500 }}>Read the {result.guide.label} →</Link>
+                  </p>
+                )}
               </div>
 
-              {products[season] && !result.isBottomFeeder && (
+              {result.pond && products[season] && !result.isBottomFeeder && (
                 <div style={{ background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.07)', marginBottom: '1rem' }}>
                   <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '1rem' }}>🛒 Recommended food for this season</p>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
@@ -442,40 +426,8 @@ export default function FeedingCalculator() {
             </>
           )}
 
-          {result && !result.pond && (
-            <div style={{ background: '#fff', borderRadius: '14px', padding: '2rem', border: '1px solid rgba(0,0,0,0.07)', marginBottom: '1rem' }}>
-              <h2 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', color: '#062d3a' }}>Feeding Guidance for {result.fishCount} Fish</h2>
-
-              <div style={{ background: '#d4f0ec', borderRadius: '10px', padding: '1rem', marginBottom: '1rem' }}>
-                <p style={{ fontSize: '11px', fontWeight: 500, color: '#0e6b6b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>How Much To Feed</p>
-                <p style={{ fontSize: '15px', fontWeight: 600, color: '#0e6b6b' }}>{result.amount}</p>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
-                <div style={{ background: '#E6F1FB', borderRadius: '10px', padding: '1rem', textAlign: 'center' }}>
-                  <p style={{ fontSize: '11px', fontWeight: 500, color: '#185FA5', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Feeding Frequency</p>
-                  <p style={{ fontSize: '14px', fontWeight: 600, color: '#185FA5' }}>{result.freq}</p>
-                </div>
-                <div style={{ background: '#e8e4f8', borderRadius: '10px', padding: '1rem', textAlign: 'center' }}>
-                  <p style={{ fontSize: '11px', fontWeight: 500, color: '#4a3d8f', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Food Type</p>
-                  <p style={{ fontSize: '14px', fontWeight: 600, color: '#4a3d8f' }}>{result.food}</p>
-                </div>
-              </div>
-
-              <div style={{ background: '#f0faf8', borderRadius: '8px', padding: '0.875rem 1rem', fontSize: '13px', color: '#0e6b6b', marginBottom: result.guide ? '1rem' : 0 }}>
-                <strong>2–3 minute rule:</strong> For indoor and saltwater tanks, feed only what your fish can finish in 2–3 minutes. It's much easier to overfeed a small tank than an outdoor pond, and leftover food quickly fouls the water.
-              </div>
-
-              {result.guide && (
-                <p style={{ fontSize: '13px' }}>
-                  <Link href={result.guide.href} style={{ color: '#1a9e8e', fontWeight: 500 }}>Read the {result.guide.label} →</Link>
-                </p>
-              )}
-            </div>
-          )}
-
           <div style={{ padding: '1.25rem', background: '#fff', borderRadius: '14px', border: '1px solid rgba(0,0,0,0.07)', fontSize: '13px', color: '#5a7a82' }}>
-            <strong style={{ color: '#1a2e35' }}>💡 About these calculations:</strong> Pond fish amounts are estimated at 1–2% of total body weight, the standard guideline for outdoor pond fish. The teaspoon figure is a rough "how much to scoop" reference, not a precise unit — dense sinking pellets can weigh 2-3x as much per teaspoon as light, fluffy flake food. Indoor/saltwater guidance is qualitative rather than weight-based, since body shape varies too much between species (a betta and a tang of the same length weigh very differently) for a single formula to stay accurate. Individual fish appetites vary — always observe your fish and adjust accordingly.
+            <strong style={{ color: '#1a2e35' }}>💡 About these calculations:</strong> Amounts are estimated from body weight (length³ × a body-shape factor, roughly 1–3% of body weight fed per day depending on species). Koi and pond fish use a chunky-bodied factor; other species use a lighter factor scaled to their typical build, since a slender tetra or a flat butterflyfish weighs much less than a koi of the same length — this is a reasonable approximation, not lab data, so individual fish will vary. The teaspoon/tablespoon/cup figure is also approximate, since dense sinking pellets can weigh 2-3x as much per teaspoon as light, fluffy flake food. Always observe your fish and adjust accordingly.
           </div>
         </div>
       </div>
