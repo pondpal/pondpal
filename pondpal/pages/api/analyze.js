@@ -16,8 +16,10 @@ export default async function handler(req, res) {
   let prompt = ''
 
   if (type === 'tank') {
-    const fishType = data.fishType || 'fish'
     const waterType = data.waterType || 'freshwater'
+    const fishList = Array.isArray(data.fish) && data.fish.length
+      ? data.fish
+      : [{ fishType: data.fishType || 'fish', fishCount: data.fishCount, fishSize: data.fishSize }]
 
     const guidelines = {
       'koi': 'Use the 250 gallon per koi rule and the 10x body length swimming space guideline. Koi can reach 18-24 inches as adults.',
@@ -46,21 +48,26 @@ export default async function handler(req, res) {
       'other saltwater': 'Apply species-specific marine stocking guidelines.',
     }
 
-    const fishGuideline = guidelines[fishType] || 'Apply appropriate stocking guidelines for this species.'
+    const fishLines = fishList.map(function(f) {
+      const fishType = f.fishType || 'fish'
+      const guideline = guidelines[fishType] || 'Apply appropriate stocking guidelines for this species.'
+      return '- ' + f.fishCount + 'x ' + fishType + ', average size ' + f.fishSize + ' inches. Stocking guideline: ' + guideline
+    }).join('\n')
+
+    const isMixedTank = fishList.length > 1
 
     prompt = 'You are Pond Pal, a friendly fish and aquarium care assistant.\n\n'
       + 'Setup details:\n'
       + '- Water type: ' + waterType + '\n'
-      + '- Fish type: ' + fishType + '\n'
       + '- Tank type: ' + data.tankType + '\n'
       + '- Volume: ' + data.gallons + ' gallons\n'
-      + '- Number of fish: ' + data.fishCount + '\n'
-      + '- Average fish size: ' + data.fishSize + ' inches\n'
       + '- Filtration: ' + data.filtration + '\n'
       + '- Plants: ' + data.planted + '\n\n'
-      + 'Stocking guideline for ' + fishType + ': ' + fishGuideline + '\n\n'
-      + 'Please analyze: 1) Is the tank big enough? Show the math using appropriate guidelines. 2) Is filtration adequate for this fish type? 3) What improvements are needed? 4) What is the ideal setup long term?\n\n'
-      + 'Be friendly and encouraging. Use checkmark for good, warning for caution, X for problems. Give specific numbers tailored to the fish type.'
+      + 'Fish in this tank:\n' + fishLines + '\n\n'
+      + (isMixedTank
+        ? 'This is a mixed-species tank with more than one type of fish kept together. Please analyze: 1) Are these species actually compatible to keep together — consider water chemistry needs, temperament/aggression, and size differences? 2) Calculate the combined space requirement by working out the gallons needed for each species using its own guideline and count, then add them together and compare that total to the actual volume. Show this math clearly, species by species. 3) Is filtration adequate for the combined bioload of all these fish together? 4) What improvements are needed? 5) What is the ideal long-term setup for this specific combination of fish?\n\n'
+        : 'Please analyze: 1) Is the tank big enough? Show the math using the guideline above. 2) Is filtration adequate for this fish type? 3) What improvements are needed? 4) What is the ideal setup long term?\n\n')
+      + 'Be friendly and encouraging. Use checkmark for good, warning for caution, X for problems. Give specific numbers tailored to the fish in this tank.'
   }
 
   if (type === 'chemistry') {

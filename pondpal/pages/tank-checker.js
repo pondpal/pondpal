@@ -10,18 +10,29 @@ const affiliateProducts = [
 export default function TankChecker() {
   const [form, setForm] = useState({
     waterType: 'freshwater',
-    fishType: 'koi',
     tankType: 'Outdoor Pond',
     gallons: '',
-    fishCount: '',
-    fishSize: '',
     filtration: 'Biological + Mechanical',
-    planted: 'Some plants'
+    planted: 'Some plants',
+    fish: [{ fishType: 'koi', fishCount: '', fishSize: '' }]
   })
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState('')
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
+
+  const updateFish = (index, k, v) => setForm(f => {
+    const fish = [...f.fish]
+    fish[index] = { ...fish[index], [k]: v }
+    return { ...f, fish }
+  })
+
+  const addFish = () => setForm(f => ({
+    ...f,
+    fish: [...f.fish, { fishType: f.waterType === 'saltwater' ? 'clownfish' : 'koi', fishCount: '', fishSize: '' }]
+  }))
+
+  const removeFish = (index) => setForm(f => ({ ...f, fish: f.fish.filter((_, i) => i !== index) }))
 
   const freshwaterFish = [
     { value: 'koi', label: 'Koi' },
@@ -55,9 +66,11 @@ export default function TankChecker() {
 
   const fishOptions = form.waterType === 'saltwater' ? saltwaterFish : freshwaterFish
 
+  const hasPondFish = form.fish.some(f => ['koi', 'goldfish', 'common goldfish'].includes(f.fishType))
+
   const tankTypes = form.waterType === 'saltwater'
     ? ['Indoor Aquarium', 'Reef Tank', 'Nano Tank']
-    : form.fishType === 'koi' || form.fishType === 'goldfish' || form.fishType === 'common goldfish'
+    : hasPondFish
       ? ['Outdoor Pond', 'Indoor Aquarium', 'Stock Tank / Tub', 'Raised Bed Pond']
       : ['Indoor Aquarium', 'Nano Tank', 'Planted Tank', 'Outdoor Pond']
 
@@ -66,8 +79,8 @@ export default function TankChecker() {
     : ['Biological + Mechanical', 'Pressurized Canister', 'Hang On Back Filter', 'Sponge Filter', 'Pressurized Bead Filter', 'Basic Mechanical Only', 'None / Natural']
 
   const analyze = async () => {
-    if (!form.gallons || !form.fishCount || !form.fishSize) {
-      alert('Please fill in volume, number of fish, and average fish size.')
+    if (!form.gallons || form.fish.some(f => !f.fishCount || !f.fishSize)) {
+      alert('Please fill in volume, and the number and average size for each fish type.')
       return
     }
     setLoading(true)
@@ -109,37 +122,69 @@ export default function TankChecker() {
               Tell us about your water type, fish, and tank — we'll do the rest!
             </p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '1rem' }}>
-              <div>
-                <label style={labelStyle}>Water Type</label>
-                <select
-                  value={form.waterType}
-                  onChange={e => {
-                    const wt = e.target.value
-                    const defaultFish = wt === 'saltwater' ? 'clownfish' : 'koi'
-                    setForm(f => ({ ...f, waterType: wt, fishType: defaultFish }))
-                    setResult('')
-                  }}
-                  className="fg"
-                  style={{ width: '100%', height: '40px', padding: '0 12px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: '8px', fontSize: '14px', fontFamily: 'inherit', color: '#1a2e35', background: '#faf7f2' }}
-                >
-                  <option value="freshwater">🌿 Freshwater</option>
-                  <option value="saltwater">🪸 Saltwater / Marine</option>
-                </select>
-              </div>
+            <div style={{ marginBottom: '1rem' }}>
+              <label style={labelStyle}>Water Type</label>
+              <select
+                value={form.waterType}
+                onChange={e => {
+                  const wt = e.target.value
+                  const defaultFish = wt === 'saltwater' ? 'clownfish' : 'koi'
+                  setForm(f => ({ ...f, waterType: wt, fish: f.fish.map(x => ({ ...x, fishType: defaultFish })) }))
+                  setResult('')
+                }}
+                className="fg"
+                style={{ width: '100%', height: '40px', padding: '0 12px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: '8px', fontSize: '14px', fontFamily: 'inherit', color: '#1a2e35', background: '#faf7f2' }}
+              >
+                <option value="freshwater">🌿 Freshwater</option>
+                <option value="saltwater">🪸 Saltwater / Marine</option>
+              </select>
+            </div>
 
-              <div>
-                <label style={labelStyle}>Fish Type</label>
-                <select
-                  value={form.fishType}
-                  onChange={e => { set('fishType', e.target.value); setResult('') }}
-                  style={{ width: '100%', height: '40px', padding: '0 12px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: '8px', fontSize: '14px', fontFamily: 'inherit', color: '#1a2e35', background: '#faf7f2' }}
-                >
-                  {fishOptions.map(f => (
-                    <option key={f.value} value={f.value}>{f.label}</option>
-                  ))}
-                </select>
+            <div style={{ marginBottom: '1.25rem' }}>
+              <label style={labelStyle}>Fish in Your Tank</label>
+              <p style={{ fontSize: '12px', color: '#5a7a82', marginBottom: '0.75rem' }}>
+                Keeping more than one type of fish together? Add each one separately — e.g. 2 koi and 2 goldfish in the same pond.
+              </p>
+              <div style={{ display: 'grid', gap: '0.75rem' }}>
+                {form.fish.map((f, i) => (
+                  <div key={i} style={{ display: 'grid', gridTemplateColumns: form.fish.length > 1 ? '2fr 1fr 1fr auto' : '2fr 1fr 1fr', gap: '10px', alignItems: 'end' }}>
+                    <div>
+                      {i === 0 && <label style={labelStyle}>Fish Type</label>}
+                      <select
+                        value={f.fishType}
+                        onChange={e => { updateFish(i, 'fishType', e.target.value); setResult('') }}
+                        style={{ width: '100%', height: '40px', padding: '0 12px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: '8px', fontSize: '14px', fontFamily: 'inherit', color: '#1a2e35', background: '#faf7f2' }}
+                      >
+                        {fishOptions.map(o => (
+                          <option key={o.value} value={o.value}>{o.label}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      {i === 0 && <label style={labelStyle}>Count</label>}
+                      <input type="number" placeholder="e.g. 2" value={f.fishCount}
+                        onChange={e => updateFish(i, 'fishCount', e.target.value)}
+                        style={{ width: '100%', height: '40px', padding: '0 12px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: '8px', fontSize: '14px', fontFamily: 'inherit', color: '#1a2e35', background: '#faf7f2' }} />
+                    </div>
+                    <div>
+                      {i === 0 && <label style={labelStyle}>Avg Size (in)</label>}
+                      <input type="number" placeholder="e.g. 4" value={f.fishSize}
+                        onChange={e => updateFish(i, 'fishSize', e.target.value)}
+                        style={{ width: '100%', height: '40px', padding: '0 12px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: '8px', fontSize: '14px', fontFamily: 'inherit', color: '#1a2e35', background: '#faf7f2' }} />
+                    </div>
+                    {form.fish.length > 1 && (
+                      <button type="button" onClick={() => removeFish(i)}
+                        style={{ height: '40px', padding: '0 12px', border: '1px solid rgba(0,0,0,0.15)', borderRadius: '8px', background: '#fff', color: '#A32D2D', cursor: 'pointer', fontSize: '13px' }}>
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                ))}
               </div>
+              <button type="button" onClick={addFish}
+                style={{ marginTop: '0.75rem', padding: '8px 16px', border: '1px dashed #1a9e8e', borderRadius: '8px', background: '#f0faf8', color: '#0e6b6b', cursor: 'pointer', fontSize: '13px', fontWeight: 500 }}>
+                + Add Another Fish Type
+              </button>
             </div>
 
             <div className="form-grid-2">
@@ -152,14 +197,6 @@ export default function TankChecker() {
               <div className="fg">
                 <label>Volume (gallons)</label>
                 <input type="number" placeholder="e.g. 55" value={form.gallons} onChange={e => set('gallons', e.target.value)} />
-              </div>
-              <div className="fg">
-                <label>Number of Fish</label>
-                <input type="number" placeholder="e.g. 5" value={form.fishCount} onChange={e => set('fishCount', e.target.value)} />
-              </div>
-              <div className="fg">
-                <label>Average Fish Size (inches)</label>
-                <input type="number" placeholder="e.g. 4" value={form.fishSize} onChange={e => set('fishSize', e.target.value)} />
               </div>
               <div className="fg">
                 <label>Filtration Type</label>
