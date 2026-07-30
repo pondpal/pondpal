@@ -49,6 +49,13 @@ export default function TankChecker() {
     { value: 'discus', label: 'Discus' },
     { value: 'corydoras', label: 'Corydoras / Bottom Dwellers' },
     { value: 'pleco', label: 'Pleco / Suckermouth Fish' },
+    { value: 'molly', label: 'Molly' },
+    { value: 'platy', label: 'Platy' },
+    { value: 'swordtail', label: 'Swordtail' },
+    { value: 'zebra danio', label: 'Zebra Danio' },
+    { value: 'harlequin rasbora', label: 'Harlequin Rasbora' },
+    { value: 'dwarf gourami', label: 'Dwarf Gourami' },
+    { value: 'rainbowfish', label: 'Rainbowfish' },
     { value: 'other freshwater', label: 'Other Freshwater Fish' },
   ]
 
@@ -60,6 +67,10 @@ export default function TankChecker() {
     { value: 'blenny', label: 'Blenny / Goby' },
     { value: 'wrasse', label: 'Wrasse' },
     { value: 'lionfish', label: 'Lionfish' },
+    { value: 'firefish', label: 'Firefish' },
+    { value: 'anthias', label: 'Anthias' },
+    { value: 'butterflyfish', label: 'Butterflyfish' },
+    { value: 'cardinalfish', label: 'Cardinalfish' },
     { value: 'reef mixed', label: 'Mixed Reef Tank' },
     { value: 'other saltwater', label: 'Other Saltwater Fish' },
   ]
