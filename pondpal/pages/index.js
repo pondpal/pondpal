@@ -78,6 +78,14 @@ export default function Home() {
                 <span className="tool-link">Check my climate →</span>
               </div>
             </Link>
+            <Link href="/tools/compatibility-checker" style={{ textDecoration: 'none' }}>
+              <div className="tool-card">
+                <span className="tool-icon">🤝</span>
+                <h3>Compatibility Checker</h3>
+                <p>Planning a mixed tank? Check whether your species choices get along before you buy — temperament, aggression, and water chemistry conflicts.</p>
+                <span className="tool-link">Check compatibility →</span>
+              </div>
+            </Link>
             <Link href="/care-guides" style={{ textDecoration: 'none' }}>
               <div className="tool-card">
                 <span className="tool-icon">📖</span>
@@ -228,6 +236,7 @@ export default function Home() {
           <Link href="/tools/feeding-calculator" style={{ color: 'rgba(255,255,255,0.6)' }}>Feeding Calculator</Link>{' · '}
           <Link href="/tools/ask-pond-pal" style={{ color: 'rgba(255,255,255,0.6)' }}>Ask Pond Pal</Link>{' · '}
           <Link href="/tools/climate-checker" style={{ color: 'rgba(255,255,255,0.6)' }}>Climate Checker</Link>{' · '}
+          <Link href="/tools/compatibility-checker" style={{ color: 'rgba(255,255,255,0.6)' }}>Compatibility Checker</Link>{' · '}
           <Link href="/care-guides" style={{ color: 'rgba(255,255,255,0.6)' }}>Care Guides</Link>{' · '}
           <Link href="/blog" style={{ color: 'rgba(255,255,255,0.6)' }}>Blog</Link>
         </p>
