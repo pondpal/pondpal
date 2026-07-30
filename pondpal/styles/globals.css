@@ -349,6 +349,68 @@ a { color: inherit; text-decoration: none; }
 .tool-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
 .tool-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 1.25rem; font-size: 14px; font-weight: 500; color: var(--teal-light); }
 
+/* Path cards ("Where should we start?") */
+.path-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 800px; }
+
+.path-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 2rem;
+  border: 1px solid rgba(0,0,0,0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+}
+
+.path-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(6,45,58,0.1); }
+.path-card-icon { font-size: 36px; margin-bottom: 1rem; display: block; }
+.path-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text); font-family: 'Lora', serif; }
+.path-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+/* Skill level pill/switcher */
+.skill-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.skill-pill strong { color: var(--text); }
+
+.skill-pill button {
+  background: none;
+  border: none;
+  color: var(--teal-light);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.tool-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.tool-badge.beginner { background: #dff5ec; color: #1a8a5e; }
+.tool-badge.expert { background: var(--koi-light); color: var(--koi); }
+.tool-card { position: relative; }
+
 /* How it works */
 .how-section { background: var(--deep); }
 .how-section h2, .how-section .section-lead { color: var(--white); }
