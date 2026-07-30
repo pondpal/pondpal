@@ -14,7 +14,7 @@ export default function WaterTesting() {
   const [showAdvanced, setShowAdvanced] = useState(false)
   const [form, setForm] = useState({
     pH: '', ammonia: '', nitrite: '', nitrate: '', temp: '',
-    kh: '', gh: '', do2: '', salt: '', salinity: '', calcium: '', magnesium: '',
+    kh: '', gh: '', do2: '', phosphate: '', salt: '', salinity: '', calcium: '', magnesium: '',
     gallons: '', lastChange: '1 week ago'
   })
   const [loading, setLoading] = useState(false)
@@ -58,6 +58,13 @@ export default function WaterTesting() {
     { key: 'do2', label: 'Dissolved Oxygen', hint: 'ppm', placeholder: '8', step: '0.1' },
   ]
 
+  const pondAdvanced = [
+    { key: 'kh', label: 'KH (Carbonate Hardness)', hint: 'dKH', placeholder: '6', step: '0.5' },
+    { key: 'gh', label: 'GH (General Hardness)', hint: 'dGH', placeholder: '8', step: '0.5' },
+    { key: 'do2', label: 'Dissolved Oxygen', hint: 'ppm', placeholder: '8', step: '0.1' },
+    { key: 'phosphate', label: 'Phosphate', hint: 'ppm', placeholder: '0.5', step: '0.1' },
+  ]
+
   const saltwaterAdvanced = [
     { key: 'salinity', label: 'Salinity', hint: 'ppt', placeholder: '35', step: '0.1' },
     { key: 'salt', label: 'Specific Gravity', hint: 'sg', placeholder: '1.025', step: '0.001' },
@@ -66,7 +73,7 @@ export default function WaterTesting() {
     { key: 'do2', label: 'Dissolved Oxygen', hint: 'ppm', placeholder: '8', step: '0.1' },
   ]
 
-  const advancedFields = tankType === 'saltwater' ? saltwaterAdvanced : freshwaterAdvanced
+  const advancedFields = tankType === 'saltwater' ? saltwaterAdvanced : tankType === 'pond' ? pondAdvanced : freshwaterAdvanced
   const relevantProducts = tankType === 'saltwater'
     ? affiliateProducts.filter(p => p.name.includes('Red Sea') || p.name.includes('Prime'))
     : affiliateProducts.filter(p => !p.name.includes('Red Sea'))
