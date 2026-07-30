@@ -69,6 +69,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 14px;
   font-weight: 400;
   transition: color 0.2s;
+  white-space: nowrap;
 }
 
 .nav-links a:hover { color: var(--white); }
@@ -415,10 +416,16 @@ a { color: inherit; text-decoration: none; }
 
 .footer a { color: var(--koi); }
 
-/* ── Mobile responsive ── */
-@media (max-width: 768px) {
+/* ── Nav responsive ── */
+/* Switches to the hamburger menu earlier than the general mobile breakpoint
+   below, since the desktop nav-links row needs ~990px to fit without wrapping. */
+@media (max-width: 1024px) {
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
+}
+
+/* ── Mobile responsive ── */
+@media (max-width: 768px) {
   .nav { padding: 0 1.25rem; }
   .hero { min-height: 70vh; padding: 3rem 1.25rem; }
   .hero-fish { font-size: 48px; }

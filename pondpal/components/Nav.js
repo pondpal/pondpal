@@ -21,6 +21,8 @@ export default function Nav() {
   const desktopLinks = [
     { href: '/tank-checker', label: 'Tank Checker' },
     { href: '/water-chemistry', label: 'Water Testing' },
+    { href: '/tools/pond-calculator', label: 'Pond Calculator' },
+    { href: '/tools/ask-pond-pal', label: 'Ask Pond Pal' },
     { href: '/care-guides', label: 'Care Guides' },
     { href: '/blog', label: 'Blog' },
     { href: '/about', label: 'About' },
