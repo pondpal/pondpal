@@ -75,7 +75,6 @@ export default function BestFilter55Gallon() {
               { name: 'API Master Test Kit', desc: 'Verify your filter is working properly', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20' },
               { name: 'Seachem Prime', desc: 'Essential water conditioner for all tanks', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
               { name: 'Seachem Stability', desc: 'Establishes beneficial bacteria fast', url: 'https://www.amazon.com/dp/B000255MWM?tag=pondpal20-20' },
-              { name: 'API Stress Coat', desc: 'Protects fish during filter maintenance', url: 'https://www.amazon.com/dp/B0002APNI8?tag=pondpal20-20' },
             ].map((p, i) => (
               <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>
                 <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '2px' }}>{p.name}</p>

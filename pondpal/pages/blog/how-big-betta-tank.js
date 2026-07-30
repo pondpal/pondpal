@@ -74,7 +74,7 @@ export default function BettaTankSize() {
             {[
               { name: 'Hikari Betta Bio-Gold', desc: 'Premium betta-specific pellet food', url: 'https://www.amazon.com/dp/B0002APBHO?tag=pondpal20-20' },
               { name: 'Seachem Prime', desc: 'Essential water conditioner for bettas', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
-              { name: 'API Betta Test Kit', desc: 'Monitor water quality in your betta tank', url: 'https://www.amazon.com/dp/B001F0QT1C?tag=pondpal20-20' },
+              { name: 'API Master Test Kit', desc: 'Monitor water quality in your betta tank', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20' },
               { name: 'Seachem Stability', desc: 'Cycles your new betta tank safely', url: 'https://www.amazon.com/dp/B000255MWM?tag=pondpal20-20' },
             ].map((p, i) => (
               <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>
