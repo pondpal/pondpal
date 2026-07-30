@@ -3,9 +3,11 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { costCategories } from '../../lib/costEstimate'
 
-const allFishSorted = Object.entries(costCategories)
-  .map(([value, c]) => ({ value, label: c.label, isPond: c.isPond }))
-  .sort((a, b) => a.label.localeCompare(b.label))
+const sortByLabel = (entries) => entries.map(([value, c]) => ({ value, label: c.label })).sort((a, b) => a.label.localeCompare(b.label))
+
+const pondSpecies = sortByLabel(Object.entries(costCategories).filter(([, c]) => c.isPond))
+const indoorFreshwaterSpecies = sortByLabel(Object.entries(costCategories).filter(([, c]) => c.env === 'indoor'))
+const saltwaterSpecies = sortByLabel(Object.entries(costCategories).filter(([, c]) => c.env === 'saltwater'))
 
 // Weather Loach, Golden Tench, and Sturgeon are bottom feeders — standard floating
 // koi/goldfish pellets aren't a good fit, so they get their own food-type guidance
@@ -73,13 +75,37 @@ const nonPondProfiles = {
 }
 
 export default function FeedingCalculator() {
-  const [fishType, setFishType] = useState('koi')
+  const [envChoice, setEnvChoice] = useState(null)
+  const [waterType, setWaterType] = useState(null)
+  const [fishType, setFishType] = useState(null)
   const [fish, setFish] = useState([{ count: '', size: '' }])
   const [nonPondCount, setNonPondCount] = useState('')
   const [season, setSeason] = useState('summer')
   const [result, setResult] = useState(null)
 
-  const isPondFish = costCategories[fishType].isPond
+  const isPondFish = envChoice === 'pond'
+
+  const filteredSpecies = envChoice === 'pond'
+    ? pondSpecies
+    : envChoice === 'indoor' && waterType === 'freshwater'
+      ? indoorFreshwaterSpecies
+      : envChoice === 'indoor' && waterType === 'saltwater'
+        ? saltwaterSpecies
+        : []
+
+  const chooseEnv = (env) => {
+    setEnvChoice(env)
+    setWaterType(null)
+    setResult(null)
+    setFishType(env === 'pond' ? pondSpecies[0].value : null)
+  }
+
+  const chooseWaterType = (wt) => {
+    setWaterType(wt)
+    setResult(null)
+    const list = wt === 'freshwater' ? indoorFreshwaterSpecies : saltwaterSpecies
+    setFishType(list[0].value)
+  }
 
   const addFish = () => setFish(f => [...f, { count: '', size: '' }])
   const removeFish = (i) => setFish(f => f.filter((_, idx) => idx !== i))
@@ -180,6 +206,13 @@ export default function FeedingCalculator() {
     letterSpacing: '0.5px', marginBottom: '5px'
   }
 
+  const choiceCardStyle = (active) => ({
+    padding: '0.875rem', borderRadius: '10px', cursor: 'pointer', textAlign: 'center',
+    border: active ? '2px solid #1a9e8e' : '1px solid rgba(0,0,0,0.12)',
+    background: active ? '#d4f0ec' : '#faf7f2',
+    transition: 'all 0.2s'
+  })
+
   const products = {
     summer: [
       { name: 'Hikari Staple Koi Food', desc: 'Best everyday summer staple', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
@@ -194,6 +227,8 @@ export default function FeedingCalculator() {
       { name: 'Blue Ridge Wheat Germ', desc: 'Great value wheat germ food', url: 'https://www.amazon.com/dp/B002C026OY?tag=pondpal20-20' },
     ],
   }
+
+  const readyForFish = (envChoice === 'pond') || (envChoice === 'indoor' && waterType)
 
   return (
     <>
@@ -212,16 +247,34 @@ export default function FeedingCalculator() {
         <div className="tool-form-inner">
 
           <div className="form-card">
-            <h2>What fish are you feeding?</h2>
-            <div style={{ marginTop: '1rem' }}>
-              <label style={labelStyle}>Fish Type</label>
-              <select value={fishType} onChange={e => { setFishType(e.target.value); setResult(null) }} style={inputStyle}>
-                {allFishSorted.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-              </select>
+            <h2>Where do you keep your fish?</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginTop: '1rem' }}>
+              <div onClick={() => chooseEnv('indoor')} style={choiceCardStyle(envChoice === 'indoor')}>
+                <div style={{ fontSize: '28px', marginBottom: '4px' }}>🏠</div>
+                <div style={{ fontSize: '15px', fontWeight: 500, color: '#1a2e35' }}>Indoor Tank</div>
+              </div>
+              <div onClick={() => chooseEnv('pond')} style={choiceCardStyle(envChoice === 'pond')}>
+                <div style={{ fontSize: '28px', marginBottom: '4px' }}>🏊</div>
+                <div style={{ fontSize: '15px', fontWeight: 500, color: '#1a2e35' }}>Outdoor Pond</div>
+              </div>
             </div>
           </div>
 
-          {isPondFish && (
+          {envChoice === 'indoor' && (
+            <div className="form-card">
+              <h2>Freshwater or saltwater?</h2>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginTop: '1rem' }}>
+                <div onClick={() => chooseWaterType('freshwater')} style={choiceCardStyle(waterType === 'freshwater')}>
+                  <div style={{ fontSize: '15px', fontWeight: 500, color: '#1a2e35' }}>🌿 Freshwater</div>
+                </div>
+                <div onClick={() => chooseWaterType('saltwater')} style={choiceCardStyle(waterType === 'saltwater')}>
+                  <div style={{ fontSize: '15px', fontWeight: 500, color: '#1a2e35' }}>🪸 Saltwater</div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {envChoice === 'pond' && (
             <div className="form-card">
               <h2>What season is it?</h2>
               <p style={{ fontSize: '13px', color: '#5a7a82', marginTop: '0.5rem', marginBottom: '0.5rem' }}>
@@ -229,16 +282,7 @@ export default function FeedingCalculator() {
               </p>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginTop: '1rem' }}>
                 {seasons.map(s => (
-                  <div
-                    key={s.value}
-                    onClick={() => { setSeason(s.value); setResult(null) }}
-                    style={{
-                      padding: '0.875rem', borderRadius: '10px', cursor: 'pointer',
-                      border: season === s.value ? '2px solid #1a9e8e' : '1px solid rgba(0,0,0,0.12)',
-                      background: season === s.value ? '#d4f0ec' : '#faf7f2',
-                      transition: 'all 0.2s'
-                    }}
-                  >
+                  <div key={s.value} onClick={() => { setSeason(s.value); setResult(null) }} style={choiceCardStyle(season === s.value)}>
                     <div style={{ fontSize: '15px', fontWeight: 500, color: '#1a2e35', marginBottom: '2px' }}>{s.label}</div>
                     <div style={{ fontSize: '11px', color: '#5a7a82' }}>{s.temp} · {s.desc}</div>
                   </div>
@@ -247,15 +291,21 @@ export default function FeedingCalculator() {
             </div>
           )}
 
-          {!isPondFish && (
+          {envChoice === 'indoor' && waterType && (
             <div style={{ background: '#f0faf8', borderRadius: '14px', padding: '1.25rem', border: '1px solid rgba(26,158,142,0.2)', fontSize: '13px', color: '#0e6b6b' }}>
               💡 Indoor and saltwater tanks stay heated year-round, so there's no seasonal feeding adjustment needed — just feed consistently.
             </div>
           )}
 
-          {isPondFish && season !== 'winter' && (
+          {readyForFish && isPondFish && season !== 'winter' && (
             <div className="form-card">
               <h2>Your Fish</h2>
+              <div style={{ marginTop: '1rem', marginBottom: '1.25rem' }}>
+                <label style={labelStyle}>Fish Type</label>
+                <select value={fishType} onChange={e => { setFishType(e.target.value); setResult(null) }} style={inputStyle}>
+                  {filteredSpecies.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                </select>
+              </div>
               <p style={{ fontSize: '13px', color: '#5a7a82', marginBottom: '1.25rem' }}>
                 Add a row for each group of similar-sized fish. You can add multiple groups if you have a mix of sizes.
               </p>
@@ -291,10 +341,16 @@ export default function FeedingCalculator() {
             </div>
           )}
 
-          {!isPondFish && (
+          {readyForFish && !isPondFish && (
             <div className="form-card">
               <h2>Your Fish</h2>
               <div style={{ marginTop: '1rem', marginBottom: '1.25rem' }}>
+                <label style={labelStyle}>Fish Type</label>
+                <select value={fishType} onChange={e => { setFishType(e.target.value); setResult(null) }} style={inputStyle}>
+                  {filteredSpecies.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                </select>
+              </div>
+              <div style={{ marginBottom: '1.25rem' }}>
                 <label style={labelStyle}>How many fish?</label>
                 <input type="number" placeholder="e.g. 6" value={nonPondCount}
                   onChange={e => setNonPondCount(e.target.value)} style={inputStyle} />
@@ -305,7 +361,7 @@ export default function FeedingCalculator() {
             </div>
           )}
 
-          {isPondFish && season === 'winter' && !result && (
+          {envChoice === 'pond' && season === 'winter' && !result && (
             <div style={{ background: '#E6F1FB', borderRadius: '14px', padding: '2rem', border: '1px solid rgba(24,95,165,0.2)', textAlign: 'center' }}>
               <div style={{ fontSize: '48px', marginBottom: '1rem' }}>❄️</div>
               <h2 style={{ fontSize: '1.2rem', color: '#185FA5', marginBottom: '0.75rem' }}>Don't feed in winter!</h2>
