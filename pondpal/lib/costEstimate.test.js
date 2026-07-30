@@ -18,6 +18,13 @@ describe('estimateCost', () => {
     expect(result.recommendedGallons).toBe(1000)
   })
 
+  test('newer pond species (e.g. golden orfe) compute without a heater', () => {
+    const result = estimateCost('golden-orfe', 3, 0.16)
+    expect(result.upfront.heater).toBe(0)
+    // 3*150=450, below the 1000 gallon floor for orfe (schooling fish needing a large pond)
+    expect(result.recommendedGallons).toBe(1000)
+  })
+
   test('upfront cost includes fish, structure, filter/pump, and misc, but no heater for koi', () => {
     const result = estimateCost('koi', 2, 0.16)
     expect(result.upfront.heater).toBe(0)
