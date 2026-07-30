@@ -64,7 +64,7 @@ export default function FeedingGuide() {
           title="Our recommended koi foods"
           items={[
             { name: 'Hikari Staple Koi Food', desc: 'Best everyday summer staple', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
-            { name: 'Hikari Wheat Germ Koi Food', desc: 'Essential cool weather formula', url: 'https://www.amazon.com/dp/B0002DHYDI?tag=pondpal20-20' },
+            { name: 'The Pond Guy Wheat Germ Fish Food', desc: 'Essential cool weather formula', url: 'https://www.amazon.com/dp/B00S6R0OZ0?tag=pondpal20-20' },
             { name: 'Hikari Gold Koi Food', desc: 'Premium summer color enhancer', url: 'https://www.amazon.com/dp/B0002562OY?tag=pondpal20-20' },
             { name: 'Blue Ridge Wheat Germ', desc: 'Great value wheat germ food', url: 'https://www.amazon.com/dp/B002C026OY?tag=pondpal20-20' },
           ]}
@@ -76,7 +76,7 @@ export default function FeedingGuide() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
             {[
               { name: 'Hikari Staple Koi Food', desc: 'Best everyday summer koi food', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
-              { name: 'Hikari Wheat Germ Koi Food', desc: 'Essential cool weather formula', url: 'https://www.amazon.com/dp/B0002DHYDI?tag=pondpal20-20' },
+              { name: 'The Pond Guy Wheat Germ Fish Food', desc: 'Essential cool weather formula', url: 'https://www.amazon.com/dp/B00S6R0OZ0?tag=pondpal20-20' },
               { name: 'Hikari Gold Koi Food', desc: 'Premium color-enhancing summer food', url: 'https://www.amazon.com/dp/B0002562OY?tag=pondpal20-20' },
               { name: 'Blue Ridge Wheat Germ', desc: 'Great value cool weather food', url: 'https://www.amazon.com/dp/B002C026OY?tag=pondpal20-20' },
             ].map((p, i) => (

@@ -7,7 +7,7 @@ const seasonalProducts = [
     color: '#d4f0ec',
     textColor: '#0e6b6b',
     products: [
-      { name: 'Hikari Wheat Germ Koi Food', desc: 'Best wheat germ food for cool water', url: 'https://www.amazon.com/dp/B0002DHYDI?tag=pondpal20-20' },
+      { name: 'The Pond Guy Wheat Germ Fish Food', desc: 'Best wheat germ food for cool water', url: 'https://www.amazon.com/dp/B00S6R0OZ0?tag=pondpal20-20' },
       { name: 'Blue Ridge Wheat Germ', desc: 'Great value cool weather formula', url: 'https://www.amazon.com/dp/B002C026OY?tag=pondpal20-20' },
     ]
   },
@@ -55,7 +55,7 @@ export default function BestKoiFood() {
           },
           {
             heading: '🌸 Spring feeding (water 50°F to 65°F)',
-            text: `Spring is the most delicate feeding season. Your koi are coming out of their winter dormancy with weakened immune systems and digestive tracts that haven't processed food in months. Jumping straight to high-protein summer food is a common mistake that stresses fish during their most vulnerable period.\n\nStart with wheat germ food as soon as temperatures consistently reach 50°F. Feed small amounts once daily — far less than you'll feed in summer. Watch carefully that fish are actively eating and digesting before increasing portions.\n\nAs temperatures rise toward 65°F, you can gradually transition to staple food by mixing a small amount of staple in with the wheat germ over a week or two, slowly increasing the proportion of staple food.\n\nOur top spring pick: Hikari Wheat Germ Koi Food is consistently the most recommended option among experienced keepers. It's palatable, easy to digest, and floats well so you can monitor consumption easily.`
+            text: `Spring is the most delicate feeding season. Your koi are coming out of their winter dormancy with weakened immune systems and digestive tracts that haven't processed food in months. Jumping straight to high-protein summer food is a common mistake that stresses fish during their most vulnerable period.\n\nStart with wheat germ food as soon as temperatures consistently reach 50°F. Feed small amounts once daily — far less than you'll feed in summer. Watch carefully that fish are actively eating and digesting before increasing portions.\n\nAs temperatures rise toward 65°F, you can gradually transition to staple food by mixing a small amount of staple in with the wheat germ over a week or two, slowly increasing the proportion of staple food.\n\nOur top spring pick: The Pond Guy Wheat Germ Fish Food is consistently the most recommended option among experienced keepers. It's palatable, easy to digest, and floats well so you can monitor consumption easily.`
           },
           {
             heading: '☀️ Summer feeding (water above 65°F)',

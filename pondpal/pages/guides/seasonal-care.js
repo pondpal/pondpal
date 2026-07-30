@@ -25,7 +25,7 @@ const seasons = [
     emoji: '🌸', title: 'Spring — waking up the pond',
     content: `Spring is the most critical season for koi keepers. Your fish are coming out of their semi-dormant winter state with weakened immune systems, and the pond is transitioning from cold to warmer temperatures. This is when most disease outbreaks occur, so vigilance pays off.\n\nStart testing your water as soon as temperatures rise above 50°F. Ammonia and nitrite can spike in spring as your filter bacteria wake up more slowly than your fish. Don't rush feeding — start with small amounts of wheat germ food when temperatures are consistently above 50°F, and only switch to a protein-rich staple food above 65°F.\n\nSpring cleaning should be done carefully. A full pond cleanout sounds tempting, but removing too much organic material at once can crash your water chemistry. Instead, do a partial 20–25% water change, remove the worst of any sludge from the bottom, and clean your filter media gently in old pond water — never tap water, as chlorine will kill your beneficial bacteria.\n\nInspect every fish carefully in spring. Look for wounds from winter, early signs of parasites, and any fish that look lethargic or have not recovered their appetite by the time temperatures reach 60°F.`,
     products: [
-      { name: 'Hikari Wheat Germ Koi Food', desc: 'Start spring feeding with this below 65°F', url: 'https://www.amazon.com/dp/B0002DHYDI?tag=pondpal20-20' },
+      { name: 'The Pond Guy Wheat Germ Fish Food', desc: 'Start spring feeding with this below 65°F', url: 'https://www.amazon.com/dp/B00S6R0OZ0?tag=pondpal20-20' },
       { name: 'API Pond Master Test Kit', desc: 'Test frequently in spring as pond wakes up', url: 'https://www.amazon.com/dp/B0002DJNN0?tag=pondpal20-20' },
       { name: 'Seachem Prime', desc: 'Use for spring water changes', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
       { name: 'API General Cure', desc: 'Treat parasites caught early in spring', url: 'https://www.amazon.com/dp/B001F0QT1C?tag=pondpal20-20' },
@@ -45,7 +45,7 @@ const seasons = [
     emoji: '🍂', title: 'Autumn — preparing for winter',
     content: `Autumn is about preparation. The decisions you make now directly affect how well your fish survive winter and how healthy they are in spring.\n\nFeeding transition: as water temperature drops below 65°F, switch from high-protein summer food to a wheat germ based food. Wheat germ is lower in protein and much easier to digest at cooler temperatures. Stop feeding entirely below 50°F.\n\nLeaf management is critical in autumn. Falling leaves decompose rapidly and drive ammonia up while consuming oxygen. Use a pond net stretched over the surface to catch leaves before they sink, and remove them daily.\n\nAutumn is also a good time for a partial water change of 20–25% before winter sets in, to start the cold season with the cleanest water possible.`,
     products: [
-      { name: 'Hikari Wheat Germ Koi Food', desc: 'Switch to this below 65°F in autumn', url: 'https://www.amazon.com/dp/B0002DHYDI?tag=pondpal20-20' },
+      { name: 'The Pond Guy Wheat Germ Fish Food', desc: 'Switch to this below 65°F in autumn', url: 'https://www.amazon.com/dp/B00S6R0OZ0?tag=pondpal20-20' },
       { name: 'Blue Ridge Wheat Germ', desc: 'Great value cool weather formula', url: 'https://www.amazon.com/dp/B002C026OY?tag=pondpal20-20' },
     ],
     productTitle: 'Autumn feeding'
