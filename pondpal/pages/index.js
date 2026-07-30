@@ -162,10 +162,10 @@ export default function Home() {
                 <span className="tool-link">View on Amazon →</span>
               </div>
             </a>
-            <a href="https://www.amazon.com/dp/B0002DHYDI?tag=pondpal20-20" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+            <a href="https://www.amazon.com/dp/B00S6R0OZ0?tag=pondpal20-20" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
               <div className="tool-card">
                 <span className="tool-icon">🌿</span>
-                <h3>Hikari Wheat Germ Koi Food</h3>
+                <h3>The Pond Guy Wheat Germ Fish Food</h3>
                 <p>Perfect for koi and goldfish in spring and autumn when water temperatures drop below 65°F. Easy to digest, highly nutritious.</p>
                 <span className="tool-link">View on Amazon →</span>
               </div>

@@ -26,7 +26,7 @@ const otherGuides = [
 const products = [
   { name: 'API Master Test Kit', desc: 'Tests pH, ammonia, nitrite & nitrate', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20', emoji: '🧪' },
   { name: 'Seachem Prime', desc: 'Best water conditioner for all tanks', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20', emoji: '💧' },
-  { name: 'Hikari Wheat Germ Koi Food', desc: 'Perfect cool weather koi food', url: 'https://www.amazon.com/dp/B0002DHYDI?tag=pondpal20-20', emoji: '🌿' },
+  { name: 'The Pond Guy Wheat Germ Fish Food', desc: 'Perfect cool weather koi food', url: 'https://www.amazon.com/dp/B00S6R0OZ0?tag=pondpal20-20', emoji: '🌿' },
   { name: 'Hikari Staple Koi Food', desc: 'Quality everyday koi food', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20', emoji: '🍽️' },
 ]
 
