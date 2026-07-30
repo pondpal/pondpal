@@ -67,6 +67,7 @@ export default async function handler(req, res) {
     const labels = {
       pH: 'pH', ammonia: 'Ammonia (ppm)', nitrite: 'Nitrite (ppm)', nitrate: 'Nitrate (ppm)',
       kh: 'KH (dKH)', gh: 'GH (dGH)', temp: 'Temperature (F)', do2: 'Dissolved O2 (ppm)',
+      phosphate: 'Phosphate (ppm)',
       salt: 'Specific Gravity', salinity: 'Salinity (ppt)', calcium: 'Calcium (ppm)', magnesium: 'Magnesium (ppm)'
     }
 
