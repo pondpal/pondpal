@@ -1,11 +1,53 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
+import { costCategories } from '../../lib/costEstimate'
+
+const allFishSorted = Object.entries(costCategories)
+  .map(([value, c]) => ({ value, label: c.label, isPond: c.isPond }))
+  .sort((a, b) => a.label.localeCompare(b.label))
+
+// Weather Loach, Golden Tench, and Sturgeon are bottom feeders — standard floating
+// koi/goldfish pellets aren't a good fit, so they get their own food-type guidance
+// and skip the floating-food Amazon recommendations below.
+const bottomFeederPond = ['weather-loach', 'golden-tench', 'sturgeon']
+
+// Feeding guidance for anything that isn't an outdoor pond fish (indoor tanks are
+// heated and don't have the seasonal temperature swings pond fish experience, so
+// there's no winter shutdown here — just steady year-round feeding).
+const nonPondProfiles = {
+  'goldfish-tank': { pct: 2, food: 'Goldfish pellets or flake', freq: '1–2 times daily', guide: { href: '/guides/goldfish', label: 'Goldfish Care Guide' } },
+  'betta': { pct: 2.5, food: 'High-quality betta pellets', freq: 'Once daily, a few pellets', guide: { href: '/guides/betta', label: 'Betta Fish Care Guide' } },
+  'african-cichlid': { pct: 2, food: 'Cichlid pellets', freq: '1–2 times daily', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
+  'south-american-cichlid': { pct: 2, food: 'Cichlid pellets', freq: '1–2 times daily', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
+  'oscar': { pct: 2, food: 'Cichlid pellets or sticks', freq: '1–2 times daily', guide: { href: '/guides/cichlids', label: 'Cichlid Care Guide' } },
+  'tropical': { pct: 2.5, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'guppies': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'tetras': { pct: 3, food: 'Tropical flake or micro-pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'angelfish': { pct: 2, food: 'Tropical flake or pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'discus': { pct: 2, food: 'High-protein discus pellets or flake', freq: '2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'corydoras': { pct: 2.5, food: 'Sinking wafers or pellets', freq: 'Once daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'pleco': { pct: 1.5, food: 'Algae wafers or sinking pellets', freq: 'Once daily (evening)', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'other-freshwater': { pct: 2.5, food: 'Tropical flake or pellet food', freq: '1–2 times daily', guide: { href: '/guides/tropical', label: 'Community Tropical Tank Guide' } },
+  'clownfish': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'chromis': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'tang': { pct: 1.5, food: 'Marine algae sheets and herbivore pellets', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'marine-angelfish': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'blenny': { pct: 2, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'wrasse': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'lionfish': { pct: 1.5, food: 'Frozen or live meaty foods (shrimp, silversides)', freq: '2–3 times weekly', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'reef-mixed': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+  'saltwater': { pct: 1.5, food: 'Marine flake, pellet, or frozen foods (mysis/brine shrimp)', freq: '1–2 times daily', guide: { href: '/guides/saltwater', label: 'Saltwater Aquarium Guide' } },
+}
 
 export default function FeedingCalculator() {
+  const [fishType, setFishType] = useState('koi')
   const [fish, setFish] = useState([{ count: '', size: '' }])
+  const [nonPondCount, setNonPondCount] = useState('')
   const [season, setSeason] = useState('summer')
   const [result, setResult] = useState(null)
+
+  const isPondFish = costCategories[fishType].isPond
 
   const addFish = () => setFish(f => [...f, { count: '', size: '' }])
   const removeFish = (i) => setFish(f => f.filter((_, idx) => idx !== i))
@@ -22,12 +64,12 @@ export default function FeedingCalculator() {
     summer: { food: 'High-protein staple or growth food', freq: '2–3 times daily', pct: 2, warning: null },
     spring: { food: 'Wheat germ food', freq: 'Once daily, small amounts', pct: 1, warning: 'Transition slowly from wheat germ to staple as temperatures rise above 65°F.' },
     autumn: { food: 'Wheat germ food', freq: 'Once daily, decreasing as temps drop', pct: 1, warning: 'Stop feeding entirely once water temperature drops below 50°F.' },
-    winter: { food: null, freq: null, pct: 0, warning: 'Do not feed your koi below 50°F. Their digestive systems cannot process food in cold water and feeding can cause serious harm.' },
+    winter: { food: null, freq: null, pct: 0, warning: 'Do not feed below 50°F. Fish digestive systems cannot process food in cold water and feeding can cause serious harm.' },
   }
 
-  const calculate = () => {
+  const calculatePond = () => {
     if (season === 'winter') {
-      setResult({ winter: true })
+      setResult({ pond: true, winter: true })
       return
     }
 
@@ -38,6 +80,7 @@ export default function FeedingCalculator() {
     }
 
     const rec = foodRecommendations[season]
+    const isBottomFeeder = bottomFeederPond.includes(fishType)
 
     let totalWeightLbs = 0
     validFish.forEach(f => {
@@ -53,17 +96,40 @@ export default function FeedingCalculator() {
     const perMealOzMax = dailyOzMax / (season === 'summer' ? 2.5 : 1)
 
     setResult({
+      pond: true,
       winter: false,
       totalWeightLbs: totalWeightLbs.toFixed(1),
       dailyMin: dailyOzMin.toFixed(1),
       dailyMax: dailyOzMax.toFixed(1),
       perMealMin: perMealOzMin.toFixed(1),
       perMealMax: perMealOzMax.toFixed(1),
-      food: rec.food,
+      food: isBottomFeeder ? `Sinking wafers or pellets — this is a bottom feeder, so standard floating ${rec.food.toLowerCase()} isn't a great fit` : rec.food,
       freq: rec.freq,
       warning: rec.warning,
+      isBottomFeeder,
       fishCount: validFish.reduce((sum, f) => sum + parseInt(f.count), 0),
     })
+  }
+
+  const calculateNonPond = () => {
+    const count = parseInt(nonPondCount, 10)
+    if (!count || count < 1) {
+      alert('Please enter how many fish you have.')
+      return
+    }
+    const profile = nonPondProfiles[fishType]
+    setResult({
+      pond: false,
+      food: profile.food,
+      freq: profile.freq,
+      guide: profile.guide,
+      fishCount: count,
+    })
+  }
+
+  const calculate = () => {
+    if (isPondFish) calculatePond()
+    else calculateNonPond()
   }
 
   const inputStyle = {
@@ -97,41 +163,62 @@ export default function FeedingCalculator() {
   return (
     <>
       <Head>
-        <title>Koi Feeding Calculator — How Much to Feed Your Koi — Pond Pal</title>
-        <meta name="description" content="Calculate exactly how much to feed your koi based on fish size, number of fish, and season. Free koi feeding calculator with seasonal food recommendations." />
+        <title>Fish Feeding Calculator — How Much to Feed Your Fish — Pond Pal</title>
+        <meta name="description" content="Calculate exactly how much to feed any fish — koi, goldfish, tropical fish, cichlids, saltwater, and more — based on fish size, number, and season." />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
       <div className="tool-hero">
-        <h1>🍽️ Koi Feeding Calculator</h1>
-        <p>Find out exactly how much to feed your koi based on fish size and the current season</p>
+        <h1>🍽️ Fish Feeding Calculator</h1>
+        <p>Find out exactly how much to feed your fish — works for koi, goldfish, tropical fish, cichlids, saltwater, and more</p>
       </div>
 
       <div className="tool-form-section">
         <div className="tool-form-inner">
 
           <div className="form-card">
-            <h2>What season is it?</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginTop: '1rem' }}>
-              {seasons.map(s => (
-                <div
-                  key={s.value}
-                  onClick={() => { setSeason(s.value); setResult(null) }}
-                  style={{
-                    padding: '0.875rem', borderRadius: '10px', cursor: 'pointer',
-                    border: season === s.value ? '2px solid #1a9e8e' : '1px solid rgba(0,0,0,0.12)',
-                    background: season === s.value ? '#d4f0ec' : '#faf7f2',
-                    transition: 'all 0.2s'
-                  }}
-                >
-                  <div style={{ fontSize: '15px', fontWeight: 500, color: '#1a2e35', marginBottom: '2px' }}>{s.label}</div>
-                  <div style={{ fontSize: '11px', color: '#5a7a82' }}>{s.temp} · {s.desc}</div>
-                </div>
-              ))}
+            <h2>What fish are you feeding?</h2>
+            <div style={{ marginTop: '1rem' }}>
+              <label style={labelStyle}>Fish Type</label>
+              <select value={fishType} onChange={e => { setFishType(e.target.value); setResult(null) }} style={inputStyle}>
+                {allFishSorted.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
             </div>
           </div>
 
-          {season !== 'winter' && (
+          {isPondFish && (
+            <div className="form-card">
+              <h2>What season is it?</h2>
+              <p style={{ fontSize: '13px', color: '#5a7a82', marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+                Outdoor pond fish slow down and stop eating as water temperature drops — this applies regardless of species.
+              </p>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginTop: '1rem' }}>
+                {seasons.map(s => (
+                  <div
+                    key={s.value}
+                    onClick={() => { setSeason(s.value); setResult(null) }}
+                    style={{
+                      padding: '0.875rem', borderRadius: '10px', cursor: 'pointer',
+                      border: season === s.value ? '2px solid #1a9e8e' : '1px solid rgba(0,0,0,0.12)',
+                      background: season === s.value ? '#d4f0ec' : '#faf7f2',
+                      transition: 'all 0.2s'
+                    }}
+                  >
+                    <div style={{ fontSize: '15px', fontWeight: 500, color: '#1a2e35', marginBottom: '2px' }}>{s.label}</div>
+                    <div style={{ fontSize: '11px', color: '#5a7a82' }}>{s.temp} · {s.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {!isPondFish && (
+            <div style={{ background: '#f0faf8', borderRadius: '14px', padding: '1.25rem', border: '1px solid rgba(26,158,142,0.2)', fontSize: '13px', color: '#0e6b6b' }}>
+              💡 Indoor and saltwater tanks stay heated year-round, so there's no seasonal feeding adjustment needed — just feed consistently.
+            </div>
+          )}
+
+          {isPondFish && season !== 'winter' && (
             <div className="form-card">
               <h2>Your Fish</h2>
               <p style={{ fontSize: '13px', color: '#5a7a82', marginBottom: '1.25rem' }}>
@@ -169,12 +256,26 @@ export default function FeedingCalculator() {
             </div>
           )}
 
-          {season === 'winter' && !result && (
+          {!isPondFish && (
+            <div className="form-card">
+              <h2>Your Fish</h2>
+              <div style={{ marginTop: '1rem', marginBottom: '1.25rem' }}>
+                <label style={labelStyle}>How many fish?</label>
+                <input type="number" placeholder="e.g. 6" value={nonPondCount}
+                  onChange={e => setNonPondCount(e.target.value)} style={inputStyle} />
+              </div>
+              <button className="submit-btn" onClick={calculate}>
+                Get Feeding Guidance 🍽️
+              </button>
+            </div>
+          )}
+
+          {isPondFish && season === 'winter' && !result && (
             <div style={{ background: '#E6F1FB', borderRadius: '14px', padding: '2rem', border: '1px solid rgba(24,95,165,0.2)', textAlign: 'center' }}>
               <div style={{ fontSize: '48px', marginBottom: '1rem' }}>❄️</div>
-              <h2 style={{ fontSize: '1.2rem', color: '#185FA5', marginBottom: '0.75rem' }}>Don't feed your koi in winter!</h2>
+              <h2 style={{ fontSize: '1.2rem', color: '#185FA5', marginBottom: '0.75rem' }}>Don't feed in winter!</h2>
               <p style={{ fontSize: '14px', color: '#2a3f47', lineHeight: '1.7' }}>
-                Below 50°F, koi's digestive systems slow to a near halt. Feeding them in cold water causes undigested food to sit and rot in their gut, which can be fatal. Your koi will survive winter perfectly well on their stored body fat — they don't need food until spring.
+                Below 50°F, pond fish digestive systems slow to a near halt. Feeding them in cold water causes undigested food to sit and rot in their gut, which can be fatal. Your fish will survive winter perfectly well on their stored body fat — they don't need food until spring.
               </p>
               <p style={{ fontSize: '13px', color: '#185FA5', marginTop: '1rem', fontWeight: 500 }}>
                 Resume feeding with wheat germ food when water temperatures reliably reach 50°F in spring.
@@ -182,10 +283,10 @@ export default function FeedingCalculator() {
             </div>
           )}
 
-          {result && !result.winter && (
+          {result && result.pond && !result.winter && (
             <>
               <div style={{ background: '#fff', borderRadius: '14px', padding: '2rem', border: '1px solid rgba(0,0,0,0.07)', marginBottom: '1rem' }}>
-                <h2 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', color: '#062d3a' }}>Feeding Results for {result.fishCount} Koi</h2>
+                <h2 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', color: '#062d3a' }}>Feeding Results for {result.fishCount} Fish</h2>
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
                   {[
@@ -213,7 +314,7 @@ export default function FeedingCalculator() {
                 </div>
               </div>
 
-              {products[season] && (
+              {products[season] && !result.isBottomFeeder && (
                 <div style={{ background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.07)', marginBottom: '1rem' }}>
                   <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '1rem' }}>🛒 Recommended food for this season</p>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
@@ -231,8 +332,35 @@ export default function FeedingCalculator() {
             </>
           )}
 
+          {result && !result.pond && (
+            <div style={{ background: '#fff', borderRadius: '14px', padding: '2rem', border: '1px solid rgba(0,0,0,0.07)', marginBottom: '1rem' }}>
+              <h2 style={{ fontSize: '1.2rem', marginBottom: '1.5rem', color: '#062d3a' }}>Feeding Guidance for {result.fishCount} Fish</h2>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
+                <div style={{ background: '#E6F1FB', borderRadius: '10px', padding: '1rem', textAlign: 'center' }}>
+                  <p style={{ fontSize: '11px', fontWeight: 500, color: '#185FA5', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Feeding Frequency</p>
+                  <p style={{ fontSize: '14px', fontWeight: 600, color: '#185FA5' }}>{result.freq}</p>
+                </div>
+                <div style={{ background: '#e8e4f8', borderRadius: '10px', padding: '1rem', textAlign: 'center' }}>
+                  <p style={{ fontSize: '11px', fontWeight: 500, color: '#4a3d8f', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>Food Type</p>
+                  <p style={{ fontSize: '14px', fontWeight: 600, color: '#4a3d8f' }}>{result.food}</p>
+                </div>
+              </div>
+
+              <div style={{ background: '#f0faf8', borderRadius: '8px', padding: '0.875rem 1rem', fontSize: '13px', color: '#0e6b6b', marginBottom: result.guide ? '1rem' : 0 }}>
+                <strong>2–3 minute rule:</strong> For indoor and saltwater tanks, feed only what your fish can finish in 2–3 minutes. It's much easier to overfeed a small tank than an outdoor pond, and leftover food quickly fouls the water.
+              </div>
+
+              {result.guide && (
+                <p style={{ fontSize: '13px' }}>
+                  <Link href={result.guide.href} style={{ color: '#1a9e8e', fontWeight: 500 }}>Read the {result.guide.label} →</Link>
+                </p>
+              )}
+            </div>
+          )}
+
           <div style={{ padding: '1.25rem', background: '#fff', borderRadius: '14px', border: '1px solid rgba(0,0,0,0.07)', fontSize: '13px', color: '#5a7a82' }}>
-            <strong style={{ color: '#1a2e35' }}>💡 About these calculations:</strong> Daily feeding amounts are estimated at 1–2% of total fish body weight, which is the standard guideline for koi. Individual fish appetites vary — always observe your fish and adjust accordingly.
+            <strong style={{ color: '#1a2e35' }}>💡 About these calculations:</strong> Pond fish amounts are estimated at 1–2% of total body weight, the standard guideline for outdoor pond fish. Indoor/saltwater guidance is qualitative rather than weight-based, since body shape varies too much between species (a betta and a tang of the same length weigh very differently) for a single formula to stay accurate. Individual fish appetites vary — always observe your fish and adjust accordingly.
           </div>
         </div>
       </div>
