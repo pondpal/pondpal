@@ -8,6 +8,13 @@ const categoriesByEnv = Object.keys(environments).reduce((acc, env) => {
   return acc
 }, {})
 
+// Alphabetized within each environment for display; categoriesByEnv (definition order,
+// most-common-first) is kept separately so new setups still default to a sensible fish.
+const categoriesByEnvSorted = Object.keys(environments).reduce((acc, env) => {
+  acc[env] = [...categoriesByEnv[env]].sort((a, b) => a.label.localeCompare(b.label))
+  return acc
+}, {})
+
 const defaultFishForEnv = (env) => categoriesByEnv[env][0].value
 const newSetup = (env) => ({ env, fish: [{ category: defaultFishForEnv(env), count: '' }] })
 
@@ -107,7 +114,7 @@ export default function CostCalculator() {
                       <select value={f.category} onChange={e => { updateFish(si, fi, 'category', e.target.value); setResult(null) }} style={inputStyle}>
                         {Object.entries(environments).map(([env, meta]) => (
                           <optgroup key={env} label={`${meta.emoji} ${meta.label}`}>
-                            {categoriesByEnv[env].map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                            {categoriesByEnvSorted[env].map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
                           </optgroup>
                         ))}
                       </select>
