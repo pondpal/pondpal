@@ -1,7 +1,52 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
+
+const toolsData = [
+  { href: '/tank-checker', icon: '🏠', title: 'Tank Size Checker', desc: "Tell us your tank size, fish type, how many fish you have, and your filtration. We'll let you know if your setup is a happy home for your fish.", cta: 'Check my tank →', level: 'beginner' },
+  { href: '/water-chemistry', icon: '🧪', title: 'Water Testing Analyzer', desc: 'Enter your test kit readings for freshwater, pond, or saltwater tanks. Our AI diagnoses any issues and tells you exactly what to do to fix them.', cta: 'Test my water →', level: 'beginner' },
+  { href: '/tools/pond-calculator', icon: '🏊', title: 'Tank & Pond Volume Calculator', desc: 'Enter your tank or pond dimensions and instantly find out how many gallons you have — and how many fish your setup can support.', cta: 'Calculate my volume →', level: 'beginner' },
+  { href: '/tools/feeding-calculator', icon: '🍽️', title: 'Feeding Calculator', desc: "Tell us how many fish you have, their size, and the current season. We'll tell you exactly how much to feed and which food to use.", cta: 'Calculate feeding →', level: 'beginner' },
+  { href: '/tools/ask-pond-pal', icon: '💬', title: 'Ask Pond Pal', desc: 'Have a question about any fish or aquarium topic? Ask our AI anything — koi, goldfish, tropical fish, bettas, saltwater reefs, and more.', cta: 'Ask a question →', level: 'both' },
+  { href: '/tools/climate-checker', icon: '❄️', title: 'Climate Checker', desc: 'Enter your USDA hardiness zone and fish type to find out if they can safely overwinter outdoors, and how deep your pond needs to be.', cta: 'Check my climate →', level: 'expert' },
+  { href: '/tools/compatibility-checker', icon: '🤝', title: 'Compatibility Checker', desc: 'Planning a mixed tank? Check whether your species choices get along before you buy — temperament, aggression, and water chemistry conflicts.', cta: 'Check compatibility →', level: 'expert' },
+  { href: '/tools/cost-calculator', icon: '💰', title: 'True Cost Calculator', desc: 'Find the real upfront and ongoing cost of keeping your fish — including equipment, food, and the electricity bill most people forget about.', cta: 'Calculate my cost →', level: 'beginner' },
+  { href: '/tools/photo-diagnosis', icon: '📸', title: 'Photo Diagnosis', desc: 'Upload a photo of your fish and our AI will look for visible signs of illness — spots, fin damage, discoloration, and more.', cta: 'Upload a photo →', level: 'both' },
+  { href: '/care-guides', icon: '📖', title: 'Care Guides', desc: "From setting up your first tank to advanced pond filtration — our friendly guides cover koi, goldfish, tropical fish, and everything in between.", cta: 'Read the guides →', level: 'both' },
+]
+
+function rank(tool, level) {
+  if (tool.level === level) return 0
+  if (tool.level === 'both') return 1
+  return 2
+}
 
 export default function Home() {
+  const [skillLevel, setSkillLevel] = useState(null)
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('pondpal_skill_level')
+      if (saved === 'beginner' || saved === 'expert') setSkillLevel(saved)
+    } catch (e) {}
+  }, [])
+
+  const choosePath = (level) => {
+    setSkillLevel(level)
+    try { localStorage.setItem('pondpal_skill_level', level) } catch (e) {}
+    const el = document.getElementById('tools')
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  const clearPath = () => {
+    setSkillLevel(null)
+    try { localStorage.removeItem('pondpal_skill_level') } catch (e) {}
+  }
+
+  const sortedTools = skillLevel
+    ? [...toolsData].sort((a, b) => rank(a, skillLevel) - rank(b, skillLevel))
+    : toolsData
+
   return (
     <>
       <Head>
@@ -26,95 +71,59 @@ export default function Home() {
 
       <section className="section" style={{ background: '#fff' }}>
         <div className="section-inner">
-          <span className="section-tag">Free AI Tools</span>
-          <h2>Everything your tank or pond needs, in one place</h2>
-          <p className="section-lead">Just answer a few questions and our AI gives you clear, friendly answers — no fish degree required!</p>
-          <div className="tools-grid">
-            <Link href="/tank-checker" style={{ textDecoration: 'none' }}>
-              <div className="tool-card">
-                <span className="tool-icon">🏠</span>
-                <h3>Tank Size Checker</h3>
-                <p>Tell us your tank size, fish type, how many fish you have, and your filtration. We'll let you know if your setup is a happy home for your fish.</p>
-                <span className="tool-link">Check my tank →</span>
-              </div>
-            </Link>
-            <Link href="/water-chemistry" style={{ textDecoration: 'none' }}>
-              <div className="tool-card">
-                <span className="tool-icon">🧪</span>
-                <h3>Water Testing Analyzer</h3>
-                <p>Enter your test kit readings for freshwater, pond, or saltwater tanks. Our AI diagnoses any issues and tells you exactly what to do to fix them.</p>
-                <span className="tool-link">Test my water →</span>
-              </div>
-            </Link>
-            <Link href="/tools/pond-calculator" style={{ textDecoration: 'none' }}>
-              <div className="tool-card">
-                <span className="tool-icon">🏊</span>
-                <h3>Tank & Pond Volume Calculator</h3>
-                <p>Enter your tank or pond dimensions and instantly find out how many gallons you have — and how many fish your setup can support.</p>
-                <span className="tool-link">Calculate my volume →</span>
-              </div>
-            </Link>
-            <Link href="/tools/feeding-calculator" style={{ textDecoration: 'none' }}>
-              <div className="tool-card">
-                <span className="tool-icon">🍽️</span>
-                <h3>Feeding Calculator</h3>
-                <p>Tell us how many fish you have, their size, and the current season. We'll tell you exactly how much to feed and which food to use.</p>
-                <span className="tool-link">Calculate feeding →</span>
-              </div>
-            </Link>
-            <Link href="/tools/ask-pond-pal" style={{ textDecoration: 'none' }}>
-              <div className="tool-card">
-                <span className="tool-icon">💬</span>
-                <h3>Ask Pond Pal</h3>
-                <p>Have a question about any fish or aquarium topic? Ask our AI anything — koi, goldfish, tropical fish, bettas, saltwater reefs, and more.</p>
-                <span className="tool-link">Ask a question →</span>
-              </div>
-            </Link>
-            <Link href="/tools/climate-checker" style={{ textDecoration: 'none' }}>
-              <div className="tool-card">
-                <span className="tool-icon">❄️</span>
-                <h3>Climate Checker</h3>
-                <p>Enter your USDA hardiness zone and fish type to find out if they can safely overwinter outdoors, and how deep your pond needs to be.</p>
-                <span className="tool-link">Check my climate →</span>
-              </div>
-            </Link>
-            <Link href="/tools/compatibility-checker" style={{ textDecoration: 'none' }}>
-              <div className="tool-card">
-                <span className="tool-icon">🤝</span>
-                <h3>Compatibility Checker</h3>
-                <p>Planning a mixed tank? Check whether your species choices get along before you buy — temperament, aggression, and water chemistry conflicts.</p>
-                <span className="tool-link">Check compatibility →</span>
-              </div>
-            </Link>
-            <Link href="/tools/cost-calculator" style={{ textDecoration: 'none' }}>
-              <div className="tool-card">
-                <span className="tool-icon">💰</span>
-                <h3>True Cost Calculator</h3>
-                <p>Find the real upfront and ongoing cost of keeping your fish — including equipment, food, and the electricity bill most people forget about.</p>
-                <span className="tool-link">Calculate my cost →</span>
-              </div>
-            </Link>
-            <Link href="/tools/photo-diagnosis" style={{ textDecoration: 'none' }}>
-              <div className="tool-card">
-                <span className="tool-icon">📸</span>
-                <h3>Photo Diagnosis</h3>
-                <p>Upload a photo of your fish and our AI will look for visible signs of illness — spots, fin damage, discoloration, and more.</p>
-                <span className="tool-link">Upload a photo →</span>
-              </div>
-            </Link>
-            <Link href="/care-guides" style={{ textDecoration: 'none' }}>
-              <div className="tool-card">
-                <span className="tool-icon">📖</span>
-                <h3>Care Guides</h3>
-                <p>From setting up your first tank to advanced pond filtration — our friendly guides cover koi, goldfish, tropical fish, and everything in between.</p>
-                <span className="tool-link">Read the guides →</span>
-              </div>
-            </Link>
+          <span className="section-tag teal">Where should we start?</span>
+          <h2>Get help tailored to your experience</h2>
+          <p className="section-lead">Pick what fits, and we'll bring your best next steps to the top.</p>
+          <div className="path-cards">
+            <button className="path-card" onClick={() => choosePath('beginner')}>
+              <span className="path-card-icon">🌱</span>
+              <h3>New to fishkeeping</h3>
+              <p>Just got your first tank or pond? Start with the basics — sizing, feeding, and water testing made simple.</p>
+              <span className="tool-link">Show me the basics →</span>
+            </button>
+            <button className="path-card" onClick={() => choosePath('expert')}>
+              <span className="path-card-icon">🏆</span>
+              <h3>Experienced keeper</h3>
+              <p>Know your way around a tank? Jump to compatibility, climate, and advanced diagnostics.</p>
+              <span className="tool-link">Show me everything →</span>
+            </button>
           </div>
         </div>
       </section>
 
-      <section className="section" style={{ background: '#f8f8f8', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
+      <section className="section" id="tools" style={{ background: '#f8f8f8', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
+        <div className="section-inner">
+          <span className="section-tag">Free AI Tools</span>
+          <h2>Everything your tank or pond needs, in one place</h2>
+          <p className="section-lead">Just answer a few questions and our AI gives you clear, friendly answers — no fish degree required!</p>
+          {skillLevel && (
+            <p className="skill-pill">
+              Browsing as: <strong>{skillLevel === 'beginner' ? '🌱 Beginner' : '🏆 Experienced'}</strong>
+              <button onClick={() => choosePath(skillLevel === 'beginner' ? 'expert' : 'beginner')}>Switch</button>
+              <button onClick={clearPath}>Show all</button>
+            </p>
+          )}
+          <div className="tools-grid">
+            {sortedTools.map(tool => (
+              <Link key={tool.href} href={tool.href} style={{ textDecoration: 'none' }}>
+                <div className="tool-card">
+                  {skillLevel && tool.level === skillLevel && (
+                    <span className={`tool-badge ${skillLevel}`}>
+                      {skillLevel === 'beginner' ? '🌱 Start here' : '🏆 Advanced'}
+                    </span>
+                  )}
+                  <span className="tool-icon">{tool.icon}</span>
+                  <h3>{tool.title}</h3>
+                  <p>{tool.desc}</p>
+                  <span className="tool-link">{tool.cta}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ background: '#fff', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
         <div className="section-inner">
           <span className="section-tag teal">What Fish Do You Keep?</span>
           <h2>Pond Pal works for every fish keeper</h2>
@@ -140,7 +149,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section" style={{ background: '#fff', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
+      <section className="section" style={{ background: '#f8f8f8', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
         <div className="section-inner">
           <span className="section-tag teal">Recommended Gear</span>
           <h2>Products every fish keeper needs</h2>
