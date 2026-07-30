@@ -9,6 +9,7 @@
   <url><loc>https://www.pondpal.space/tools/climate-checker</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://www.pondpal.space/tools/compatibility-checker</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://www.pondpal.space/tools/cost-calculator</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.pondpal.space/tools/photo-diagnosis</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://www.pondpal.space/search</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.pondpal.space/faq</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.pondpal.space/care-guides</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>

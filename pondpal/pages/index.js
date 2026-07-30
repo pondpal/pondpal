@@ -94,6 +94,14 @@ export default function Home() {
                 <span className="tool-link">Calculate my cost →</span>
               </div>
             </Link>
+            <Link href="/tools/photo-diagnosis" style={{ textDecoration: 'none' }}>
+              <div className="tool-card">
+                <span className="tool-icon">📸</span>
+                <h3>Photo Diagnosis</h3>
+                <p>Upload a photo of your fish and our AI will look for visible signs of illness — spots, fin damage, discoloration, and more.</p>
+                <span className="tool-link">Upload a photo →</span>
+              </div>
+            </Link>
             <Link href="/care-guides" style={{ textDecoration: 'none' }}>
               <div className="tool-card">
                 <span className="tool-icon">📖</span>
@@ -246,6 +254,7 @@ export default function Home() {
           <Link href="/tools/climate-checker" style={{ color: 'rgba(255,255,255,0.6)' }}>Climate Checker</Link>{' · '}
           <Link href="/tools/compatibility-checker" style={{ color: 'rgba(255,255,255,0.6)' }}>Compatibility Checker</Link>{' · '}
           <Link href="/tools/cost-calculator" style={{ color: 'rgba(255,255,255,0.6)' }}>Cost Calculator</Link>{' · '}
+          <Link href="/tools/photo-diagnosis" style={{ color: 'rgba(255,255,255,0.6)' }}>Photo Diagnosis</Link>{' · '}
           <Link href="/care-guides" style={{ color: 'rgba(255,255,255,0.6)' }}>Care Guides</Link>{' · '}
           <Link href="/blog" style={{ color: 'rgba(255,255,255,0.6)' }}>Blog</Link>
         </p>
