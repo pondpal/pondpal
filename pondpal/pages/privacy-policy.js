@@ -34,7 +34,7 @@ export default function PrivacyPolicy() {
           },
           {
             title: 'Information we collect',
-            content: 'Pond Pal does not require you to create an account or provide personal information to use our tools. When you use our Tank Checker or Water Chemistry Analyzer, the information you enter (such as tank size or water readings) is sent to our AI system to generate your results and is not stored or linked to you personally.\n\nLike most websites, we may collect standard technical information automatically, including your IP address, browser type, pages visited, and time spent on the site. This is collected through cookies and similar technologies.'
+            content: 'Pond Pal does not require you to create an account or provide personal information to use our tools. When you use our Tank Checker, Water Chemistry Analyzer, or other AI tools, the information you enter (such as tank size or water readings) is sent to our AI system to generate your results and is not stored or linked to you personally.\n\nOur Photo Diagnosis tool works the same way: any photo you upload is sent directly to our AI system for one-time analysis and is not saved, stored, or retained by Pond Pal afterward. Please avoid including any people or identifying information in photos you upload.\n\nLike most websites, we may collect standard technical information automatically, including your IP address, browser type, pages visited, and time spent on the site. This is collected through cookies and similar technologies.'
           },
           {
             title: 'Cookies and advertising',
