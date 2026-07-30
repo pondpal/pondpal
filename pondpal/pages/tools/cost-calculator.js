@@ -8,12 +8,12 @@ const categoriesByEnv = Object.keys(environments).reduce((acc, env) => {
   return acc
 }, {})
 
-// Alphabetized within each environment for display; categoriesByEnv (definition order,
-// most-common-first) is kept separately so new setups still default to a sensible fish.
-const categoriesByEnvSorted = Object.keys(environments).reduce((acc, env) => {
-  acc[env] = [...categoriesByEnv[env]].sort((a, b) => a.label.localeCompare(b.label))
-  return acc
-}, {})
+// One flat, alphabetized list for the fish-type dropdown (no environment grouping/headers).
+// categoriesByEnv (definition order, most-common-first) is kept separately so new setups
+// still default to a sensible fish.
+const allCategoriesSorted = Object.entries(costCategories)
+  .map(([value, c]) => ({ value, label: c.label }))
+  .sort((a, b) => a.label.localeCompare(b.label))
 
 const defaultFishForEnv = (env) => categoriesByEnv[env][0].value
 const newSetup = (env) => ({ env, fish: [{ category: defaultFishForEnv(env), count: '' }] })
@@ -112,11 +112,7 @@ export default function CostCalculator() {
                   {setup.fish.map((f, fi) => (
                     <div key={fi} style={{ display: 'grid', gridTemplateColumns: setup.fish.length > 1 ? '2fr 1fr auto' : '2fr 1fr', gap: '10px' }}>
                       <select value={f.category} onChange={e => { updateFish(si, fi, 'category', e.target.value); setResult(null) }} style={inputStyle}>
-                        {Object.entries(environments).map(([env, meta]) => (
-                          <optgroup key={env} label={`${meta.emoji} ${meta.label}`}>
-                            {categoriesByEnvSorted[env].map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-                          </optgroup>
-                        ))}
+                        {allCategoriesSorted.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
                       </select>
                       <input type="number" placeholder="e.g. 2" value={f.count}
                         onChange={e => { updateFish(si, fi, 'count', e.target.value); setResult(null) }}
