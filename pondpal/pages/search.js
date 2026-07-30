@@ -10,6 +10,7 @@ const allContent = [
   { title: 'Pond Volume Calculator', desc: 'Calculate how many gallons your pond or tank holds by entering your dimensions.', url: '/tools/pond-calculator', category: 'Tool', emoji: '🏊', tags: ['pond', 'volume', 'calculator', 'gallons', 'size', 'dimensions', 'litres'] },
   { title: 'Feeding Calculator', desc: 'Find out exactly how much to feed your fish based on their size, number, and the current season.', url: '/tools/feeding-calculator', category: 'Tool', emoji: '🍽️', tags: ['feeding', 'calculator', 'food', 'how much', 'season', 'amount', 'koi', 'fish'] },
   { title: 'Ask Pond Pal', desc: 'Ask our AI anything about fish keeping — any species, any question, instant friendly answers.', url: '/tools/ask-pond-pal', category: 'Tool', emoji: '💬', tags: ['ask', 'chat', 'ai', 'question', 'help', 'advice', 'fish', 'pond'] },
+  { title: 'Climate Checker', desc: 'Find out if your koi, goldfish, or other fish can safely overwinter outdoors based on your USDA hardiness zone and pond depth.', url: '/tools/climate-checker', category: 'Tool', emoji: '❄️', tags: ['climate', 'hardiness zone', 'winter', 'overwinter', 'outdoor', 'cold', 'freeze', 'koi', 'goldfish', 'usda'] },
 
   // Koi Guides
   { title: 'Getting Started with Koi', desc: 'Everything a first-time koi keeper needs to know — pond size, filtration, the nitrogen cycle, and what to expect in year one.', url: '/guides/getting-started', category: 'Koi Guide', emoji: '🐣', tags: ['koi', 'beginner', 'getting started', 'setup', 'new pond', 'first time', 'nitrogen cycle'] },
