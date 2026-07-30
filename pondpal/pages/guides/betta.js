@@ -81,7 +81,7 @@ export default function BettaGuide() {
             {[
               { name: 'Hikari Betta Bio-Gold', desc: 'Premium betta-specific pellets', url: 'https://www.amazon.com/dp/B0002APBHO?tag=pondpal20-20' },
               { name: 'API Betta Water Conditioner', desc: 'Designed specifically for betta tanks', url: 'https://www.amazon.com/dp/B001F0QSEA?tag=pondpal20-20' },
-              { name: 'API Betta Test Kit', desc: 'Quick test strips for betta tanks', url: 'https://www.amazon.com/dp/B001F0QT1C?tag=pondpal20-20' },
+              { name: 'API Master Test Kit', desc: 'Accurate water testing for betta tanks', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20' },
               { name: 'Seachem Prime', desc: 'Best all-round water conditioner', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
             ].map((p, i) => (
               <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>
