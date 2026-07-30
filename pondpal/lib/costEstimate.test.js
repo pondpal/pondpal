@@ -1,4 +1,4 @@
-import { estimateCost } from './costEstimate'
+import { estimateCost, estimateMultiCost } from './costEstimate'
 
 describe('estimateCost', () => {
   test('returns null for an unknown category or missing fish count', () => {
@@ -71,5 +71,56 @@ describe('estimateCost', () => {
     const many = estimateCost('tropical', 20, 0.16)
     expect(many.monthly.food).toBeGreaterThan(few.monthly.food)
     expect(many.monthly.total).toBeGreaterThan(few.monthly.total)
+  })
+})
+
+describe('estimateMultiCost', () => {
+  test('returns null for an empty or entirely invalid fish list', () => {
+    expect(estimateMultiCost([], 0.16)).toBeNull()
+    expect(estimateMultiCost(null, 0.16)).toBeNull()
+    expect(estimateMultiCost([{ category: 'not-real', count: 3 }], 0.16)).toBeNull()
+    expect(estimateMultiCost([{ category: 'koi', count: 0 }], 0.16)).toBeNull()
+  })
+
+  test('combines multiple pond fish types into a single pond section', () => {
+    const result = estimateMultiCost([
+      { category: 'koi', count: 2 },
+      { category: 'goldfish-pond', count: 2 },
+    ], 0.16)
+    expect(result.sections).toHaveLength(1)
+    expect(result.sections[0].env).toBe('pond')
+    // 2*250 + 2*30 = 560, above the 500 gallon koi floor
+    expect(result.sections[0].recommendedGallons).toBe(560)
+  })
+
+  test('splits fish across environments into separate sections', () => {
+    const result = estimateMultiCost([
+      { category: 'koi', count: 2 },
+      { category: 'betta', count: 1 },
+      { category: 'saltwater', count: 3 },
+    ], 0.16)
+    const envs = result.sections.map(s => s.env).sort()
+    expect(envs).toEqual(['indoor', 'pond', 'saltwater'])
+  })
+
+  test('grand total equals the sum of each section total', () => {
+    const result = estimateMultiCost([
+      { category: 'koi', count: 2 },
+      { category: 'tropical', count: 6 },
+    ], 0.16)
+    const expectedUpfront = result.sections.reduce((s, sec) => s + sec.upfront.total, 0)
+    const expectedMonthly = result.sections.reduce((s, sec) => s + sec.monthly.total, 0)
+    expect(result.grandTotal.upfront).toBeCloseTo(expectedUpfront, 2)
+    expect(result.grandTotal.monthly).toBeCloseTo(expectedMonthly, 2)
+  })
+
+  test('ignores invalid entries mixed in with valid ones', () => {
+    const result = estimateMultiCost([
+      { category: 'koi', count: 2 },
+      { category: 'not-real', count: 5 },
+      { category: 'betta', count: 0 },
+    ], 0.16)
+    expect(result.sections).toHaveLength(1)
+    expect(result.sections[0].env).toBe('pond')
   })
 })
