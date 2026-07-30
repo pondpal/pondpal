@@ -37,6 +37,16 @@ const sections = [
     afterTitle: 'Essential gear before you fill your pond'
   },
   {
+    emoji: '🏗️',
+    title: 'Choosing a liner and siting your pond',
+    content: `Before anything else, you need to decide how the pond itself will hold water, and where it will actually sit in your yard — both are permanent decisions that are expensive to change later.\n\nFlexible EPDM rubber liner is the most popular choice for koi ponds of any real size. It conforms to any shape you dig, is highly puncture-resistant, and typically carries a 20+ year warranty. Budget roughly $0.50–$1.50 per gallon of pond volume for liner material alone, more for larger or custom shapes.\n\nPreformed hard-shell ponds are simpler to install and good for smaller ponds, but they come in fixed shapes and sizes, which limits you if you plan to expand your koi collection later — and most preformed shells top out well below the volume serious koi keeping requires.\n\nConcrete ponds are the most durable and give you full design freedom, including built-in bottom drains, but require professional construction, cost significantly more, and take longer to build. This is usually the choice for keepers who know from day one they're building a permanent, larger-scale setup.\n\nFor siting: aim for partial sun — 4–6 hours of direct sunlight is enough to keep plants and beneficial algae healthy without causing constant green water or overheating in summer. Avoid placing your pond directly under deciduous trees; falling leaves decompose into ammonia and are one of the most common causes of chronic water quality problems in new ponds. Plan electrical access for your pump and any UV sterilizer before you dig, and check local codes if your pond will be deep enough to be classified as a swimming hazard.`
+  },
+  {
+    emoji: '🦉',
+    title: 'Protecting your koi from predators',
+    content: `Herons, raccoons, cats, and even large birds of prey see an open koi pond as a well-stocked buffet, and losing fish to predators is one of the most common — and most preventable — problems new keepers face.\n\nDepth is your first line of defense. A pond at least 3 feet deep, with steep sides near the edges, makes it much harder for a heron to wade in or a raccoon to reach fish from the bank. Shallow "shelf" areas around the edge, while nice for plants, are exactly where herons prefer to stand and hunt.\n\nPond netting stretched across the surface is the single most effective physical barrier, though it takes some of the visual appeal away. Motion-activated sprinklers positioned at typical approach angles are highly effective against herons specifically, since the sudden spray reliably startles them off before they strike.\n\nDecoy herons have mixed results — real herons are often territorial toward other herons, but many quickly learn a stationary decoy poses no threat. Overhead structures like pergolas, taut wire grids, or dense marginal planting around the edges reduce a heron's ability to get a clean flight approach, which matters since herons typically won't land somewhere they can't see a clear escape route.\n\nIf you have koi in the $50+ range or particularly attached fish, netting or a wire grid is worth the aesthetic tradeoff — a single heron visit can wipe out several fish in one morning.`
+  },
+  {
     emoji: '🔄',
     title: 'Filtration — the heart of your pond',
     content: `Koi produce a lot of waste for their size. Without good filtration, ammonia from fish waste will build up quickly and can be fatal. A proper koi filter has two jobs:\n\nMechanical filtration physically removes solid waste from the water — things like uneaten food, fish waste, and debris. This is usually achieved with foam pads, brushes, or settlement chambers.\n\nBiological filtration uses beneficial bacteria to convert harmful ammonia into nitrite, and then into the much less harmful nitrate. This process is called the nitrogen cycle, and it's the foundation of a healthy pond.\n\nFor koi, you want a filter rated for at least twice your actual pond volume. So a 1,000-gallon pond needs a filter rated for 2,000 gallons. A UV sterilizer is also a great addition — it kills algae and harmful bacteria and keeps your water crystal clear.`
@@ -80,7 +90,7 @@ export default function GettingStarted() {
     <>
       <Head>
         <title>Getting Started with Koi — Pond Pal</title>
-        <meta name="description" content="Everything a first-time koi keeper needs to know — pond size, filtration, the nitrogen cycle, choosing fish, and what to expect in year one." />
+        <meta name="description" content="Everything a first-time koi keeper needs to know — pond size, liner types and siting, predator protection, filtration, the nitrogen cycle, choosing fish, and what to expect in year one." />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
@@ -92,7 +102,7 @@ export default function GettingStarted() {
       <div style={{ maxWidth: '780px', margin: '0 auto', padding: '3rem 2rem' }}>
         <div style={{ display: 'flex', gap: '8px', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
           <span style={{ fontSize: '11px', fontWeight: 500, padding: '4px 12px', borderRadius: '20px', background: '#d4f0ec', color: '#0e6b6b' }}>Beginner</span>
-          <span style={{ fontSize: '11px', color: '#5a7a82', padding: '4px 0' }}>10 min read</span>
+          <span style={{ fontSize: '11px', color: '#5a7a82', padding: '4px 0' }}>15 min read</span>
         </div>
 
         {sections.map((s, i) => (
