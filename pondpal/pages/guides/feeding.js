@@ -63,32 +63,10 @@ export default function FeedingGuide() {
         <ProductGrid
           title="Our recommended koi foods"
           items={[
-            { name: 'Hikari Staple Koi Food', desc: 'Best everyday summer staple', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
             { name: 'The Pond Guy Wheat Germ Fish Food', desc: 'Essential cool weather formula', url: 'https://www.amazon.com/dp/B00S6R0OZ0?tag=pondpal20-20' },
-            { name: 'Hikari Gold Koi Food', desc: 'Premium summer color enhancer', url: 'https://www.amazon.com/dp/B0002562OY?tag=pondpal20-20' },
             { name: 'Blue Ridge Wheat Germ', desc: 'Great value wheat germ food', url: 'https://www.amazon.com/dp/B002C026OY?tag=pondpal20-20' },
           ]}
         />
-
-        
-        <div style={{ background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.07)', marginBottom: '2rem' }}>
-          <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '1rem' }}>🛒 Recommended products for this guide</p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
-            {[
-              { name: 'Hikari Staple Koi Food', desc: 'Best everyday summer koi food', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
-              { name: 'The Pond Guy Wheat Germ Fish Food', desc: 'Essential cool weather formula', url: 'https://www.amazon.com/dp/B00S6R0OZ0?tag=pondpal20-20' },
-              { name: 'Hikari Gold Koi Food', desc: 'Premium color-enhancing summer food', url: 'https://www.amazon.com/dp/B0002562OY?tag=pondpal20-20' },
-              { name: 'Blue Ridge Wheat Germ', desc: 'Great value cool weather food', url: 'https://www.amazon.com/dp/B002C026OY?tag=pondpal20-20' },
-            ].map((p, i) => (
-              <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>
-                <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '2px' }}>{p.name}</p>
-                <p style={{ fontSize: '11px', color: '#5a7a82' }}>{p.desc}</p>
-                <p style={{ fontSize: '11px', color: '#1a9e8e', marginTop: '4px' }}>View on Amazon →</p>
-              </a>
-            ))}
-          </div>
-          <p style={{ fontSize: '10px', color: '#5a7a82', marginTop: '0.75rem' }}>As an Amazon Associate, Pond Pal earns from qualifying purchases.</p>
-        </div>
 
         <div style={{ background: '#062d3a', borderRadius: '14px', padding: '2rem', textAlign: 'center' }}>
           <h3 style={{ color: '#fff', marginBottom: '0.75rem', fontSize: '1.2rem' }}>Is your water handling the feeding load?</h3>

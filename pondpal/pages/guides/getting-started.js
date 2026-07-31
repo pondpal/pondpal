@@ -63,7 +63,6 @@ const sections = [
     afterContent: [
       { name: 'API Pond Master Test Kit', desc: 'Test pH, ammonia, nitrite and nitrate', url: 'https://www.amazon.com/dp/B0002DJNN0?tag=pondpal20-20' },
       { name: 'Seachem Prime', desc: 'Dechlorinator that also detoxifies ammonia', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
-      { name: 'Hikari Staple Koi Food', desc: 'Quality everyday koi food to start with', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
       { name: 'The Pond Guy Wheat Germ Fish Food', desc: 'For spring/autumn below 65°F feeding', url: 'https://www.amazon.com/dp/B00S6R0OZ0?tag=pondpal20-20' },
     ],
     afterTitle: 'Starter kit — everything you need before fish arrive'
@@ -79,7 +78,7 @@ const sections = [
     content: `Month 1–2: Focus on cycling your pond and monitoring water parameters closely. Test every 2–3 days. Don't be alarmed by ammonia and nitrite spikes — this is normal. Feed lightly.\n\nMonth 3–4: Your pond should be fully cycled. Water parameters stabilize. You can add a few more fish if you have room. Start enjoying your koi — watch their personalities emerge.\n\nMonth 5–6: Summer is here. Koi are active and hungry. Feed 2–3 times daily, only what they can eat in 5 minutes. Keep an eye on algae — some is fine, but excessive algae can crash oxygen levels overnight.\n\nMonth 7–8: Autumn arrives. Start reducing feeding as temperatures drop. Switch to a wheat germ based food below 55°F as it's easier to digest in cooler water.\n\nMonth 9–12: Winter. Stop feeding completely below 50°F. Koi go into a semi-dormant state and their metabolism slows dramatically. Keep a hole in any ice to allow gas exchange. Enjoy the quieter season and start planning for spring!`,
     afterContent: [
       { name: 'The Pond Guy Wheat Germ Fish Food', desc: 'Switch to this below 65°F', url: 'https://www.amazon.com/dp/B00S6R0OZ0?tag=pondpal20-20' },
-      { name: 'Hikari Gold Koi Food', desc: 'Premium summer growth and color food', url: 'https://www.amazon.com/dp/B0002562OY?tag=pondpal20-20' },
+      { name: 'Blue Ridge Wheat Germ', desc: 'Great value wheat germ food', url: 'https://www.amazon.com/dp/B002C026OY?tag=pondpal20-20' },
     ],
     afterTitle: 'Seasonal food essentials'
   },

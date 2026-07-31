@@ -59,8 +59,6 @@ export default function KoiVarieties() {
           <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '1rem' }}>🛒 Recommended products for this guide</p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
             {[
-              { name: 'Hikari Staple Koi Food', desc: 'Great food for all koi varieties', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
-              { name: 'Hikari Gold Koi Food', desc: 'Enhances red and orange colors', url: 'https://www.amazon.com/dp/B0002562OY?tag=pondpal20-20' },
               { name: 'API Pond Master Test Kit', desc: 'Keep your new koi healthy', url: 'https://www.amazon.com/dp/B0002DJNN0?tag=pondpal20-20' },
               { name: 'Seachem Prime', desc: 'Essential for any new fish addition', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
             ].map((p, i) => (

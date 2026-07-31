@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 function ProductGrid({ items, title }) {
+  if (!items || items.length === 0) return null
   return (
     <div style={{ background: '#fff', borderRadius: '14px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.07)', margin: '1.5rem 0' }}>
       <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '1rem' }}>🛒 {title}</p>
@@ -35,11 +36,6 @@ const seasons = [
   {
     emoji: '☀️', title: 'Summer — peak season',
     content: `Summer is when koi truly come alive. They're active, colorful, hungry, and growing fast. It's also the season that demands the most attention from you.\n\nFeeding: koi can be fed 2–3 times daily in summer, only what they can consume in 5 minutes per feeding. Overfeeding is one of the most common mistakes — excess food decomposes quickly and creates an ammonia spike. A quality high-protein food supports growth and vibrant color during warm months.\n\nOxygen management: warm water holds less dissolved oxygen. On hot days above 85°F, run your waterfall and any air stones continuously. If you notice fish gasping at the surface first thing in the morning, this is a red flag for overnight oxygen depletion.\n\nAlgae: some string algae and green water is normal and even beneficial. However, a severe algae bloom can crash oxygen levels overnight. A UV sterilizer keeps the water clear and green water algae under control.\n\nWater changes: aim for a 10–15% water change weekly in summer. This keeps nitrate in check and replaces trace minerals.`,
-    products: [
-      { name: 'Hikari Staple Koi Food', desc: 'Best everyday summer staple food', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
-      { name: 'Hikari Gold Koi Food', desc: 'Premium color enhancing summer food', url: 'https://www.amazon.com/dp/B0002562OY?tag=pondpal20-20' },
-    ],
-    productTitle: 'Summer feeding essentials'
   },
   {
     emoji: '🍂', title: 'Autumn — preparing for winter',

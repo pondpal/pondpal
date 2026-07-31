@@ -75,7 +75,6 @@ export default function CichlidGuide() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
             {[
               { name: 'API Master Test Kit', desc: 'Essential water testing, including pH for African cichlids', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20' },
-              { name: 'Hikari Cichlid Gold', desc: 'Premium cichlid pellet food', url: 'https://www.amazon.com/dp/B0002562LG?tag=pondpal20-20' },
               { name: 'Seachem Prime', desc: 'Essential water conditioner', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
             ].map((p, i) => (
               <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>

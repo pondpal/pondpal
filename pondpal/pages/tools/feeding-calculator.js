@@ -219,10 +219,6 @@ export default function FeedingCalculator() {
   })
 
   const products = {
-    summer: [
-      { name: 'Hikari Staple Koi Food', desc: 'Best everyday summer staple', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
-      { name: 'Hikari Gold Koi Food', desc: 'Premium color enhancing food', url: 'https://www.amazon.com/dp/B0002562OY?tag=pondpal20-20' },
-    ],
     spring: [
       { name: 'The Pond Guy Wheat Germ Fish Food', desc: 'Best cool weather formula', url: 'https://www.amazon.com/dp/B00S6R0OZ0?tag=pondpal20-20' },
       { name: 'Blue Ridge Wheat Germ', desc: 'Great value wheat germ food', url: 'https://www.amazon.com/dp/B002C026OY?tag=pondpal20-20' },
