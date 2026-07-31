@@ -81,7 +81,6 @@ export default function TropicalGuide() {
             {[
               { name: 'API Master Test Kit', desc: 'Essential water testing for community tanks', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20' },
               { name: 'Seachem Prime', desc: 'Best water conditioner for tropical tanks', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
-              { name: 'Hikari Micro Pellets', desc: 'Perfect size for small community fish', url: 'https://www.amazon.com/dp/B0002562OO?tag=pondpal20-20' },
               { name: 'Seachem Stability', desc: 'Cycles new community tanks fast', url: 'https://www.amazon.com/dp/B000255MWM?tag=pondpal20-20' },
             ].map((p, i) => (
               <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>

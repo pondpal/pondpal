@@ -76,7 +76,6 @@ export default function PondPlants() {
             {[
               { name: 'API Pond Master Test Kit', desc: 'See how plants improve your water quality', url: 'https://www.amazon.com/dp/B0002DJNN0?tag=pondpal20-20' },
               { name: 'Seachem Prime', desc: 'Safe for fish and aquatic plants', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
-              { name: 'Hikari Staple Koi Food', desc: 'Less overfeeding means healthier plants', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
               { name: 'The Pond Guy Wheat Germ Fish Food', desc: 'Cool weather feeding reduces waste', url: 'https://www.amazon.com/dp/B00S6R0OZ0?tag=pondpal20-20' },
             ].map((p, i) => (
               <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>

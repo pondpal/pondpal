@@ -27,7 +27,7 @@ const faqs = [
       },
       {
         q: 'What is the best koi food?',
-        a: 'In summer, use a quality staple or growth pellet with 30–36% protein — Hikari Staple and Hikari Gold are trusted options. In spring and autumn when water is below 65°F, switch to wheat germ food which is easier to digest in cool water. Stop feeding entirely below 50°F. Never feed bread or human food to koi.',
+        a: 'In summer, use a quality staple or growth pellet with 30–36% protein from a trusted brand. In spring and autumn when water is below 65°F, switch to wheat germ food which is easier to digest in cool water. Stop feeding entirely below 50°F. Never feed bread or human food to koi.',
         link: '/blog/best-koi-food-every-season',
         linkText: 'Full feeding guide →'
       },

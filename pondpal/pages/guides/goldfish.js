@@ -81,7 +81,6 @@ export default function GoldfishGuide() {
             {[
               { name: 'API Master Test Kit', desc: 'Essential water testing for goldfish', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20' },
               { name: 'Seachem Prime', desc: 'Best water conditioner for goldfish', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
-              { name: 'Hikari Oranda Gold Food', desc: 'Premium food for fancy goldfish', url: 'https://www.amazon.com/dp/B0002562V2?tag=pondpal20-20' },
             ].map((p, i) => (
               <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', padding: '0.75rem', background: '#f8fffe', borderRadius: '8px', border: '1px solid rgba(26,158,142,0.2)', display: 'block' }}>
                 <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '2px' }}>{p.name}</p>

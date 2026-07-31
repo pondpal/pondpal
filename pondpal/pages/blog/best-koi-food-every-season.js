@@ -11,15 +11,6 @@ const seasonalProducts = [
       { name: 'Blue Ridge Wheat Germ', desc: 'Great value cool weather formula', url: 'https://www.amazon.com/dp/B002C026OY?tag=pondpal20-20' },
     ]
   },
-  {
-    season: 'Summer',
-    color: '#faeeda',
-    textColor: '#854F0B',
-    products: [
-      { name: 'Hikari Staple Koi Food', desc: 'Best everyday summer staple', url: 'https://www.amazon.com/dp/B0002562MK?tag=pondpal20-20' },
-      { name: 'Hikari Gold Koi Food', desc: 'Premium color enhancing summer food', url: 'https://www.amazon.com/dp/B0002562OY?tag=pondpal20-20' },
-    ]
-  },
 ]
 
 export default function BestKoiFood() {
@@ -59,7 +50,7 @@ export default function BestKoiFood() {
           },
           {
             heading: '☀️ Summer feeding (water above 65°F)',
-            text: `Summer is when you can really invest in your koi. With their metabolism running at full speed, they can process high-protein foods efficiently and put the nutrients to work in growth and color development.\n\nFeed a quality staple or growth food two to three times daily in summer. The five minute rule is your guide — offer a moderate amount and remove anything uneaten after five minutes. Overfeeding in summer is the leading cause of ammonia spikes, so resist the temptation to dump in large amounts.\n\nFor color enhancement, a food containing astaxanthin or spirulina will intensify the reds, oranges, and whites in your koi during the months when their metabolism can actually use it. Color enhancing foods fed in cold water are essentially wasted.\n\nOur top summer picks: Hikari Staple for everyday feeding and Hikari Gold or Hikari Growth for keepers who want to maximize size and color during peak season.`
+            text: `Summer is when you can really invest in your koi. With their metabolism running at full speed, they can process high-protein foods efficiently and put the nutrients to work in growth and color development.\n\nFeed a quality staple or growth food two to three times daily in summer. The five minute rule is your guide — offer a moderate amount and remove anything uneaten after five minutes. Overfeeding in summer is the leading cause of ammonia spikes, so resist the temptation to dump in large amounts.\n\nFor color enhancement, a food containing astaxanthin or spirulina will intensify the reds, oranges, and whites in your koi during the months when their metabolism can actually use it. Color enhancing foods fed in cold water are essentially wasted.\n\nLook for a quality staple food for everyday feeding, and a color-enhancing growth food if you want to maximize size and color during peak season.`
           },
           {
             heading: '🍂 Autumn feeding (water dropping below 65°F)',
@@ -75,7 +66,7 @@ export default function BestKoiFood() {
           },
           {
             heading: 'The bottom line on koi feeding',
-            text: `Match the food to the temperature. Wheat germ below 65°F, quality staple above 65°F, nothing below 50°F. That single guideline, followed consistently, will make a bigger difference to your koi's health than almost anything else you do.\n\nFeed little and often rather than one large daily feeding. Monitor your fish during every feeding — healthy koi should be eager and competitive at the surface. Loss of appetite is almost always the first sign something is wrong, and catching it early can save a fish's life.\n\nInvest in quality food. The difference in price between a budget koi food and a quality brand like Hikari is small compared to the cost of treating sick fish or the loss of a valuable koi.`
+            text: `Match the food to the temperature. Wheat germ below 65°F, quality staple above 65°F, nothing below 50°F. That single guideline, followed consistently, will make a bigger difference to your koi's health than almost anything else you do.\n\nFeed little and often rather than one large daily feeding. Monitor your fish during every feeding — healthy koi should be eager and competitive at the surface. Loss of appetite is almost always the first sign something is wrong, and catching it early can save a fish's life.\n\nInvest in quality food. The difference in price between a budget koi food and a trusted, well-reviewed brand is small compared to the cost of treating sick fish or the loss of a valuable koi.`
           },
         ].map((s, i) => (
           <div key={i} style={{ marginBottom: '2rem' }}>

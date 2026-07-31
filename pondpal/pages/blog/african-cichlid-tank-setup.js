@@ -77,7 +77,6 @@ export default function AfricanCichlidSetup() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
             {[
               { name: 'API Master Test Kit', desc: 'Essential water testing', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20' },
-              { name: 'Hikari Cichlid Gold', desc: 'Premium cichlid pellet food', url: 'https://www.amazon.com/dp/B0002562LG?tag=pondpal20-20' },
               { name: 'Seachem Prime', desc: 'Essential water conditioner', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
               { name: 'Seachem Stability', desc: 'Establishes bacterial cycle fast', url: 'https://www.amazon.com/dp/B000255MWM?tag=pondpal20-20' },
             ].map((p, i) => (

@@ -25,7 +25,7 @@ const sections = [
   {
     emoji: '🍽️',
     title: 'Feeding bettas',
-    content: `Bettas are carnivores. In the wild they eat insects, insect larvae, and small crustaceans. A diet based primarily on plant matter or generic tropical flakes is inadequate and leads to nutritional deficiencies, color fading, and a shortened lifespan.\n\nFeed a quality betta-specific pellet as the staple food. Look for pellets with fish or shrimp as the first ingredient, not fillers like wheat or soy. Hikari Betta Bio-Gold and Fluval Bug Bites Betta Formula are well-regarded options.\n\nFeed small amounts once or twice daily — only what your betta can eat in two to three minutes. Bettas have stomachs roughly the size of their eye, and overfeeding is very common. Uneaten food rapidly degrades water quality in a small tank.\n\nOffer treats a few times weekly: frozen or freeze-dried bloodworms, daphnia, or brine shrimp. These provide variety, enrichment, and nutritional diversity. Live foods are even better if you can source them safely.\n\nFast your betta one day per week. This gives their digestive system a rest and helps prevent constipation, which can trigger swim bladder issues.`
+    content: `Bettas are carnivores. In the wild they eat insects, insect larvae, and small crustaceans. A diet based primarily on plant matter or generic tropical flakes is inadequate and leads to nutritional deficiencies, color fading, and a shortened lifespan.\n\nFeed a quality betta-specific pellet as the staple food. Look for pellets with fish or shrimp as the first ingredient, not fillers like wheat or soy. Fluval Bug Bites Betta Formula is a well-regarded option.\n\nFeed small amounts once or twice daily — only what your betta can eat in two to three minutes. Bettas have stomachs roughly the size of their eye, and overfeeding is very common. Uneaten food rapidly degrades water quality in a small tank.\n\nOffer treats a few times weekly: frozen or freeze-dried bloodworms, daphnia, or brine shrimp. These provide variety, enrichment, and nutritional diversity. Live foods are even better if you can source them safely.\n\nFast your betta one day per week. This gives their digestive system a rest and helps prevent constipation, which can trigger swim bladder issues.`
   },
   {
     emoji: '🏥',
@@ -79,7 +79,6 @@ export default function BettaGuide() {
           <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a2e35', marginBottom: '1rem' }}>🛒 Recommended for betta keepers</p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
             {[
-              { name: 'Hikari Betta Bio-Gold', desc: 'Premium betta-specific pellets', url: 'https://www.amazon.com/dp/B0002APBHO?tag=pondpal20-20' },
               { name: 'API Betta Water Conditioner', desc: 'Designed specifically for betta tanks', url: 'https://www.amazon.com/dp/B001F0QSEA?tag=pondpal20-20' },
               { name: 'API Master Test Kit', desc: 'Accurate water testing for betta tanks', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20' },
               { name: 'Seachem Prime', desc: 'Best all-round water conditioner', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },

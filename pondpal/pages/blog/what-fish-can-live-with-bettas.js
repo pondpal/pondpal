@@ -72,7 +72,6 @@ export default function BettaTankMates() {
           <p style={{ fontSize: '14px', fontWeight: 500, color: '#1a2e35', marginBottom: '1rem' }}>🛒 Recommended for betta keepers</p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
             {[
-              { name: 'Hikari Betta Bio-Gold', desc: 'Premium betta-specific pellet food', url: 'https://www.amazon.com/dp/B0002APBHO?tag=pondpal20-20' },
               { name: 'Seachem Prime', desc: 'Essential water conditioner', url: 'https://www.amazon.com/dp/B00025694O?tag=pondpal20-20' },
               { name: 'API Master Test Kit', desc: 'Monitor water quality', url: 'https://www.amazon.com/dp/B000255NCI?tag=pondpal20-20' },
               { name: 'Seachem Stability', desc: 'Cycles new tanks safely', url: 'https://www.amazon.com/dp/B000255MWM?tag=pondpal20-20' },
