@@ -9,6 +9,12 @@ const nextConfig = {
         destination: 'https://www.pondpal.space/:path*',
         permanent: true,
       },
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'pondpal.vercel.app' }],
+        destination: 'https://www.pondpal.space/:path*',
+        permanent: true,
+      },
     ]
   },
 }
